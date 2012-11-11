@@ -27,6 +27,7 @@ void nextTrack(){
 }
 
 int main(int argc, char* argv[]){
+	sistema.setIcon("../resources/images/icono_prueba.png");
 	musica.setVol(128);
 	musica.setTrack(0, "../resources/sound/track01.ogg");
 	musica.setTrack(1, "../resources/sound/track02.ogg");
@@ -38,7 +39,7 @@ int main(int argc, char* argv[]){
 			switch(event.type){
 				case SDL_KEYDOWN:
 					if(event.key.keysym.sym == SDLK_ESCAPE) return 0;
-					if(event.key.keysym.sym == SDLK_SPACE) nextTrack();
+					if(event.key.keysym.sym == SDLK_RIGHT) nextTrack();
 					break;
 				case SDL_QUIT:
 					return 0;

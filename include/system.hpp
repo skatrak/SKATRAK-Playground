@@ -1,6 +1,8 @@
 #ifndef __SYSTEM_T__
 #define __SYSTEM_T__
 
+using std::string;
+
 /**
  * @class system_t
  * @brief Representa todo lo necesario para inicializar y cerrar SDL.
@@ -9,6 +11,7 @@
 class system_t {
 	private:
 		SDL_Surface* screen;
+		SDL_Surface* wIcon;
 		int width;
 		int height;
 		int bpp;
@@ -17,6 +20,7 @@ class system_t {
 	system_t(int scr_w, int scr_h, int depth);
 	~system_t();
 	void toggleFullscreen();
+	void setIcon(string iconpath);
 	int w(){ return width; }
 	int h(){ return height; }
 	SDL_Surface* scr(){ return screen; }

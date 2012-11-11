@@ -5,12 +5,13 @@
  * @param depth Profundidad de bits de la pantalla.
  * @note En el caso de que la pantalla no se pudiera iniciar con las opciones especificadas, imprimirá un mensaje de error.
  */
-system_t::system_t(int scr_w, int scr_h, int depth): width(scr_w), height(scr_h), bpp(depth), screen(NULL)
+system_t::system_t(int scr_w, int scr_h, int depth): width(scr_w), height(scr_h), bpp(depth), screen(NULL), wIcon(NULL)
 {
 	SDL_Init(SDL_INIT_EVERYTHING);
 	screen = SDL_SetVideoMode(width, height, bpp, SDL_HWSURFACE | SDL_DOUBLEBUF);
 	if(screen == NULL)
 		fprintf(stderr, "No se ha podido iniciar el modo de video %dx%d a %d bits.\n", width, height, bpp);
+	SDL_WM_SetCaption("SKATRAK Playground", NULL);
 }
 
 /**
@@ -24,7 +25,7 @@ system_t::~system_t(){
 
 /**
  * @brief Intercambia entre pantalla completa y ventana.
-*/
+ */
 void system_t::toggleFullscreen(){
 	fullscr? fullscr = false : fullscr = true;
 	if(screen != NULL){
@@ -43,9 +44,26 @@ void system_t::toggleFullscreen(){
 }
 
 /**
+ * @brief Le da un icono a la ventana del programa.
+ * @param iconpath Ruta del icono.
+ * @note Este icono no será visible en pantalla completa.
+ */
+void system_t::setIcon(string iconpath){
+	if(wIcon != NULL){
+		SDL_FreeSurface(wIcon);
+		wIcon = NULL;
+	}
+	wIcon = IMG_Load(iconpath.c_str());
+	if(wIcon == NULL)
+		fprintf(stderr, "No se ha podido cargar el icono del programa.\n");
+	else
+		SDL_WM_SetIcon(wIcon, NULL);
+}
+
+/**
  * @brief Actualiza la pantalla.
  * @note Es necesario llamar esta función para que se intercambien los buffers de vídeo.
-*/
+ */
 void system_t::update(){
 	if(screen != NULL)
 		SDL_Flip(screen);
