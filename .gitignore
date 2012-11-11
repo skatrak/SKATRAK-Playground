@@ -1,2 +1,6 @@
+# Archivos que no queremos que se actualicen para los demás
 ignore_*
 
+# Estos archivos se generan automáticamente por wxDev-C++
+*.layout
+Makefile.win
