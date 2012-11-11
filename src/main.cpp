@@ -1,14 +1,15 @@
 #include <string>
-#include "../include/SDL/SDL.h"
-#include "../include/SDL/SDL_image.h"
-#include "../include/SDL/SDL_mixer.h"
-#include "../include/SDL/SDL_ttf.h"
+#include <SDL/SDL.h>
+#include <SDL/SDL_image.h>
+#include <SDL/SDL_mixer.h>
+#include <SDL/SDL_ttf.h>
 
 #include "../include/system.hpp"
 #include "../include/music.hpp"
 
-system_t sistema(1024, 768, 32);
-music_t musica;
+SDL_Event event;
+system_t sistema(1024, 768, 32);	//! La variable sistema se comparte entre todos los minijuegos y permanece igual para todos ellos.
+music_t musica(3);					//! La variable musica se comparte por todos los minijuegos y cada uno puede tener su propia lista de reproducción.
 
 /**
  * @brief Esta función hace que se pase automáticamente a la siguiente canción de la lista de reproducción cuando se acaba la que se está reproduciendo.
@@ -16,6 +17,8 @@ music_t musica;
  * una dirección de tipo función y no de tipo miembro.
  */
 void nextTrack(){
+	if(musica.playing)
+		musica.halt();
 	musica.current++;
 	if(musica.current >= musica.n_tracks)
 		musica.current = 0;
@@ -24,10 +27,25 @@ void nextTrack(){
 }
 
 int main(int argc, char* argv[]){
-	sistema.toggleFullscreen();
-	sistema.update();
-	SDL_Delay(5000);
-	sistema.toggleFullscreen();
-	sistema.update();
-	SDL_Delay(5000);
+	musica.setVol(128);
+	musica.setTrack(0, "../resources/sound/track01.ogg");
+	musica.setTrack(1, "../resources/sound/track02.ogg");
+	musica.setTrack(2, "../resources/sound/track03.ogg");
+
+	musica.play();
+	while(true){
+		while(SDL_PollEvent(&event)){
+			switch(event.type){
+				case SDL_KEYDOWN:
+					if(event.key.keysym.sym == SDLK_ESCAPE) return 0;
+					if(event.key.keysym.sym == SDLK_SPACE) nextTrack();
+					break;
+				case SDL_QUIT:
+					return 0;
+			}
+			SDL_Delay(100);
+			sistema.update();
+		}
+	}
+	musica.halt();
 }
