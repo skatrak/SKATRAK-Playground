@@ -3,6 +3,8 @@
 
 using std::string;
 
+const int FADEIN_DELAY = 1000;
+
 /**
  * @class music_t
  * @brief Clase cuyo objetivo es tener una lista de reproducción de música con la cantidad que se necesite de canciones que se pueda manipular
