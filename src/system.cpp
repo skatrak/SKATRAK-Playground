@@ -24,7 +24,6 @@ system_t::~system_t(){
 
 /**
  * @brief Intercambia entre pantalla completa y ventana.
- * @return void
 */
 void system_t::toggleFullscreen(){
 	fullscr? fullscr = false : fullscr = true;
@@ -35,11 +34,11 @@ void system_t::toggleFullscreen(){
 	if(fullscr){
 		screen = SDL_SetVideoMode(width, height, bpp, SDL_HWSURFACE | SDL_DOUBLEBUF | SDL_FULLSCREEN);
 		if(screen == NULL)
-			fprintf(stderr, "No se ha podido iniciar el modo de video %dx%d a %d bits.\n", width, height, bpp);
+			fprintf(stderr, "No se ha podido iniciar el modo de video %dx%d a %d bits con pantalla completa.\n", width, height, bpp);
 	} else {
 		screen = SDL_SetVideoMode(width, height, bpp, SDL_HWSURFACE | SDL_DOUBLEBUF);
 		if(screen == NULL)
-			fprintf(stderr, "No se ha podido iniciar el modo de video %dx%d a %d bits.\n", width, height, bpp);
+			fprintf(stderr, "No se ha podido iniciar el modo de video %dx%d a %d bits sin pantalla completa.\n", width, height, bpp);
 	}
 }
 
