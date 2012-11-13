@@ -1,3 +1,8 @@
+#include <string>
+#include <SDL/SDL.h>
+#include <SDL/SDL_image.h>
+#include "../include/system.hpp"
+
 /**
  * @brief Crea la clase sistema e inicializa las propiedades de la pantalla. También inicializa SDL.
  * @param scr_w Anchura de la pantalla.

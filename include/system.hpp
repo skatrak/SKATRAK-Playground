@@ -42,6 +42,4 @@ class system_t {
  * @return Devuelve un puntero a la SDL_Surface que apunta a la pantalla de SDL.
  */
 
-#include "../src/system.cpp"
-
 #endif

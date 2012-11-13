@@ -6,10 +6,11 @@
 
 #include "../include/system.hpp"
 #include "../include/music.hpp"
+#include "../include/image.hpp"
 
 SDL_Event event;
-system_t sistema(1024, 768, 32);	//! La variable sistema se comparte entre todos los minijuegos y permanece igual para todos ellos.
-music_t musica(3);					//! La variable musica se comparte por todos los minijuegos y cada uno puede tener su propia lista de reproducción.
+system_t sistema(1024, 768, 32);	// La variable sistema se comparte entre todos los minijuegos y permanece igual para todos ellos.
+music_t musica(3);					// La variable musica se comparte por todos los minijuegos y cada uno puede tener su propia lista de reproducción.
 
 /**
  * @brief Esta función hace que se pase automáticamente a la siguiente canción de la lista de reproducción cuando se acaba la que se está reproduciendo.
@@ -33,6 +34,8 @@ int main(int argc, char* argv[]){
 	musica.setTrack(1, "../resources/sound/track02.ogg");
 	musica.setTrack(2, "../resources/sound/track03.ogg");
 
+	image_t prueba("../resources/images/icono_prueba.png");
+
 	musica.play();
 	while(true){
 		while(SDL_PollEvent(&event)){
@@ -45,6 +48,7 @@ int main(int argc, char* argv[]){
 					return 0;
 			}
 			SDL_Delay(100);
+			prueba.blit(100, 100, sistema.scr());
 			sistema.update();
 		}
 	}

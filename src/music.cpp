@@ -1,3 +1,8 @@
+#include <string>
+#include <SDL/SDL.h>
+#include <SDL/SDL_mixer.h>
+#include "../include/music.hpp"
+
 /**
  * @brief Inicializa la clase con los valores por defecto e inicia SDL
  */

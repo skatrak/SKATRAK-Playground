@@ -32,6 +32,4 @@ class music_t {
 		friend void nextTrack();
 };
 
-#include "../src/music.cpp"
-
 #endif
