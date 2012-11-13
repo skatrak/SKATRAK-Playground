@@ -1,7 +1,7 @@
 [Project]
 FileName=SKATRAK Playground.dev
 Name=SKATRAK Playground
-UnitCount=5
+UnitCount=7
 PchHead=-1
 PchSource=-1
 Ver=3
@@ -44,27 +44,27 @@ BuildCmd=
 FileName=..\src\music.cpp
 CompileCpp=1
 Folder=SKATRAK Playground
-Compile=0
-Link=0
+Compile=1
+Link=1
 Priority=1000
 OverrideBuildCmd=0
-BuildCmd=$(CPP) -c music.cpp -o ../bin/objects/music.o $(CXXFLAGS)
+BuildCmd=	$(CPP) -c music.cpp -o ../bin/objects/music.o $(CXXFLAGS)
 
 [Unit5]
 FileName=..\src\system.cpp
 CompileCpp=1
 Folder=SKATRAK Playground
-Compile=0
-Link=0
+Compile=1
+Link=1
 Priority=1000
 OverrideBuildCmd=0
-BuildCmd=$(CPP) -c system.cpp -o ../bin/objects/system.o $(CXXFLAGS)
+BuildCmd=	$(CPP) -c system.cpp -o ../bin/objects/system.o $(CXXFLAGS)
 
 [VersionInfo]
 Major=0
-Minor=1
-Release=1
-Build=1
+Minor=0
+Release=0
+Build=0
 LanguageID=1033
 CharsetID=1252
 CompanyName=
@@ -101,7 +101,7 @@ OverrideOutputName=SKATRAK Playground.exe
 HostApplication=
 CommandLine=
 UseCustomMakefile=0
-CustomMakefile=C:\Users\Sergio-G\Desktop\Trolling\C++\GIT\proyect\Makefile.win
+CustomMakefile=
 IncludeVersionInfo=0
 SupportXPThemes=0
 CompilerSet=0
@@ -162,4 +162,24 @@ IncludeVersionInfo=0
 SupportXPThemes=0
 CompilerSet=5
 CompilerType=5
+
+[Unit6]
+FileName=..\include\image.hpp
+CompileCpp=1
+Folder=
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit7]
+FileName=..\src\image.cpp
+CompileCpp=1
+Folder=
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=	$(CPP) -c image.cpp -o ../bin/objects/image.o $(CXXFLAGS)
 
