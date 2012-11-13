@@ -19,4 +19,4 @@ haciendo el **diseño gráfico** del programa y los minijuegos bienvenido sea. T
 
 ## Contacto ##
 Para los que quieran estar al día, este es el blog del proyecto, donde intentaré ir actualizando cada semana los cambios
-importantes que haya realizado en el proyecto: <skatrakplayground.wordpress.com>.
+importantes que haya realizado en el proyecto: <http://skatrakplayground.wordpress.com/>.
