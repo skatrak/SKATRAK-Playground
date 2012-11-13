@@ -13,7 +13,7 @@ Este juego estará bajo la licencia **LGPL** (GNU Lesser General Public License)
 - Encontrar las parejas
 
 ## Autor/es ##
-Hasta el momento todo el código ha sido escrito por mí ([Sergio M. Afonso Fumero](theSkatrak@gmail.com)).
+Hasta el momento todo el código ha sido escrito por mí ([Sergio M. Afonso Fumero](mailto:theSkatrak@gmail.com)).
 De todas formas quien quiera participar en el proyecto, ya sea aportando **código**, haciendo de **beta-tester** o
 haciendo el **diseño gráfico** del programa y los minijuegos bienvenido sea. Toda ayuda será reflejada aquí, por supuesto.
 
