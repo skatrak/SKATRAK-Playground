@@ -11,8 +11,8 @@ class timer_t {
 		int current;
 		int frames;
 	public:
-		timer_t(): start(0), current(0), frames(0) {}
-		void start();
+		timer_t(): current(0), frames(0) { start = SDL_GetTicks(); }
+		void refresh();
 		int elapsed();
 		void waitFramerate(int fps);
 		int renderedFrames();
