@@ -7,6 +7,7 @@
 #include "../include/system.hpp"
 #include "../include/music.hpp"
 #include "../include/image.hpp"
+#include "../include/timer.hpp"
 
 SDL_Event event;
 system_t sistema(1024, 768, 32);	// La variable sistema se comparte entre todos los minijuegos y permanece igual para todos ellos.
@@ -28,29 +29,34 @@ void nextTrack(){
 }
 
 int main(int argc, char* argv[]){
-	sistema.setIcon("../resources/images/icono_prueba.png");
+	sistema.setIcon("../../resources/images/icono_prueba.png");
 	musica.setVol(128);
-	musica.setTrack(0, "../resources/sound/track01.ogg");
-	musica.setTrack(1, "../resources/sound/track02.ogg");
-	musica.setTrack(2, "../resources/sound/track03.ogg");
+	musica.setTrack(0, "../../resources/sound/track01.ogg");
+	musica.setTrack(1, "../../resources/sound/track02.ogg");
+	musica.setTrack(2, "../../resources/sound/track03.ogg");
 
-	image_t prueba("../resources/images/icono_prueba.png");
+	image_t prueba("../../resources/images/icono_prueba.png");
+	timer_t temporizador;
+	bool salir = false;
 
 	musica.play();
-	while(true){
+	while(!salir){
+		temporizador.refresh();
 		while(SDL_PollEvent(&event)){
 			switch(event.type){
 				case SDL_KEYDOWN:
-					if(event.key.keysym.sym == SDLK_ESCAPE) return 0;
+					if(event.key.keysym.sym == SDLK_ESCAPE) salir = true;
 					if(event.key.keysym.sym == SDLK_RIGHT) nextTrack();
 					break;
 				case SDL_QUIT:
-					return 0;
+					salir = true;
 			}
-			SDL_Delay(100);
-			prueba.blit(100, 100, sistema.scr());
-			sistema.update();
 		}
+		prueba.blit(100, 100, sistema.scr());
+		sistema.update();
+		temporizador.waitFramerate(30);
 	}
 	musica.halt();
+	printf("El programa ha estado abierto %d segundos y ha imprimido %d fotogramas.\n", (int)temporizador.elapsed()/1000, temporizador.renderedFrames());
+	return 0;
 }
