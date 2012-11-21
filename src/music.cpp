@@ -167,6 +167,6 @@ void music_t::halt(){
  * 0 se corresponde con silencioso y 128 es el volumen máximo.
  */
 void music_t::setVol(int vol){
-	if(vol != volume && vol >= 0 && vol <= 128)
+	if(vol != volume && vol >= 0 && vol <= MAX_VOLUME)
 		Mix_VolumeMusic(vol);
 }

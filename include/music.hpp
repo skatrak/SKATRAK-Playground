@@ -4,6 +4,7 @@
 using std::string;
 
 const int FADEIN_DELAY = 1000;
+const int MAX_VOLUME = 128;
 
 /**
  * @class music_t
