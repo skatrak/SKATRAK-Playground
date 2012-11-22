@@ -21,7 +21,7 @@ image_t::image_t(string path): img(NULL) {
 }
 
 /**
- * @brief Libera el espacio ocupado por la clase.
+ * @brief Libera el espacio ocupado por la imagen.
  */
 image_t::~image_t(){
 	if(img != NULL)
@@ -29,7 +29,7 @@ image_t::~image_t(){
 }
 
 /**
- * @brief Carga una imagen
+ * @brief Carga una imagen.
  * @param path Ruta de la imagen que se desea cargar.
  *
  * Este método intenta convertir la imagen al formato de la pantalla para que sea más rápido el proceso de blitting.
@@ -60,7 +60,6 @@ void image_t::load(string path){
  * @param y Posición vertical relativa al borde superior de la superficie destino donde se situará el borde superior de la imagen.
  * @param screen Superficie destino donde se imprimirá la imagen (Normalmente la pantalla).
  * @param imZone Zona origen de la imagen que se imprimirá en la pantalla. Este valor se puede omitir para imprimir toda la imagen.
- * @note Esta función está sobrecargada.
  */
 void image_t::blit(int x, int y, SDL_Surface* screen, SDL_Rect* imZone){
 	if(img != NULL){

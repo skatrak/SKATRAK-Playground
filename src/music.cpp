@@ -3,8 +3,11 @@
 #include <SDL/SDL_mixer.h>
 #include "../include/music.hpp"
 
+// Declaración de la funión de callback (La que en realidad debería ser parte de la clase)
+void nextTrack();
+
 /**
- * @brief Inicializa la clase con los valores por defecto e inicia SDL
+ * @brief Inicializa la clase con los valores por defecto e inicia SDL_mixer
  */
 music_t::music_t(): music(NULL), music_names(NULL), n_tracks(0), volume(128), current(0), running(false), playing(false), paused(false) {
 	if(Mix_OpenAudio(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT, 2, 4096)){
@@ -17,7 +20,7 @@ music_t::music_t(): music(NULL), music_names(NULL), n_tracks(0), volume(128), cu
 }
 
 /**
- * @brief Inicializa la clase con los valores por defecto, inicia SDL y reserva espacio para un número de canciones
+ * @brief Inicializa la clase con los valores por defecto, inicia SDL_mixer y reserva espacio para un número de canciones
  * @param nT Número de canciones que deseas poder reproducir cíclicamente
  */
 music_t::music_t(int nT): music(NULL), music_names(NULL), volume(128), current(0), running(false), playing(false), paused(false), n_tracks(nT) {
@@ -57,7 +60,6 @@ music_t::~music_t(){
  * aunque se especifique el mismo número.
  * @param n Número de canciones que se van a reservar.
  * @note Para evitar errores en tiempo de ejecución, hay que llenar este array completamente con music_t::setTrack.
- * @see music_t::setTrack
  */
 void music_t::setTracks(int n){
 	if(playing)
@@ -94,7 +96,6 @@ void music_t::setTracks(int n){
  * @param index Posición en la lista de reproducción (Entre 0 y n-1).
  * @param name Nombre del fichero donde está guardada la canción.
  * @note Para llamar a esta función hay que llamar previamente a music_t::setTracks para reservar la memoria.
- * @see music_t::setTracks
  */
 void music_t::setTrack(int index, string name){
 	if(playing)
@@ -151,7 +152,8 @@ void music_t::pause(){
 }
 
 /**
- * @brief La pista actual se para de reproducir (No afecta al número de pista que se está reproduciendo)
+ * @brief La pista actual se para de reproducir (No pasa automáticamente a la siguiente pista)
+ * @see nextTrack
  */
 void music_t::halt(){
 	if(running && playing){

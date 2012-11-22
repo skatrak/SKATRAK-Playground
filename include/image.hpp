@@ -3,6 +3,10 @@
 
 using std::string;
 
+/**
+ * @class image_t
+ * @brief Clase encargada de representar las imágenes que se utilizan en el programa.
+ */
 class image_t {
 	private:
 		SDL_Surface* img;

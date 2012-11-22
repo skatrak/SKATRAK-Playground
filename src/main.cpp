@@ -7,7 +7,7 @@
 #include "../include/system.hpp"
 #include "../include/music.hpp"
 #include "../include/image.hpp"
-#include "../include/timer.hpp"
+#include "../include/timekeeper.hpp"
 
 SDL_Event event;
 system_t sistema(1024, 768, 32);	// La variable sistema se comparte entre todos los minijuegos y permanece igual para todos ellos.
@@ -16,7 +16,8 @@ music_t musica(3);					// La variable musica se comparte por todos los minijuego
 /**
  * @brief Esta función hace que se pase automáticamente a la siguiente canción de la lista de reproducción cuando se acaba la que se está reproduciendo.
  * @note Se supone que esta función tiene que ser miembro de la clase music_t, pero la llamada a la función Mix_HookMusicFinished de SDL requiere que se le pase
- * una dirección de tipo función y no de tipo miembro.
+ * como único argumento la dirección de una función que no reciba ni devuelva ningún valor. Si estuviera implementada como método de la clase music_t,
+ * recibiría un parámetro oculto y no se podría compilar.
  */
 void nextTrack(){
 	if(musica.playing)
@@ -36,7 +37,7 @@ int main(int argc, char* argv[]){
 	musica.setTrack(2, "../../resources/sound/track03.ogg");
 
 	image_t prueba("../../resources/images/icono_prueba.png");
-	timer_t temporizador;
+	timekeeper_t temporizador;
 	bool salir = false;
 
 	musica.play();
