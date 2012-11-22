@@ -1,21 +1,27 @@
-#ifndef __TIMER_T__
-#define __TIMER_T__
+#ifndef __TIMEKEEPER_T__
+#define __TIMEKEEPER_T__
 
 /**
- * @class timer_t
+ * @class timekeeper_t
  * @brief Temporizador para controlar la velocidad de ejecución del programa y la cantidad de fotogramas que se van renderizando.
  */
-class timer_t {
+class timekeeper_t {
 	private:
 		int start;
 		int current;
 		int frames;
 	public:
-		timer_t(): current(0), frames(0) { start = SDL_GetTicks(); }
+		timekeeper_t(): current(0), frames(0) { start = SDL_GetTicks(); }
 		void refresh();
 		int elapsed();
 		void waitFramerate(int fps);
 		int renderedFrames();
 };
 
+/**
+ * @fn timekeeper_t::timekeeper_t
+ * @brief Constructor. Inicializa el reloj con el tiempo inicial.
+ */
+
 #endif
+
