@@ -4,3 +4,10 @@ ignore_*
 # Estos archivos se generan automáticamente por wxDev-C++
 *.layout
 Makefile.win
+
+# Archivos que genera Ubuntu
+*~
+
+# Archivos objeto intermedios
+*.o
+
