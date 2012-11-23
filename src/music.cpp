@@ -3,31 +3,39 @@
 #include <SDL/SDL_mixer.h>
 #include "../include/music.hpp"
 
-// Declaración de la funión de callback (La que en realidad debería ser parte de la clase)
+// Prototipo de la funión de callback (La que en realidad debería ser parte de la clase)
 void nextTrack();
 
 /**
- * @brief Inicializa la clase con los valores por defecto e inicia SDL_mixer
+ * @brief Inicializa la clase con los valores por defecto e inicia SDL_mixer.
+ *
+ * También reserva espacio para AUDIO_CHANNELS canales de audio para reproducir efectos de sonido.
+ * @see sfx_t
  */
 music_t::music_t(): music(NULL), music_names(NULL), n_tracks(0), volume(128), current(0), running(false), playing(false), paused(false) {
 	if(Mix_OpenAudio(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT, 2, 4096)){
 		fprintf(stderr, "No se ha podido inicializar el sistema de audio.\n");
 	}
 	else {
+		Mix_AllocateChannels(AUDIO_CHANNELS);
 		running = true;
 		Mix_HookMusicFinished(nextTrack);
 	}
 }
 
 /**
- * @brief Inicializa la clase con los valores por defecto, inicia SDL_mixer y reserva espacio para un número de canciones
- * @param nT Número de canciones que deseas poder reproducir cíclicamente
+ * @brief Inicializa la clase con los valores por defecto, inicia SDL_mixer y reserva espacio para un número de canciones.
+ * @param nT Número de canciones que deseas poder reproducir cíclicamente.
+ *
+ * También reserva espacio para AUDIO_CHANNELS canales de audio para reproducir efectos de sonido.
+ * @see sfx_t
  */
 music_t::music_t(int nT): music(NULL), music_names(NULL), volume(128), current(0), running(false), playing(false), paused(false), n_tracks(nT) {
 	if(Mix_OpenAudio(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT, 2, 4096)){
 		fprintf(stderr, "No se ha podido inicializar el sistema de audio.\n");
 	}
 	else {
+		Mix_AllocateChannels(AUDIO_CHANNELS);
 		running = true;
 		setTracks(n_tracks);
 		Mix_HookMusicFinished(nextTrack);
@@ -152,7 +160,7 @@ void music_t::pause(){
 }
 
 /**
- * @brief La pista actual se para de reproducir (No pasa automáticamente a la siguiente pista)
+ * @brief La pista actual se para de reproducir (No pasa automáticamente a la siguiente pista).
  * @see nextTrack
  */
 void music_t::halt(){

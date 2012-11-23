@@ -1,7 +1,7 @@
 [Project]
 FileName=SKATRAK Playground.dev
 Name=SKATRAK Playground
-UnitCount=9
+UnitCount=11
 PchHead=-1
 PchSource=-1
 Ver=3
@@ -184,7 +184,27 @@ OverrideBuildCmd=0
 BuildCmd=$(CPP) -c image.cpp -o ../bin/objects/image.o $(CXXFLAGS)
 
 [Unit9]
-FileName=..\src\timer.cpp
+FileName=..\src\timekeeper.cpp
+CompileCpp=1
+Folder=SKATRAK Playground
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit8]
+FileName=..\include\timekeeper.hpp
+CompileCpp=1
+Folder=SKATRAK Playground
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit10]
+FileName=..\include\sfx.hpp
 CompileCpp=1
 Folder=
 Compile=1
@@ -193,10 +213,10 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit8]
-FileName=..\include\timer.hpp
+[Unit11]
+FileName=..\src\sfx.cpp
 CompileCpp=1
-Folder=SKATRAK Playground
+Folder=
 Compile=1
 Link=1
 Priority=1000
