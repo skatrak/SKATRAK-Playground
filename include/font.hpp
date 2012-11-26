@@ -14,6 +14,7 @@ class font_t {
 	private:
 		TTF_Font* font;
 		SDL_Surface* rendered;
+		string fontName;
 		int fontSize;
 		int fontStyle;
 		string fontText;
@@ -21,9 +22,9 @@ class font_t {
 		bool changed;
 	public:
 		font_t();
-		font_t(string fontname);
+		font_t(string path);
 		~font_t();
-		void open(string fontname);
+		void open(string path);
 		void setSize(int size);
 		void setStyle(int style);
 		void setText(string text);
