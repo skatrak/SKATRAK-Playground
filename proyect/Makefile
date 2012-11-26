@@ -1,8 +1,8 @@
 CC=g++
 CFLAGS=-c
 LDFLAGS=-lSDL -lSDL_image -lSDL_mixer -lSDL_ttf
-SOURCES=../src/image.cpp ../src/main.cpp ../src/music.cpp ../src/system.cpp ../src/timekeeper.cpp
-OBJECTS=../bin/linux/obj/image.o ../bin/linux/obj/main.o ../bin/linux/obj/music.o ../bin/linux/obj/system.o ../bin/linux/obj/timekeeper.o
+SOURCES=../src/image.cpp ../src/main.cpp ../src/music.cpp ../src/system.cpp ../src/timekeeper.cpp ../src/font.cpp
+OBJECTS=../bin/linux/obj/image.o ../bin/linux/obj/main.o ../bin/linux/obj/music.o ../bin/linux/obj/system.o ../bin/linux/obj/timekeeper.o ../bin/linux/obj/font.o
 EXECUTABLE="../bin/linux/SKATRAK-Playground"
 
 all: $(SOURCES) $(EXECUTABLE)
@@ -24,6 +24,9 @@ $(EXECUTABLE): $(OBJECTS)
 
 ../bin/linux/obj/timekeeper.o:
 	$(CC) $(CFLAGS) ../src/timekeeper.cpp -o $@
+
+../bin/linux/obj/font.o:
+	$(CC) $(CFLAGS) ../src/font.cpp -o $@
 
 clean:
 	rm -f "../bin/linux/*.o"

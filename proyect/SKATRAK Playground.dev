@@ -1,7 +1,7 @@
 [Project]
 FileName=SKATRAK Playground.dev
 Name=SKATRAK Playground
-UnitCount=11
+UnitCount=13
 PchHead=-1
 PchSource=-1
 Ver=3
@@ -217,6 +217,26 @@ BuildCmd=
 FileName=..\src\sfx.cpp
 CompileCpp=1
 Folder=
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit12]
+FileName=..\include\font.hpp
+CompileCpp=1
+Folder=SKATRAK Playground
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit13]
+FileName=..\src\font.cpp
+CompileCpp=1
+Folder=SKATRAK Playground
 Compile=1
 Link=1
 Priority=1000

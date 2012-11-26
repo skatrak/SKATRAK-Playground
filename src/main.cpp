@@ -8,6 +8,7 @@
 #include "../include/music.hpp"
 #include "../include/image.hpp"
 #include "../include/timekeeper.hpp"
+#include "../include/font.hpp"
 
 SDL_Event event;
 system_t sistema(1024, 768, 32);	// La variable sistema se comparte entre todos los minijuegos y permanece igual para todos ellos.
@@ -30,19 +31,32 @@ void nextTrack(){
 }
 
 int main(int argc, char* argv[]){
+	// Ponemos un icono a la ventana
 	sistema.setIcon("../../resources/images/icono_prueba.png");
+	// Cargamos 3 pistas de música para que reproduzcan en el fondo
 	musica.setVol(128);
 	musica.setTrack(0, "../../resources/sound/track01.ogg");
 	musica.setTrack(1, "../../resources/sound/track02.ogg");
 	musica.setTrack(2, "../../resources/sound/track03.ogg");
-
+	// Cargamos y mostramos por pantalla una imagen de prueba
 	image_t prueba("../../resources/images/icono_prueba.png");
+	// Creamos el temporizador
 	timekeeper_t temporizador;
-	bool salir = false;
+	// Creamos una fuente, le asignamos un tamaño, un estilo y un texto
+	font_t fuente;
+	fuente.open("../../resources/fonts/font01.ttf");
+	fuente.setSize(64);
+	fuente.setStyle(TTF_STYLE_UNDERLINE | TTF_STYLE_ITALIC);
+	fuente.setText("Esto es una prueba");
 
+	bool salir = false;
+	// Comenzamos a reproducir la música
 	musica.play();
+	// GAME LOOP
 	while(!salir){
+		// Reiniciamos el temporizador en cada ciclo del game loop
 		temporizador.refresh();
+		// Gestionamos los eventos
 		while(SDL_PollEvent(&event)){
 			switch(event.type){
 				case SDL_KEYDOWN:
@@ -53,10 +67,16 @@ int main(int argc, char* argv[]){
 					salir = true;
 			}
 		}
+		// Ponemos un color aleatorio a las letras en cada fotograma
+		fuente.setColor(rand() % 256, rand() % 256, rand() % 256);
+		// Imprimimos por pantalla todo lo que haga falta e intercambiamos los buffers de vídeo
+		fuente.blit(200, 200, sistema.scr());
 		prueba.blit(100, 100, sistema.scr());
 		sistema.update();
+		// Fijamos los FPS a 30
 		temporizador.waitFramerate(30);
 	}
+	// Paramos la música antes de salir. No hay que liberar memoria porque se libera en los destructores de las clases
 	musica.halt();
 	printf("El programa ha estado abierto %d segundos y ha imprimido %d fotogramas.\n", (int)temporizador.elapsed()/1000, temporizador.renderedFrames());
 	return 0;
