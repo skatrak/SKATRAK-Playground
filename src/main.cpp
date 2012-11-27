@@ -42,12 +42,18 @@ int main(int argc, char* argv[]){
 	image_t prueba("../../resources/images/icono_prueba.png");
 	// Creamos el temporizador
 	timekeeper_t temporizador;
-	// Creamos una fuente, le asignamos un tamaño, un estilo y un texto
+	// Creamos dos fuentes, les asignamos un tamaño, un estilo y un texto
 	font_t fuente;
+	font_t fuente2("../../resources/fonts/font01.ttf");
+
 	fuente.open("../../resources/fonts/font01.ttf");
 	fuente.setSize(64);
+	fuente2.setSize(32);
 	fuente.setStyle(TTF_STYLE_UNDERLINE | TTF_STYLE_ITALIC);
+	fuente2.setStyle(TTF_STYLE_BOLD);
 	fuente.setText("Esto es una prueba");
+	fuente2.setText("Esta linea es la segunda.");
+	fuente2.setColor(255, 255, 0);
 
 	bool salir = false;
 	// Comenzamos a reproducir la música
@@ -71,6 +77,7 @@ int main(int argc, char* argv[]){
 		fuente.setColor(rand() % 256, rand() % 256, rand() % 256);
 		// Imprimimos por pantalla todo lo que haga falta e intercambiamos los buffers de vídeo
 		fuente.blit(200, 200, sistema.scr());
+		fuente2.blit(200 + (int)fuente.width()/2, 200 + fuente.height(), sistema.scr());	// Colocamos esta línea debajo de la anterior y separada horizontalmente
 		prueba.blit(100, 100, sistema.scr());
 		sistema.update();
 		// Fijamos los FPS a 30
