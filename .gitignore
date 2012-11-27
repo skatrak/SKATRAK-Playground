@@ -11,3 +11,6 @@ Makefile.win
 # Archivos objeto intermedios
 *.o
 
+# Archivos que genera la ejecución del programa
+stdout.txt
+stderr.txt
