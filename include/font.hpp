@@ -30,6 +30,8 @@ class font_t {
 		void setText(string text);
 		void setColor(int R, int G, int B);
 		void blit(int x, int y, SDL_Surface* screen);
+		int width();
+		int height();
 		int size(){ return fontSize; }
 };
 

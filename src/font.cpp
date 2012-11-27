@@ -149,3 +149,23 @@ void font_t::blit(int x, int y, SDL_Surface* screen){
 	else
 		fprintf(stderr, "No se puede imprimir la fuente por la pantalla porque no se ha cargado.\n");
 }
+
+/**
+ * @return Anchura en píxeles del texto cargado actualmente con la fuente actual.
+ */
+int font_t::width(){
+	if(font == NULL)
+		return 0;
+	int retVal = 0;
+	TTF_SizeText(font, fontText.c_str(), &retVal, NULL);
+	return retVal;
+}
+
+/**
+ * @return Altura en píxeles máxima que puede alcanzar la fuente actual.
+ */
+int font_t::height(){
+	if(font == NULL)
+		return 0;
+	return TTF_FontHeight(font);
+}
