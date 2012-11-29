@@ -64,6 +64,7 @@ int inifile_t::readInt(string section, string varName){
 	temp2 += section;	// temp2 = "[SECCION]"
 	temp2 += "]";
 
+	input.seekg(std::ios::beg);
 	while(!input.eof()){
 		getline(input, temp);
 		// Buscamos la sección
@@ -137,6 +138,7 @@ double inifile_t::readDouble(string section, string varName){
 	temp2 += section;
 	temp2 += "]";
 
+	input.seekg(std::ios::beg);
 	while(!input.eof()){
 		getline(input, temp);
 		if(temp2 == temp){
@@ -198,6 +200,7 @@ string inifile_t::readString(string section, string varName){
 	temp2 += section;
 	temp2 += "]";
 
+	input.seekg(std::ios::beg);
 	while(!input.eof()){
 		getline(input, temp);
 		if(temp2 == temp){
