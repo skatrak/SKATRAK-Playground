@@ -13,7 +13,7 @@ rem esta variable comprobará si hay algún error en el proceso de compilado.
 set error=false
 
 rem Argumentos para compilar y enlazar los códigos objeto. -mwindows para que no aparezca una consola.
-set CFLAGS=-c -I"..\include"
+set CFLAGS=-Wall -c -I"..\include"
 set LIBS=-L"..\lib" -mwindows -lmingw32 -lSDLmain -lSDL -lSDL_mixer -lSDL_image -lSDL_ttf
 set OBJECTS="..\bin\windows\obj\main.o" "..\bin\windows\obj\music.o" "..\bin\windows\obj\system.o" "..\bin\windows\obj\image.o" "..\bin\windows\obj\timekeeper.o" "..\bin\windows\obj\font.o" "..\bin\windows\obj\inifile.o" "..\bin\windows\obj\sfx.o" "..\bin\windows\obj\str_operations.o"
 set OUTPUT="..\bin\windows\SKATRAK Playground.exe"

@@ -2,7 +2,7 @@
 # ESCRITO POR SERGIO M. AFONSO FUMERO (theSkatrak@gmail.com)
 
 CC=g++
-CFLAGS=-c -I../include
+CFLAGS=-Wall -c -I../include
 LDFLAGS=-L../lib -lSDL -lSDL_image -lSDL_mixer -lSDL_ttf
 SOURCES=../src/main.cpp ../src/music.cpp ../src/system.cpp ../src/image.cpp ../src/timekeeper.cpp ../src/font.cpp ../src/inifile.cpp ../src/sfx.cpp ../src/str_operations.cpp
 OBJECTS=../bin/linux/obj/main.o ../bin/linux/obj/music.o ../bin/linux/obj/system.o ../bin/linux/obj/image.o ../bin/linux/obj/timekeeper.o ../bin/linux/obj/font.o ../bin/linux/obj/inifile.o ../bin/linux/obj/sfx.o ../bin/linux/obj/str_operations.o
