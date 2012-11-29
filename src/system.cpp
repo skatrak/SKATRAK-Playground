@@ -10,8 +10,7 @@
  * @param depth Profundidad de bits de la pantalla.
  * @note En el caso de que la pantalla no se pudiera iniciar con las opciones especificadas, imprimirá un mensaje de error.
  */
-system_t::system_t(int scr_w, int scr_h, int depth): width(scr_w), height(scr_h), bpp(depth), screen(NULL), wIcon(NULL)
-{
+system_t::system_t(int scr_w, int scr_h, int depth): screen(NULL), wIcon(NULL), width(scr_w), height(scr_h), bpp(depth), fullscr(false) {
 	SDL_Init(SDL_INIT_EVERYTHING);
 	screen = SDL_SetVideoMode(width, height, bpp, SDL_HWSURFACE | SDL_DOUBLEBUF);
 	if(screen == NULL)

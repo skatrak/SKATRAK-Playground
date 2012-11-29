@@ -6,7 +6,7 @@
 /**
  * @brief Constructor. Inicializa los valores de las variables e inicia SDL_TTF si no se ha iniciado.
  */
-font_t::font_t(): font(NULL), rendered(NULL), fontSize(DEFAULT_FONT_SIZE), fontStyle(DEFAULT_FONT_STYLE), fontText(""), fontName(""), changed(true) {
+font_t::font_t(): font(NULL), rendered(NULL), fontName(""), fontSize(DEFAULT_FONT_SIZE), fontStyle(DEFAULT_FONT_STYLE), fontText(""), changed(true) {
 	if(!TTF_WasInit()){
 		if(TTF_Init() < 0)
 			fprintf(stderr, "No se ha podido inicializar SDL_TTF.\n");
@@ -18,8 +18,7 @@ font_t::font_t(): font(NULL), rendered(NULL), fontSize(DEFAULT_FONT_SIZE), fontS
  * @brief Constructor. Inicializa los valores de las variables e inicia SDL_TTF si no se ha iniciado.
  * @param path Ruta del archivo de fuentes .ttf o .fon que contiene la fuente a utilizar.
  */
-font_t::font_t(string path): font(NULL), rendered(NULL), fontSize(DEFAULT_FONT_SIZE), fontStyle(DEFAULT_FONT_STYLE), fontText(""), fontName(""), changed(true) {
-	fontName = path;
+font_t::font_t(string path): font(NULL), rendered(NULL), fontName(path), fontSize(DEFAULT_FONT_SIZE), fontStyle(DEFAULT_FONT_STYLE), fontText(""), changed(true) {
 	if(!TTF_WasInit()){
 		if(TTF_Init() < 0)
 			fprintf(stderr, "No se ha podido inicializar SDL_TTF.\n");

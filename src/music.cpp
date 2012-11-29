@@ -30,7 +30,7 @@ music_t::music_t(): music(NULL), music_names(NULL), n_tracks(0), volume(128), cu
  * También reserva espacio para AUDIO_CHANNELS canales de audio para reproducir efectos de sonido.
  * @see sfx_t
  */
-music_t::music_t(int nT): music(NULL), music_names(NULL), volume(128), current(0), running(false), playing(false), paused(false), n_tracks(nT) {
+music_t::music_t(int nT): music(NULL), music_names(NULL), n_tracks(nT), volume(128), current(0), running(false), playing(false), paused(false) {
 	if(Mix_OpenAudio(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT, 2, 4096)){
 		fprintf(stderr, "No se ha podido inicializar el sistema de audio.\n");
 	}
