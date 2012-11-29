@@ -23,7 +23,7 @@ int timekeeper_t::elapsed(){
  */
 void timekeeper_t::waitFramerate(int fps){
 	if(fps > 0){
-		int tmp = (int)1000/fps;
+		unsigned int tmp = (unsigned int)1000/fps;
 		if(SDL_GetTicks() - current < tmp)
 			SDL_Delay(tmp - (SDL_GetTicks() - current));
 	}
