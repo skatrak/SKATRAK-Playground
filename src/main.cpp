@@ -1,4 +1,5 @@
 #include <string>
+#include <fstream>
 #include <SDL/SDL.h>
 #include <SDL/SDL_image.h>
 #include <SDL/SDL_mixer.h>
@@ -9,8 +10,10 @@
 #include "../include/image.hpp"
 #include "../include/timekeeper.hpp"
 #include "../include/font.hpp"
+#include "../include/inifile.hpp"
 
 SDL_Event event;
+inifile_t pruebaIni("../../resources/settings/prueba.ini");
 system_t sistema(1024, 768, 32);	// La variable sistema se comparte entre todos los minijuegos y permanece igual para todos ellos.
 music_t musica(3);					// La variable musica se comparte por todos los minijuegos y cada uno puede tener su propia lista de reproducción.
 
@@ -51,8 +54,8 @@ int main(int argc, char* argv[]){
 	fuente2.setSize(32);
 	fuente.setStyle(TTF_STYLE_UNDERLINE | TTF_STYLE_ITALIC);
 	fuente2.setStyle(TTF_STYLE_BOLD);
-	fuente.setText("Esto es una prueba");
-	fuente2.setText("Esta linea es la segunda.");
+	fuente.setText(pruebaIni.readString("Other", "Text1"));
+	fuente2.setText(pruebaIni.readString("Other", "Text2"));
 	fuente2.setColor(255, 255, 0);
 
 	bool salir = false;
