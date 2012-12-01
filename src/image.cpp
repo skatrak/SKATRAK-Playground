@@ -1,7 +1,4 @@
-#include <string>
-#include <SDL/SDL.h>
-#include <SDL/SDL_image.h>
-#include "../include/image.hpp"
+#include "../include/SKATRAK_PLAYGROUND.hpp"
 
 /**
  * @brief Inicializa la clase.
@@ -17,7 +14,7 @@ image_t::image_t(): img(NULL)
  * @see http://www.libpng.org/pub/png/src/libpng-LICENSE.txt
  */
 image_t::image_t(string path): img(NULL) {
-	load(path);
+	open(path);
 }
 
 /**
@@ -34,12 +31,15 @@ image_t::~image_t(){
  *
  * Este método intenta convertir la imagen al formato de la pantalla para que sea más rápido el proceso de blitting.
  */
-void image_t::load(string path){
+void image_t::open(string path){
+	string compPath = IMG_PATH;
+	compPath += path;
+
 	if(img != NULL){
 		SDL_FreeSurface(img);
 		img = NULL;
 	}
-	img = IMG_Load(path.c_str());
+	img = IMG_Load(compPath.c_str());
 	if(img != NULL){
 		SDL_Surface* temp = NULL;
 		temp = SDL_DisplayFormatAlpha(img);
@@ -51,7 +51,7 @@ void image_t::load(string path){
 			fprintf(stderr, "No se ha podido optimizar la imagen al formato de la pantalla.\n");
 	}
 	else
-		fprintf(stderr, "No se puede cargar la imagen \"%s\".\n", path.c_str());
+		fprintf(stderr, "No se puede cargar la imagen \"%s\".\n", compPath.c_str());
 }
 
 /**
