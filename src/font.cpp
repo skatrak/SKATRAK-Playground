@@ -3,7 +3,7 @@
 /**
  * @brief Constructor. Inicializa los valores de las variables e inicia SDL_TTF si no se ha iniciado.
  */
-font_t::font_t(): font(NULL), rendered(NULL), fontName(""), fontSize(DEFAULT_FONT_SIZE), fontStyle(DEFAULT_FONT_STYLE), fontText(""), changed(true) {
+font_t::font_t(): font(NULL), rendered(NULL), fontName(""), fontSize(DEFAULT_FONT_SIZE), fontStyle(DEFAULT_FONT_STYLE), fontText(""), fontAlpha(SDL_ALPHA_OPAQUE), changed(true) {
 	if(!TTF_WasInit()){
 		if(TTF_Init() < 0)
 			fprintf(stderr, "No se ha podido inicializar SDL_TTF.\n");
@@ -15,7 +15,7 @@ font_t::font_t(): font(NULL), rendered(NULL), fontName(""), fontSize(DEFAULT_FON
  * @brief Constructor. Inicializa los valores de las variables e inicia SDL_TTF si no se ha iniciado.
  * @param path Ruta del archivo de fuentes .ttf o .fon que contiene la fuente a utilizar.
  */
-font_t::font_t(string path): font(NULL), rendered(NULL), fontName(path), fontSize(DEFAULT_FONT_SIZE), fontStyle(DEFAULT_FONT_STYLE), fontText(""), changed(true) {
+font_t::font_t(string path): font(NULL), rendered(NULL), fontName(path), fontSize(DEFAULT_FONT_SIZE), fontStyle(DEFAULT_FONT_STYLE), fontText(""), fontAlpha(SDL_ALPHA_OPAQUE), changed(true) {
 	if(!TTF_WasInit()){
 		if(TTF_Init() < 0)
 			fprintf(stderr, "No se ha podido inicializar SDL_TTF.\n");
@@ -109,6 +109,17 @@ void font_t::setColor(int R, int G, int B){
 }
 
 /**
+ * @brief Cambia la transparencia de la fuente al imprimirla por pantalla.
+ * @param alpha Valor de transparencia que se desea poner. Debe estar entre 0 (SDL_ALPHA_TRANSPARENT) y 255 (SDL_ALPHA_OPAQUE).
+ */
+void font_t::setAlpha(int alpha){
+	if(alpha >= SDL_ALPHA_TRANSPARENT && alpha <= SDL_ALPHA_OPAQUE && alpha != fontAlpha){
+		fontAlpha = alpha;
+		changed = true;
+	}
+}
+
+/**
  * @brief Imprime la fuente por la pantalla
  * @param x Posición X donde se imprime
  * @param y Posición Y donde se imprime
@@ -135,6 +146,7 @@ void font_t::blit(int x, int y, SDL_Surface* screen){
 					SDL_FreeSurface(rendered);
 					rendered = temp;
 				}
+				SDL_SetAlpha(rendered, SDL_SRCALPHA | SDL_RLEACCEL, fontAlpha);
 			}
 		}
 		SDL_Rect dest = {x, y, 0, 0};

@@ -17,6 +17,7 @@ class font_t {
 		int fontStyle;
 		string fontText;
 		SDL_Color fontColor;
+		int fontAlpha;
 		bool changed;
 	public:
 		font_t();
@@ -27,6 +28,7 @@ class font_t {
 		void setStyle(int style);
 		void setText(string text);
 		void setColor(int R, int G, int B);
+		void setAlpha(int alpha);
 		void blit(int x, int y, SDL_Surface* screen);
 		int width();
 		int height();
