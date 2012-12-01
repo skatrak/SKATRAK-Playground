@@ -104,5 +104,3 @@ int main(int argc, char* argv[]){
 		delete sistema;
 	return 0;
 }
-
-returnVal mainMenu(){ return EXIT; }
