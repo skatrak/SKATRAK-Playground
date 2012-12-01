@@ -15,14 +15,14 @@ class system_t {
 		int bpp;
 		bool fullscr;
 	public:
-	system_t(int scr_w, int scr_h, int depth);
-	~system_t();
-	void toggleFullscreen();
-	void setIcon(string iconpath);
-	int width(){ return screenWidth; }
-	int height(){ return screenHeight; }
-	SDL_Surface* scr(){ return screen; }
-	void update();
+		system_t(int scr_w, int scr_h, int depth);
+		~system_t();
+		void toggleFullscreen();
+		void setIcon(string iconpath);
+		int width(){ return screenWidth; }
+		int height(){ return screenHeight; }
+		SDL_Surface* scr(){ return screen; }
+		void update();
 };
 
 /**
