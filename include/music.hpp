@@ -1,8 +1,6 @@
 #ifndef __MUSIC_T__
 #define __MUSIC_T__
 
-using std::string;
-
 const int FADEIN_DELAY = 1000;
 const int MAX_VOLUME = 128;
 const int AUDIO_CHANNELS = 5;
@@ -26,7 +24,7 @@ class music_t {
 		music_t(int nT);
 		~music_t();
 		void setTracks(int n);
-		void setTrack(int index, string name);
+		void setTrack(int index, string path);
 		void play();
 		void pause();
 		void halt();

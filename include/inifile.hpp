@@ -1,7 +1,6 @@
 #ifndef __INIFILE_T__
 #define __INIFILE_T__
 
-using std::string;
 using std::ifstream;
 
 /**
@@ -14,9 +13,9 @@ class inifile_t {
 		bool error;
 	public:
 		inifile_t();
-		inifile_t(string filename);
+		inifile_t(string path);
 		~inifile_t();
-		void open(string filename);
+		void open(string path);
 		int readInt(string section, string varName);
 		double readDouble(string section, string varName);
 		string readString(string section, string varName);

@@ -1,8 +1,6 @@
 #ifndef __FONT_T__
 #define __FONT_T__
 
-using std::string;
-
 const int DEFAULT_FONT_SIZE = 24;
 const int DEFAULT_FONT_STYLE = TTF_STYLE_NORMAL;
 

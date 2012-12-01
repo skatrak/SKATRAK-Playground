@@ -1,8 +1,6 @@
 #ifndef __SFX_T__
 #define __SFX_T__
 
-using std::string;
-
 const int DEFAULT_SFX_VOLUME = 128;
 
 /**
@@ -17,9 +15,9 @@ class sfx_t {
 		int volume;
 	public:
 		sfx_t();
-		sfx_t(string filename);
+		sfx_t(string path);
 		~sfx_t();
-		void setSound(string filename);
+		void setSound(string path);
 		void setVol(int vol);
 		void play();
 		int vol(){ return volume; }
