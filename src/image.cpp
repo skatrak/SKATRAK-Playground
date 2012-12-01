@@ -55,6 +55,17 @@ void image_t::open(string path){
 }
 
 /**
+ * @brief Cambia la transparencia de la imagen.
+ * @param alpha Nueva transparencia, entre 0 (SDL_ALPHA_TRANSPARENT) y 255(SDL_ALPHA_OPAQUE).
+ */
+void image_t::setAlpha(int alpha){
+	if(img != NULL){
+		if(alpha >= SDL_ALPHA_TRANSPARENT && alpha <= SDL_ALPHA_OPAQUE)
+			SDL_SetAlpha(img, SDL_SRCALPHA | SDL_RLEACCEL, alpha);
+	}
+}
+
+/**
  * @brief Imprime la imagen en la posición indicada sobre otra superficie.
  * @param x Posición horizontal relativa al borde izquierdo de la superficie destino donde se situará el borde izquierdo de la imagen.
  * @param y Posición vertical relativa al borde superior de la superficie destino donde se situará el borde superior de la imagen.
