@@ -1,10 +1,23 @@
-#include <string>
-#include <SDL/SDL.h>
-#include <SDL/SDL_mixer.h>
-#include "../include/music.hpp"
+#include "../include/SKATRAK_PLAYGROUND.hpp"
 
-// Prototipo de la funión de callback (La que en realidad debería ser parte de la clase)
-void nextTrack();
+/* Declaración de la variable musica que será la que contenga la lista de reproducción */
+extern music_t* musica;
+
+/**
+ * @brief Esta función hace que se pase automáticamente a la siguiente canción de la lista de reproducción cuando se acaba la que se está reproduciendo.
+ * @note Se supone que esta función tiene que ser miembro de la clase music_t, pero la llamada a la función Mix_HookMusicFinished de SDL requiere que se le pase
+ * como único argumento la dirección de una función que no reciba ni devuelva ningún valor. Si estuviera implementada como método de la clase music_t,
+ * recibiría un parámetro oculto y no se podría compilar.
+ */
+void nextTrack(){
+	if(musica->playing)
+		musica->halt();
+	musica->current++;
+	if(musica->current >= musica->n_tracks)
+		musica->current = 0;
+	musica->playing = false;
+	musica->play();
+}
 
 /**
  * @brief Inicializa la clase con los valores por defecto e inicia SDL_mixer.
@@ -105,7 +118,7 @@ void music_t::setTracks(int n){
  * @param name Nombre del fichero donde está guardada la canción.
  * @note Para llamar a esta función hay que llamar previamente a music_t::setTracks para reservar la memoria.
  */
-void music_t::setTrack(int index, string name){
+void music_t::setTrack(int index, string path){
 	if(playing)
 		halt();
 	if(index < 0 || index >= n_tracks){
@@ -113,14 +126,16 @@ void music_t::setTrack(int index, string name){
 		index = 0;
 	}
 	if(music != NULL && music_names != NULL){
-		music_names[index] = name;
+		string compPath = MUS_PATH;
+		compPath += path;
+		music_names[index] = compPath;
 		if(music[index] != NULL){
 			Mix_FreeMusic(music[index]);
 			music[index] = NULL;
 		}
-		music[index] = Mix_LoadMUS(name.c_str());
+		music[index] = Mix_LoadMUS(compPath.c_str());
 		if(!music[index]){
-			fprintf(stderr, "No se ha podido cargar el fichero \"%s\".\n", name.c_str());
+			fprintf(stderr, "No se ha podido cargar el fichero \"%s\".\n", compPath.c_str());
 			music[index] = NULL;
 		}
 	}

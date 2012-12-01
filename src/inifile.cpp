@@ -1,6 +1,4 @@
-#include <fstream>
-#include <string>
-#include "../include/inifile.hpp"
+#include "../include/SKATRAK_PLAYGROUND.hpp"
 #include "../include/str_operations.hpp"
 
 /**
@@ -12,11 +10,11 @@ inifile_t::inifile_t(): error(false)
 
 /**
  * @brief Constructor. Inicializa variables y abre un fichero .ini
- * @param filename Ruta del fichero .ini a abrir.
+ * @param path Ruta del fichero .ini a abrir.
  * @note La extensión del fichero no tiene por qué ser '.ini', pero se recomienda que sea así.
  */
-inifile_t::inifile_t(string filename): error(false) {
-	open(filename);
+inifile_t::inifile_t(string path): error(false) {
+	open(path);
 }
 
 /**
@@ -29,16 +27,19 @@ inifile_t::~inifile_t(){
 
 /**
  * @brief Abre un fichero para la lectura de los datos.
- * @param filename Ruta del fichero .ini a abrir.
+ * @param path Ruta del fichero .ini a abrir.
  */
-void inifile_t::open(string filename){
+void inifile_t::open(string path){
+	string compPath = INI_PATH;
+	compPath += path;
+
 	if(input.is_open())
 		input.close();
-	input.open(filename.c_str());
+	input.open(compPath.c_str());
 	if(input.is_open())
 		error = false;
 	else {
-		fprintf(stderr, "No se ha podido abrir el fichero .ini \"%s\".\n", filename.c_str());
+		fprintf(stderr, "No se ha podido abrir el fichero .ini \"%s\".\n", compPath.c_str());
 		error = true;
 	}
 }

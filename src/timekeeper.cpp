@@ -1,5 +1,4 @@
-#include <SDL/SDL.h>
-#include "../include/timekeeper.hpp"
+#include "../include/SKATRAK_PLAYGROUND.hpp"
 
 /**
  * @brief Actualiza el contador de tiempo.

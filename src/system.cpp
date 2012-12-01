@@ -1,7 +1,4 @@
-#include <string>
-#include <SDL/SDL.h>
-#include <SDL/SDL_image.h>
-#include "../include/system.hpp"
+#include "../include/SKATRAK_PLAYGROUND.hpp"
 
 /**
  * @brief Crea la clase sistema e inicializa las propiedades de la pantalla. También inicializa SDL.
@@ -10,11 +7,12 @@
  * @param depth Profundidad de bits de la pantalla.
  * @note En el caso de que la pantalla no se pudiera iniciar con las opciones especificadas, imprimirá un mensaje de error.
  */
-system_t::system_t(int scr_w, int scr_h, int depth): screen(NULL), wIcon(NULL), width(scr_w), height(scr_h), bpp(depth), fullscr(false) {
-	SDL_Init(SDL_INIT_EVERYTHING);
-	screen = SDL_SetVideoMode(width, height, bpp, SDL_HWSURFACE | SDL_DOUBLEBUF);
+system_t::system_t(int scr_w, int scr_h, int depth): screen(NULL), wIcon(NULL), screenWidth(scr_w), screenHeight(scr_h), bpp(depth), fullscr(false) {
+	if(SDL_Init(SDL_INIT_EVERYTHING) < 0)
+		fprintf(stderr, "No se ha podido inicializar SDL.\n");
+	screen = SDL_SetVideoMode(screenWidth, screenHeight, bpp, SDL_HWSURFACE | SDL_DOUBLEBUF);
 	if(screen == NULL)
-		fprintf(stderr, "No se ha podido iniciar el modo de video %dx%d a %d bits.\n", width, height, bpp);
+		fprintf(stderr, "No se ha podido iniciar el modo de video %dx%d a %d bits.\n", screenWidth, screenHeight, bpp);
 	SDL_WM_SetCaption("SKATRAK Playground", NULL);
 }
 
@@ -37,13 +35,13 @@ void system_t::toggleFullscreen(){
 		screen = NULL;
 	}
 	if(fullscr){
-		screen = SDL_SetVideoMode(width, height, bpp, SDL_HWSURFACE | SDL_DOUBLEBUF | SDL_FULLSCREEN);
+		screen = SDL_SetVideoMode(screenWidth, screenHeight, bpp, SDL_HWSURFACE | SDL_DOUBLEBUF | SDL_FULLSCREEN);
 		if(screen == NULL)
-			fprintf(stderr, "No se ha podido iniciar el modo de video %dx%d a %d bits con pantalla completa.\n", width, height, bpp);
+			fprintf(stderr, "No se ha podido iniciar el modo de video %dx%d a %d bits con pantalla completa.\n", screenWidth, screenHeight, bpp);
 	} else {
-		screen = SDL_SetVideoMode(width, height, bpp, SDL_HWSURFACE | SDL_DOUBLEBUF);
+		screen = SDL_SetVideoMode(screenWidth, screenHeight, bpp, SDL_HWSURFACE | SDL_DOUBLEBUF);
 		if(screen == NULL)
-			fprintf(stderr, "No se ha podido iniciar el modo de video %dx%d a %d bits sin pantalla completa.\n", width, height, bpp);
+			fprintf(stderr, "No se ha podido iniciar el modo de video %dx%d a %d bits sin pantalla completa.\n", screenWidth, screenHeight, bpp);
 	}
 }
 
@@ -53,11 +51,14 @@ void system_t::toggleFullscreen(){
  * @note Este icono no será visible en pantalla completa.
  */
 void system_t::setIcon(string iconpath){
+	string compPath = IMG_PATH;
+	compPath += iconpath;
+
 	if(wIcon != NULL){
 		SDL_FreeSurface(wIcon);
 		wIcon = NULL;
 	}
-	wIcon = IMG_Load(iconpath.c_str());
+	wIcon = IMG_Load(compPath.c_str());
 	if(wIcon == NULL)
 		fprintf(stderr, "No se ha podido cargar el icono del programa.\n");
 	else

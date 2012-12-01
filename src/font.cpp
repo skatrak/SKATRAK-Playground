@@ -1,7 +1,4 @@
-#include <string>
-#include <SDL/SDL.h>
-#include <SDL/SDL_ttf.h>
-#include "../include/font.hpp"
+#include "../include/SKATRAK_PLAYGROUND.hpp"
 
 /**
  * @brief Constructor. Inicializa los valores de las variables e inicia SDL_TTF si no se ha iniciado.
@@ -44,14 +41,16 @@ font_t::~font_t(){
  * @brief Abre un archivo de fuentes .ttf o .fon.
  */
 void font_t::open(string path){
-	fontName = path;
+	fontName = FONT_PATH;
+	fontName += path;
+
 	if(font != NULL){
 		TTF_CloseFont(font);
 		font = NULL;
 	}
-	font = TTF_OpenFont(path.c_str(), fontSize);
+	font = TTF_OpenFont(fontName.c_str(), fontSize);
 	if(font == NULL)
-		fprintf(stderr, "No se ha podido abrir la fuente \"%s\".\n", path.c_str());
+		fprintf(stderr, "No se ha podido abrir la fuente \"%s\".\n", fontName.c_str());
 	changed = true;
 }
 
@@ -63,11 +62,7 @@ void font_t::setSize(int size){
 	if(size != fontSize){
 		changed = true;
 		fontSize = size;
-		if(font != NULL){
-			TTF_CloseFont(font);
-			font = NULL;
-			open(fontName);
-		}
+		open(fontName);
 	}
 }
 
