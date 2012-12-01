@@ -133,10 +133,19 @@ void font_t::blit(int x, int y, SDL_Surface* screen){
 				SDL_FreeSurface(rendered);
 				rendered = NULL;
 			}
-			rendered = TTF_RenderText_Blended(font, fontText.c_str(), fontColor);
-			if(rendered == NULL)
-				fprintf(stderr, "No se ha podido renderizar la fuente.\n");
+			if(fontAlpha == SDL_ALPHA_OPAQUE){
+				rendered = TTF_RenderText_Blended(font, fontText.c_str(), fontColor);
+				if(rendered == NULL)
+					fprintf(stderr, "No se ha podido renderizar la fuente.\n");
+			}
 			else {
+				rendered = TTF_RenderText_Solid(font, fontText.c_str(), fontColor);
+				if(rendered == NULL)
+					fprintf(stderr, "No se ha podido renderizar la fuente.\n");
+				else
+					SDL_SetAlpha(rendered, SDL_SRCALPHA | SDL_RLEACCEL, fontAlpha);
+			}
+			if(rendered != NULL){
 				changed = false;
 				SDL_Surface* temp = NULL;
 				temp = SDL_DisplayFormatAlpha(rendered);
@@ -146,7 +155,6 @@ void font_t::blit(int x, int y, SDL_Surface* screen){
 					SDL_FreeSurface(rendered);
 					rendered = temp;
 				}
-				SDL_SetAlpha(rendered, SDL_SRCALPHA | SDL_RLEACCEL, fontAlpha);
 			}
 		}
 		SDL_Rect dest = {x, y, 0, 0};

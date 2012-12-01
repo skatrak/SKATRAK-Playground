@@ -48,15 +48,15 @@ int main(int argc, char* argv[]){
 	// Comenzamos a reproducir la música
 	musica->play();
 
-	double alpha = 0.0;
+	int alpha = 0;
 	while((int)alpha < SDL_ALPHA_OPAQUE){
 		temporizador.refresh();
-		nombreJuego.setAlpha((int)alpha);		// Debería ir de transparente a visible, pero no hace nada la transparencia
+		nombreJuego.setAlpha((int)alpha);
 		fondo.blit(0, 0, screen);
-		nombreJuego.blit((int)(screen->w / 2)- (int)(nombreJuego.width() / 2), (int)(screen->h / 2 - nombreJuego.height()), screen);
+		nombreJuego.blit((int)(screen->w / 2) - (int)(nombreJuego.width() / 2), (int)(screen->h / 2) - (int)(nombreJuego.height() / 2), screen);
 		sistema->update();
 		temporizador.waitFramerate(30);
-		alpha += 2;
+		alpha += 3;
 		SDL_PollEvent(NULL);
 	}
 
@@ -78,17 +78,17 @@ int main(int argc, char* argv[]){
 		}
 		// Para dar una sensación de texto parpadeante (Cuando funcionen las transparencias)
 		if(alphaAdd)
-			alpha += 0.5;
+			alpha += 5;
 		else
-			alpha -= 0.5;
-		if((int)alpha == SDL_ALPHA_TRANSPARENT) alphaAdd = true;
-		else if((int)alpha == SDL_ALPHA_OPAQUE) alphaAdd = false;
+			alpha -= 5;
+		if(alpha <= SDL_ALPHA_TRANSPARENT) alphaAdd = true;
+		else if(alpha >= SDL_ALPHA_OPAQUE) alphaAdd = false;
 		empezar.setAlpha((int)alpha);
 
 		// Imprimimos por pantalla todo lo que haga falta e intercambiamos los buffers de vídeo
 		fondo.blit(0, 0, screen);
-		nombreJuego.blit((int)(screen->w / 2)- (int)(nombreJuego.width() / 2), (int)(screen->h / 2 - nombreJuego.height()), screen);
-		empezar.blit((int)(screen->w / 2)- (int)(empezar.width() / 2), (int)(3 * screen->h / 4 - empezar.height()), screen);
+		nombreJuego.blit((int)(screen->w / 2) - (int)(nombreJuego.width() / 2), (int)(screen->h / 2) - (int)(nombreJuego.height() / 2), screen);
+		empezar.blit((int)(screen->w / 2) - (int)(empezar.width() / 2), (int)(3 * screen->h / 4) - (int)(empezar.height() / 2), screen);
 		sistema->update();
 
 		// Fijamos los FPS a 30
