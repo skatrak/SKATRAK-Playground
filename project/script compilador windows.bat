@@ -4,7 +4,7 @@ rem SCRIPT COMPILADOR PARA WINDOWS
 rem ESCRITO POR SERGIO M. AFONSO FUMERO (theSkatrak@gmail.com)
 
 rem Preguntamos al usuario la dirección del compilador GNU
-set /p gpp="Introduce la ruta completa o relativa al directorio donde se encuentra g++: "
+set /p gpp="Introduce la ruta completa o relativa al directorio donde se encuentra g++ (Por defecto 'C:\MinGW\bin'): "
 
 rem Comprobamos que la respuesta no esté vacía
 if "%gpp%" equ "" echo Para compilar, debes descargar primero MinGW e indicar aqui la ruta de su carpeta bin. && pause>nul && exit
