@@ -59,6 +59,7 @@ int main(int argc, char* argv[]){
 		alpha += 3;
 		SDL_PollEvent(NULL);
 	}
+	nombreJuego.setAlpha(SDL_ALPHA_OPAQUE);
 
 	bool alphaAdd = false;
 	while(!salir){
@@ -76,7 +77,7 @@ int main(int argc, char* argv[]){
 					salir = true;
 			}
 		}
-		// Para dar una sensación de texto parpadeante (Cuando funcionen las transparencias)
+		// Para dar una sensación de texto parpadeante
 		if(alphaAdd)
 			alpha += 5;
 		else
