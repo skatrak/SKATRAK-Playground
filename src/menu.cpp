@@ -132,9 +132,8 @@ void menu_t::setOpts(int optNumber){
  * @param func Función de callback de la forma: 'returnVal func(void* datos);'.
  */
 void menu_t::setOpt(int index, MenuCallbackFunc func){
-	if(index >= 0 && index < nOpt){
+	if(index >= 0 && index < nOpt && callback != NULL)
 		callback[index] = func;
-	}
 	else
 		fprintf(stderr, "No se puede asignar un callback al elemento %d del menú porque no se ha reservado memoria para él.\n", index);
 }
@@ -172,9 +171,12 @@ void menu_t::setTexts(font_t* fontStyle){
  * @param text Nombre de la opción.
  */
 void menu_t::setText(int index, string text){
-	if(index >= 0 && index < nOpt){
-		if(optName[index] != NULL)
+	if(index >= 0 && index < nOpt && optName != NULL && textPos != NULL){
+		if(optName[index] != NULL){
 			optName[index]->setText(text);
+			textPos[index].w = optName[index]->width();
+			textPos[index].h = optName[index]->height();
+		}
 		else
 			fprintf(stderr, "No se puede asignar un texto al elemento %d porque ha habido un error al asignarle propiedades.\n", index);
 	}
@@ -223,20 +225,72 @@ void menu_t::setImage(string imageName){
  * @note Hay que llamar a esta función cada vez que se llame a SDL_PollEvent con la misma variable para que se actualice el menú adecuadamente.
  */
 returnVal menu_t::update(SDL_Event* event){
+	static int pressed = -1;
+	int prevIndex = selIndex;	// Para controlar el número de veces que se reproduce 'selectSound'
+
 	switch(event->type){
 		case SDL_QUIT:
 			return EXIT;
 		case SDL_KEYDOWN:
-
+			switch(event->key.keysym.sym){
+				case SDLK_UP:
+				case SDLK_LEFT:
+					selIndex--;
+					if(selIndex < 0) selIndex = nOpt - 1;
+					break;
+				case SDLK_DOWN:
+				case SDLK_RIGHT:
+					selIndex++;
+					if(selIndex >= nOpt) selIndex = 0;
+					break;
+				case SDLK_ENTER:
+					if(callback != NULL && callback[selIndex] != NULL)
+						return callback[selIndex](NULL);
+					else
+						return MAIN;
+					break;
+				case SDLK_ESCAPE:
+					return PREV_MENU;
+			}
 			break;
 		case SDL_MOUSEMOTION:
-
+			if(textPos != NULL){
+				for(int i = 0; i < nOpt; i++){
+					if(event->motion.x >= textPos[i].x && event->motion.x <= textPos[i].x + textPos[i].w && event->motion.y >= textPos[i].y && event->motion.y <= textPos[i].y + textPos[i].h){
+						selIndex = i;
+						break;
+					}
+				}
+				if(prevIndex != selIndex && selectSound != NULL)
+					selectSound->play();
+			}
 			break;
 		case SDL_MOUSEBUTTONDOWN:
-
+			if(event->button.button == SDL_BUTTON_LEFT){
+				if(textPos != NULL){
+					for(int i = 0; i < nOpt; i++){
+						if(event->button.x >= textPos[i].x && event->button.x <= textPos[i].x + textPos[i].w && event->button.y >= textPos[i].y && event->button.y <= textPos[i].y + textPos[i].h){
+							pressed = i;
+							if(clickSound != NULL)
+								clickSound->play();
+							return ACTUAL_MENU;
+						}
+					}
+				}
+			}
 			break;
 		case SDL_MOUSEBUTTONUP:
-
+			if(event->button.button == SDL_BUTTON_LEFT){
+				if(textPos != NULL && pressed != -1){
+					if(event->button.x >= textPos[pressed].x && event->button.x <= textPos[pressed].x + textPos[pressed].w && event->button.y >= textPos[pressed].y && event->button.y <= textPos[pressed].y + textPos[pressed].h){
+						if(callback != NULL && callback[pressed] != NULL)
+							return callback[pressed](NULL);
+						else
+							return MAIN;
+					}
+				}
+				pressed = -1;
+			}
 			break;
 	}
 	return ACTUAL_MENU;
@@ -253,7 +307,7 @@ void menu_t::blit(SDL_Surface* screen){
 		fprintf(stderr, "No se puede mostrar el fondo de pantalla porque no se ha cargado.\n");
 	if(textPos != NULL && optName != NULL){
 		if(selImage != NULL)
-			selImage->blit(textPos[selIndex].x, textPos[selIndex].y + (optName[0]->height() - selImage->height()), screen);
+			selImage->blit(textPos[selIndex].x, textPos[selIndex].y + (textPos[selIndex].h - selImage->height()), screen);
 		else
 			fprintf(stderr, "No se puede imprimir el resaltador de opciones porque no se ha cargado en memoria.\n");
 		for(int i = 0; i < nOpt; i++){
