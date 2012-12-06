@@ -53,6 +53,10 @@ int main(int argc, char* argv[]){
 
 	// Imágenes para mostrar en el menú inicio
 	SDL_Surface* screen = sistema->scr();
+	if(screen == NULL){
+		fprintf(stderr, "La pantalla no se ha iniciado. Saliendo del programa...\n");
+		return 1;
+	}
 	image_t fondo("Fondo_inicio_prueba.png");
 	font_t nombreJuego("font01.ttf");
 	nombreJuego.setSize(72);
