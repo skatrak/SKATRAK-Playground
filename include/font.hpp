@@ -42,6 +42,7 @@ class font_t {
 		bool changed;
 	public:
 		font_t();
+		font_t(font_t& copy);
 		font_t(string path);
 		~font_t();
 		void open(string path);
