@@ -53,9 +53,7 @@ class menu_t {
 		void setTexts(font_t* fontStyle);
 		void setText(int index, string text);
 		void setBackground(string imageName);
-		void setBackground(image_t* image);
 		void setImage(string imageName);
-		void setImage(image_t* image);
 		returnVal update(SDL_Event* event);
 		void blit(SDL_Surface* screen);
 };

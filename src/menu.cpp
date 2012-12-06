@@ -165,31 +165,33 @@ void menu_t::setText(int index, string text){
 }
 
 /**
- * @brief
+ * @brief Asigna una imagen de fondo del menú.
+ * @param imageName Nombre del fichero de imagen.
+ * @note ¡Cuidado! Es la imagen de fondo, así que tiene que tener al menos el tamaño de la pantalla porque si no, se van a ver cosas feas
+ * arrastrándose por ahí.
  */
 void menu_t::setBackground(string imageName){
-
+	if(backImage != NULL){
+		delete backImage;
+		backImage = NULL;
+	}
+	backImage = new image_t(imageName);
+	if(backImage == NULL)
+		fprintf(stderr, "No se ha podido cargar la imagen de fondo del menú desde %s.\n", imageName.c_str());
 }
 
 /**
- * @brief
- */
-void menu_t::setBackground(image_t* image){
-
-}
-
-/**
- * @brief
+ * @brief Asigna una imagen para resaltar la opción activa del menú.
+ * @param imageName Nombre del fichero de imagen.
  */
 void menu_t::setImage(string imageName){
-
-}
-
-/**
- * @brief
- */
-void menu_t::setImage(image_t* image){
-
+	if(selImage != NULL){
+		delete selImage;
+		selImage = NULL;
+	}
+	selImage = new image_t(imageName);
+	if(selImage == NULL)
+		fprintf(stderr, "No se ha podido cargar la imagen para resaltar la opción activa del menú desde %s.\n", imageName.c_str());
 }
 
 /**
@@ -200,8 +202,26 @@ returnVal menu_t::update(SDL_Event* event){
 }
 
 /**
- * @brief
+ * @brief Imprime todos los elementos del menú por pantalla.
+ * @param screen Superficie sobre la que hacer el blitting.
  */
 void menu_t::blit(SDL_Surface* screen){
-
+	if(backImage != NULL)
+		backImage->blit(0, 0, screen);
+	else
+		fprintf(stderr, "No se puede mostrar el fondo de pantalla porque no se ha cargado.\n");
+	if(textPos != NULL && optName != NULL){
+		if(selImage != NULL)
+			selImage->blit(textPos[selIndex].x, textPos[selIndex].y - (int)(selImage->height()/2), screen);
+		else
+			fprintf(stderr, "No se puede imprimir el resaltador de opciones porque no se ha cargado en memoria.\n");
+		for(int i = 0; i < nOpt; i++){
+			if(optName[i] != NULL)
+				optName[i]->blit(textPos[i].x, textPos[i].y, screen);
+			else
+				fprintf(stderr, "No se puede imprimir por pantalla la opción %d porque la imagen no está cargada en memoria.\n", i);
+		}
+	}
+	else
+		fprintf(stderr, "No se pueden imprimir las opciones porque no están cargadas en memoria.\n");
 }
