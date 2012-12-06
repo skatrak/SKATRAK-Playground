@@ -1,7 +1,7 @@
 [Project]
 FileName=SKATRAK Playground.dev
 Name=SKATRAK Playground
-UnitCount=20
+UnitCount=22
 PchHead=-1
 PchSource=-1
 Ver=3
@@ -305,6 +305,26 @@ BuildCmd=
 
 [Unit20]
 FileName=..\src\mainMenu.cpp
+CompileCpp=1
+Folder=
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit21]
+FileName=..\include\menu.hpp
+CompileCpp=1
+Folder=
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit22]
+FileName=..\src\menu.cpp
 CompileCpp=1
 Folder=
 Compile=1

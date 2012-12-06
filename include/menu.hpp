@@ -37,7 +37,7 @@ class menu_t {
 		int nOpt;					// Número de elementos en el menú
 		int selIndex;				// Índice del elemento del menú seleccionado
 		SDL_Rect* textPos;			// Array de posiciones de textos
-		font_t* optName;			// Array de textos de opciones
+		font_t** optName;			// Array de punteros a textos de opciones
 		image_t* selImage;			// Imagen debajo de la opción seleccionada
 		image_t* backImage;			// Imagen de fondo
 		sfx_t* clickSound;			// Sonido al pulsar un botón
@@ -50,8 +50,8 @@ class menu_t {
 		void setOpts(int optNumber);
 		void setOpt(int index, MenuCallbackFunc func);
 		void setTexts(string fontName, int fontSize);
+		void setTexts(font_t* fontStyle);
 		void setText(int index, string text);
-		void setText(font_t* fontStyle);
 		void setBackground(string imageName);
 		void setBackground(image_t* image);
 		void setImage(string imageName);

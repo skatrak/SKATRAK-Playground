@@ -55,8 +55,14 @@ void menu_t::setOpts(int optNumber){
 		textPos = NULL;
 	}
 	if(optName != NULL){
+		for(int i = 0; i < nOpt; i++){
+			if(optName[i] != NULL){
+				delete optName[i];
+				optName[i] = NULL;
+			}
+		}
 		delete [] optName;
-		menuName = NULL;
+		optName = NULL;
 	}
 	if(callback != NULL){
 		delete [] callback;
@@ -72,22 +78,29 @@ void menu_t::setOpts(int optNumber){
 			fprintf(stderr, "No se ha podido reservar memoria para las posiciones de los textos del menú.\n");
 			return;
 		}
-		optName = new font_t[optNumber];
-		if(optName == NULL){
-			fprintf(stderr, "No se ha podido reservar memoria para las fuentes de los textos de opciones del menú.\n");
-			delete [] textPos;
-			textPos = NULL;
-			return;
-		}
+
 		callback = new MenuCallbackFunc[optNumber];
 		if(callback == NULL){
 			fprintf(stderr, "No se ha podido reservar memoria para las funciones de callback del menú.\n");
 			delete [] textPos;
-			delete [] optName;
 			textPos = NULL;
-			optName = NULL;
 			return;
 		}
+		for(int i = 0; i < optNumber; i++)
+			callback[i] = NULL;
+
+		optName = new font_t*[optNumber];
+		if(optName == NULL){
+			fprintf(stderr, "No se ha podido reservar memoria para las fuentes de los textos de opciones del menú.\n");
+			delete [] textPos;
+			delete [] callback;
+			textPos = NULL;
+			callback = NULL;
+			return;
+		}
+		for(int i = 0; i < optNumber; i++)
+			optName[i] = NULL;
+
 		nOpt = optNumber;	// Todo se ha cargado correctamente, así que actualizamos el número de opciones que tenemos
 	}
 	else {
@@ -96,31 +109,59 @@ void menu_t::setOpts(int optNumber){
 }
 
 /**
- * @brief
+ * @brief Establece una función de callback para un elemento del menú.
+ * @param index Índice del elemento.
+ * @param func Función de callback de la forma: 'returnVal func(void* datos);'.
  */
-void menu_t::setOpt(int optIndex, MenuCallbackFunc func){
-
+void menu_t::setOpt(int index, MenuCallbackFunc func){
+	if(index >= 0 && index < nOpt){
+		callback[index] = func;
+	}
+	else
+		fprintf(stderr, "No se puede asignar un callback al elemento %d del menú porque no se ha reservado memoria para él.\n", index);
 }
 
 /**
- * @brief
+ * @brief Establece las propiedades de los textos del menú.
+ * @param fontName Nombre de la fuente TTF que se va a cargar.
+ * @param fontSize Tamaño de la fuente.
  */
 void menu_t::setTexts(string fontName, int fontSize){
-
+	for(int i = 0; i < nOpt; i++){
+		optName[i] = new font_t(fontName);
+		if(optName[i] != NULL)
+			optName[i]->setSize(fontSize);
+		else
+			fprintf(stderr, "No se ha podido reservar memoria para la fuente nº %d.\n", i);
+	}
 }
 
 /**
- * @brief
+ * @brief Establece las propiedades de los textos del menú a partir de una fuente ya configurada.
+ * @param fontStyle Puntero a un objeto de la clase font_t.
+ */
+void menu_t::setTexts(font_t* fontStyle){
+	for(int i = 0; i < nOpt; i++){
+		optName[i] = new font_t(*fontStyle);
+		if(optName[i] == NULL)
+			fprintf(stderr, "No se ha podido reservar memoria para la fuente nº %d.\n", i);
+	}
+}
+
+/**
+ * @brief Le da un nombre a la opción del menú indicada.
+ * @param index Índice de la opción.
+ * @param text Nombre de la opción.
  */
 void menu_t::setText(int index, string text){
-
-}
-
-/**
- * @brief
- */
-void menu_t::setText(font_t* fontStyle){
-
+	if(index >= 0 && index < nOpt){
+		if(optName[index] != NULL)
+			optName[index]->setText(text);
+		else
+			fprintf(stderr, "No se puede asignar un texto al elemento %d porque ha habido un error al asignarle propiedades.\n", index);
+	}
+	else
+		fprintf(stderr, "No se puede asignar un texto al elemento %d del menú porque no se ha reservado memoria para él.\n", index);
 }
 
 /**
