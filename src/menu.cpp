@@ -147,8 +147,10 @@ void menu_t::setTexts(string fontName, int fontSize){
 	if(optName != NULL){
 		for(int i = 0; i < nOpt; i++){
 			optName[i] = new font_t(fontName);
-			if(optName[i] != NULL)
+			if(optName[i] != NULL){
 				optName[i]->setSize(fontSize);
+				optName[i]->setText("[UNDEFINED]");
+			}
 			else
 				fprintf(stderr, "No se ha podido reservar memoria para la fuente nº %d.\n", i);
 		}
@@ -167,6 +169,8 @@ void menu_t::setTexts(font_t* fontStyle){
 			optName[i] = new font_t(*fontStyle);
 			if(optName[i] == NULL)
 				fprintf(stderr, "No se ha podido reservar memoria para la fuente nº %d.\n", i);
+			else
+				setText(i, "[UNDEFINED]");
 		}
 	}
 	else
@@ -186,7 +190,7 @@ void menu_t::setText(int index, string text){
 			textPos[index].h = optName[index]->height();
 		}
 		else
-			fprintf(stderr, "No se puede asignar un texto al elemento %d porque ha habido un error al asignarle propiedades.\n", index);
+			fprintf(stderr, "No se puede asignar un texto al elemento %d del menú porque ha habido un error al asignarle propiedades.\n", index);
 	}
 	else
 		fprintf(stderr, "No se puede asignar un texto al elemento %d del menú porque no se ha reservado memoria para él.\n", index);
