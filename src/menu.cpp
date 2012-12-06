@@ -273,6 +273,7 @@ returnVal menu_t::update(SDL_Event* event){
 					break;
 				case SDLK_ESCAPE:
 					return PREV_MENU;
+				default: return ACTUAL_MENU;
 			}
 			break;
 		case SDL_MOUSEBUTTONDOWN:

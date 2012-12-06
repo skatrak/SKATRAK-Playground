@@ -51,6 +51,7 @@ returnVal mainMenu(){
 					salir = true;
 					break;
 				case ACTUAL_MENU:
+				default:
 					break;
 			}
 		}
@@ -59,4 +60,5 @@ returnVal mainMenu(){
 		timer.waitFramerate(30);
 	}
 	printf("Has estado %d segundos en el menú principal.\n", (int)(timer.elapsed()/1000));
+	return EXIT;
 }
