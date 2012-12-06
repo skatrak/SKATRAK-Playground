@@ -25,6 +25,12 @@
 #include "../include/SKATRAK_PLAYGROUND.hpp"
 #include "../include/shared_attributes.hpp"
 
+/* Definición de los flags para alinear los menús */
+#define MENU_RIGHT	0x00000001
+#define MENU_LEFT	0x00000002
+#define MENU_UP		0x00000004
+#define MENU_DOWN	0x00000008
+
 /* Definición de las funciones de callback: Reciben un puntero a algún dato o estructura que quieras y devuelven hasta dónde se retrocederá en la estructura de menús */
 typedef returnVal (*MenuCallbackFunc)(void*);
 
@@ -54,6 +60,9 @@ class menu_t {
 		void setText(int index, string text);
 		void setBackground(string imageName);
 		void setImage(string imageName);
+		void setClickSFX(string soundName);	// TODO
+		void setSelectSFX(string soundName);// TODO
+		void align(unsigned int flags);		// TODO
 		returnVal update(SDL_Event* event);
 		void blit(SDL_Surface* screen);
 };
