@@ -40,7 +40,25 @@ menu_t::menu_t(int optNumber): nOpt(optNumber), selIndex(0), textPos(NULL), optN
  * @brief Destructor. Libera la memoria ocupada por el menú.
  */
 menu_t::~menu_t(){
-
+	if(textPos != NULL)
+		delete [] textPos;
+	if(optName != NULL){
+		for(int i = 0; i < nOpt; i++){
+			if(optName[i] != NULL)
+				delete optName[i];
+		}
+		delete [] optName;
+	}
+	if(callback != NULL)
+		delete [] callback;
+	if(selImage != NULL)
+		delete selImage;
+	if(backImage != NULL)
+		delete backImage;
+	if(clickSound != NULL)
+		delete clickSound;
+	if(selectSound != NULL)
+		delete selectSound;
 }
 
 /**
@@ -195,10 +213,33 @@ void menu_t::setImage(string imageName){
 }
 
 /**
- * @brief
+ * @brief Gestiona los eventos dentro del menú.
+ *
+ * Activa los sonidos, cambia el elemento activo del menú, detecta cuando el usuario intenta entrar en una de las opciones
+ * y activa la función de callback asociada.
+ *
+ * @param event Evento que hay que procesar.
+ * @return Uno de los valores de returnVal. Devuelve por defecto MAIN si la función de callback no está definida para alguno de los submenús.
+ * @note Hay que llamar a esta función cada vez que se llame a SDL_PollEvent con la misma variable para que se actualice el menú adecuadamente.
  */
 returnVal menu_t::update(SDL_Event* event){
+	switch(event->type){
+		case SDL_QUIT:
+			return EXIT;
+		case SDL_KEYDOWN:
 
+			break;
+		case SDL_MOUSEMOTION:
+
+			break;
+		case SDL_MOUSEBUTTONDOWN:
+
+			break;
+		case SDL_MOUSEBUTTONUP:
+
+			break;
+	}
+	return ACTUAL_MENU;
 }
 
 /**
@@ -212,7 +253,7 @@ void menu_t::blit(SDL_Surface* screen){
 		fprintf(stderr, "No se puede mostrar el fondo de pantalla porque no se ha cargado.\n");
 	if(textPos != NULL && optName != NULL){
 		if(selImage != NULL)
-			selImage->blit(textPos[selIndex].x, textPos[selIndex].y - (int)(selImage->height()/2), screen);
+			selImage->blit(textPos[selIndex].x, textPos[selIndex].y + (optName[0]->height() - selImage->height()), screen);
 		else
 			fprintf(stderr, "No se puede imprimir el resaltador de opciones porque no se ha cargado en memoria.\n");
 		for(int i = 0; i < nOpt; i++){
