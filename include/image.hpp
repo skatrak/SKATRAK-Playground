@@ -24,7 +24,7 @@
 
 /**
  * @class image_t
- * @brief Clase encargada de representar las im√°genes que se utilizan en el programa.
+ * @brief Clase encargada de representar las im·genes que se utilizan en el programa.
  */
 class image_t {
 	private:
