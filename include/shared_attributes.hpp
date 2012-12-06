@@ -24,11 +24,13 @@
 
 /* Valores de retorno de los menús */
 enum returnVal	{	MAIN,			// Volver al menú principal
-					ACTUAL_GAME,	// Volver al menú del juego actual
+					ACTUAL_MENU,	// Volver al menú del juego actual
+					PREV_MENU,		// Volver al menú anterior
 					EXIT,			// Salir del juego
 					ERROR			// Salir con error
 				};
 
+/* Variables compartidas */
 extern system_t* sistema;
 extern music_t* musica;
 
