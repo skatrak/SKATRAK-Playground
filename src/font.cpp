@@ -39,7 +39,7 @@ font_t::font_t(): font(NULL), rendered(NULL), fontName(""), fontSize(DEFAULT_FON
 font_t::font_t(font_t& copy): font(NULL), rendered(NULL), fontName(""), fontSize(copy.fontSize), fontStyle(copy.fontStyle), fontText(""), fontAlpha(SDL_ALPHA_OPAQUE), changed(true) {
 	if(!TTF_WasInit()){
 		if(TTF_Init() < 0)
-			fprintf(stderr, "No se ha podido inicializar SDL_TTF.\n");
+			fprintf(stderr, "No se ha podido inicializar SDL_TTF: %s.\n", TTF_GetError());
 		else
 			open(copy.fontName);
 	}
@@ -55,7 +55,7 @@ font_t::font_t(font_t& copy): font(NULL), rendered(NULL), fontName(""), fontSize
 font_t::font_t(string path): font(NULL), rendered(NULL), fontName(path), fontSize(DEFAULT_FONT_SIZE), fontStyle(DEFAULT_FONT_STYLE), fontText(""), fontAlpha(SDL_ALPHA_OPAQUE), changed(true) {
 	if(!TTF_WasInit()){
 		if(TTF_Init() < 0)
-			fprintf(stderr, "No se ha podido inicializar SDL_TTF.\n");
+			fprintf(stderr, "No se ha podido inicializar SDL_TTF: %s.\n", TTF_GetError());
 		else
 			open(path);
 	}
@@ -87,7 +87,7 @@ void font_t::open(string path){
 	}
 	font = TTF_OpenFont(fontName.c_str(), fontSize);
 	if(font == NULL)
-		fprintf(stderr, "No se ha podido abrir la fuente \"%s\".\n", fontName.c_str());
+		fprintf(stderr, "No se ha podido abrir la fuente \"%s\": %s.\n", fontName.c_str(), TTF_GetError());
 	changed = true;
 	fontName = path;	// Hay que resetear la variable, porque si no se va añadiendo FONT_PATH al principio todo el rato
 }
@@ -174,12 +174,12 @@ void font_t::blit(int x, int y, SDL_Surface* screen){
 			if(fontAlpha == SDL_ALPHA_OPAQUE){
 				rendered = TTF_RenderText_Blended(font, fontText.c_str(), fontColor);
 				if(rendered == NULL)
-					fprintf(stderr, "No se ha podido renderizar la fuente.\n");
+					fprintf(stderr, "No se ha podido renderizar la fuente: %s.\n", TTF_GetError());
 			}
 			else {
 				rendered = TTF_RenderText_Solid(font, fontText.c_str(), fontColor);
 				if(rendered == NULL)
-					fprintf(stderr, "No se ha podido renderizar la fuente.\n");
+					fprintf(stderr, "No se ha podido renderizar la fuente: %s.\n", TTF_GetError());
 				else
 					SDL_SetAlpha(rendered, SDL_SRCALPHA | SDL_RLEACCEL, fontAlpha);
 			}
