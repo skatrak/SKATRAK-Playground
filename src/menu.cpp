@@ -144,13 +144,17 @@ void menu_t::setOpt(int index, MenuCallbackFunc func){
  * @param fontSize Tamaño de la fuente.
  */
 void menu_t::setTexts(string fontName, int fontSize){
-	for(int i = 0; i < nOpt; i++){
-		optName[i] = new font_t(fontName);
-		if(optName[i] != NULL)
-			optName[i]->setSize(fontSize);
-		else
-			fprintf(stderr, "No se ha podido reservar memoria para la fuente nº %d.\n", i);
+	if(optName != NULL){
+		for(int i = 0; i < nOpt; i++){
+			optName[i] = new font_t(fontName);
+			if(optName[i] != NULL)
+				optName[i]->setSize(fontSize);
+			else
+				fprintf(stderr, "No se ha podido reservar memoria para la fuente nº %d.\n", i);
+		}
 	}
+	else
+		fprintf(stderr, "No se pueden especificar las características de los textos de los menús sin haber decidido cuántos van a haber.\n");
 }
 
 /**
@@ -158,11 +162,15 @@ void menu_t::setTexts(string fontName, int fontSize){
  * @param fontStyle Puntero a un objeto de la clase font_t.
  */
 void menu_t::setTexts(font_t* fontStyle){
-	for(int i = 0; i < nOpt; i++){
-		optName[i] = new font_t(*fontStyle);
-		if(optName[i] == NULL)
-			fprintf(stderr, "No se ha podido reservar memoria para la fuente nº %d.\n", i);
+	if(optName != NULL){
+		for(int i = 0; i < nOpt; i++){
+			optName[i] = new font_t(*fontStyle);
+			if(optName[i] == NULL)
+				fprintf(stderr, "No se ha podido reservar memoria para la fuente nº %d.\n", i);
+		}
 	}
+	else
+		fprintf(stderr, "No se pueden especificar las características de los textos de los menús sin haber decidido cuántos van a haber.\n");
 }
 
 /**
@@ -229,8 +237,18 @@ returnVal menu_t::update(SDL_Event* event){
 	int prevIndex = selIndex;	// Para controlar el número de veces que se reproduce 'selectSound'
 
 	switch(event->type){
-		case SDL_QUIT:
-			return EXIT;
+		case SDL_MOUSEMOTION:
+			if(textPos != NULL){
+				for(int i = 0; i < nOpt; i++){
+					if(event->motion.x >= textPos[i].x && event->motion.x <= textPos[i].x + textPos[i].w && event->motion.y >= textPos[i].y && event->motion.y <= textPos[i].y + textPos[i].h){
+						selIndex = i;
+						break;
+					}
+				}
+				if(prevIndex != selIndex && selectSound != NULL)
+					selectSound->play();
+			}
+			break;
 		case SDL_KEYDOWN:
 			switch(event->key.keysym.sym){
 				case SDLK_UP:
@@ -243,7 +261,7 @@ returnVal menu_t::update(SDL_Event* event){
 					selIndex++;
 					if(selIndex >= nOpt) selIndex = 0;
 					break;
-				case SDLK_ENTER:
+				case SDLK_RETURN:
 					if(callback != NULL && callback[selIndex] != NULL)
 						return callback[selIndex](NULL);
 					else
@@ -251,18 +269,6 @@ returnVal menu_t::update(SDL_Event* event){
 					break;
 				case SDLK_ESCAPE:
 					return PREV_MENU;
-			}
-			break;
-		case SDL_MOUSEMOTION:
-			if(textPos != NULL){
-				for(int i = 0; i < nOpt; i++){
-					if(event->motion.x >= textPos[i].x && event->motion.x <= textPos[i].x + textPos[i].w && event->motion.y >= textPos[i].y && event->motion.y <= textPos[i].y + textPos[i].h){
-						selIndex = i;
-						break;
-					}
-				}
-				if(prevIndex != selIndex && selectSound != NULL)
-					selectSound->play();
 			}
 			break;
 		case SDL_MOUSEBUTTONDOWN:
@@ -292,6 +298,9 @@ returnVal menu_t::update(SDL_Event* event){
 				pressed = -1;
 			}
 			break;
+		case SDL_QUIT:
+			return EXIT;
+		default: break;
 	}
 	return ACTUAL_MENU;
 }
