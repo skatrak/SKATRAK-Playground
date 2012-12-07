@@ -108,7 +108,7 @@ int main(int argc, char* argv[]){
 		else
 			alpha -= 5;
 		if(alpha <= SDL_ALPHA_TRANSPARENT) alphaAdd = true;
-		else if(alpha >= SDL_ALPHA_OPAQUE) alphaAdd = false;
+		else if(alpha >= SDL_ALPHA_OPAQUE - 5) alphaAdd = false;
 		empezar.setAlpha((int)alpha);
 
 		// Imprimimos por pantalla todo lo que haga falta e intercambiamos los buffers de vídeo
