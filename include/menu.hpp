@@ -65,9 +65,9 @@ class menu_t {
 		void setText(int index, string text);
 		void setBackground(string imageName);
 		void setImage(string imageName);
-		void setClickSFX(string soundName);	// TODO
-		void setSelectSFX(string soundName);// TODO
-		void align(unsigned int flags);		// TODO
+		void setClickSFX(string soundName);
+		void setSelectSFX(string soundName);
+		void align(unsigned int flags);
 		returnVal update(SDL_Event* event);
 		void blit(SDL_Surface* screen);
 };
