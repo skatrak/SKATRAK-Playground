@@ -24,18 +24,47 @@
 #include "../include/menu.hpp"
 
 returnVal defaultCallback(void* data){
+	printf("Entraste a algún juego.\n");
+	return EXIT;
+}
+
+returnVal optionsCallback(void* data){
+//	return optionsMenu();
+	printf("Entraste al menú de opciones.\n");
+	return ACTUAL_MENU;
+}
+
+returnVal aboutCallback(void* data){
+//	return aboutMenu();
+	printf("Entraste al menú 'Acerca de...'.\n");
+	return ACTUAL_MENU;
+}
+
+returnVal exitCallback(void* data){
+	printf("Salir.\n");
 	return EXIT;
 }
 
 returnVal mainMenu(){
-	menu_t menu(4);
-	for(int i = 0; i < 4; i++)
-		menu.setOpt(i, &defaultCallback);
+	menu_t menu(5);
+
 	menu.setTexts("font01.ttf", 48);
-	menu.setText(0, "op1");
-	menu.setText(1, "op2");
-	menu.setText(2, "op3");
-	menu.setText(3, "op4");
+
+	menu.setText(0, "Juego 1");
+	menu.setOpt(0, &defaultCallback);
+
+	menu.setText(1, "Juego 2");
+	menu.setOpt(1, &defaultCallback);
+
+	menu.setText(2, "Opciones");
+	menu.setOpt(2, &optionsCallback);
+
+	menu.setText(3, "Salir");
+	menu.setOpt(3, &exitCallback);
+
+	menu.setText(4, "Acerca de...");
+	menu.setOpt(4, &aboutCallback);
+
 	menu.setBackground("Fondo_inicio_prueba.png");
 	menu.setImage("marcador_prueba.png");
 	menu.align(0);
@@ -49,11 +78,12 @@ returnVal mainMenu(){
 		while(SDL_PollEvent(&event)){
 			switch(menu.update(&event)){
 				case EXIT:
+				case PREV_MENU:
 					salir = true;
 					break;
 				case ACTUAL_MENU:
-				default:
-					break;
+				case MAIN:
+				default: break;
 			}
 		}
 		menu.blit(screen);
