@@ -33,11 +33,12 @@ returnVal mainMenu(){
 		menu.setOpt(i, &defaultCallback);
 	menu.setTexts("font01.ttf", 48);
 	menu.setText(0, "op1");
-	menu.setText(1, "    op2");
-	menu.setText(2, "        op3");
-	menu.setText(3, "            op4");
+	menu.setText(1, "op2");
+	menu.setText(2, "op3");
+	menu.setText(3, "op4");
 	menu.setBackground("Fondo_inicio_prueba.png");
 	menu.setImage("marcador_prueba.png");
+	menu.align(0);
 
 	SDL_Event event;
 	SDL_Surface* screen = sistema->scr();
