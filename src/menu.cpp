@@ -227,6 +227,89 @@ void menu_t::setImage(string imageName){
 }
 
 /**
+ * @brief Asigna un sonido para reproducir cuando se pulsa un botón del menú.
+ * @param soundName Nombre del fichero de sonido.
+ */
+void menu_t::setClickSFX(string soundName){
+	if(clickSound != NULL){
+		delete clickSound;
+		clickSound = NULL;
+	}
+	clickSound = new sfx_t(soundName);
+	if(clickSound == NULL)
+		fprintf(stderr, "No se ha podido cargar el sonido de 'click' del menú.\n");
+}
+
+/**
+ * @brief Asigna un sonido para reproducir cuando se pasa el cursor por encima de un botón del menú.
+ * @param soundName Nombre del fichero de sonido.
+ */
+void menu_t::setSelectSFX(string soundName){
+	if(selectSound != NULL){
+		delete selectSound;
+		selectSound = NULL;
+	}
+	selectSound = new sfx_t(soundName);
+	if(selectSound == NULL)
+		fprintf(stderr, "No se ha podido cargar el sonido de selección del menú.\n");
+}
+
+/**
+ * @brief Distribuye los textos de opciones a lo largo de la pantalla según las especificaciones del usuario.
+ * @param flags Combinación de los flags: MENU_RIGHT, MENU_LEFT, MENU_UP, MENU_DOWN o 0 para que esté en el centro de la pantalla.
+ */
+void menu_t::align(unsigned int flags){
+	int posX = -1, posY = -1;
+	int biggest = 0;
+
+	if(textPos != NULL){
+		// Establecemos la posición en X
+		if(flags & MENU_LEFT){
+			posX = MENU_MARGIN_H;
+		}
+		else {
+			if(flags & MENU_RIGHT){
+				for(int i = 0; i < nOpt; i++){
+					if(textPos[i].w > biggest)
+						biggest = textPos[i].w;
+				}
+				posX = sistema->width() - biggest - MENU_MARGIN_H;
+				biggest = 0;	// Lo reseteamos para poder usarlo después
+			}
+			else {
+				for(int i = 0; i < nOpt; i++)
+					textPos[i].x = (int)(sistema->width()/2 - textPos[i].w/2);
+			}
+		}
+		if(posX != -1){
+			for(int i = 0; i < nOpt; i++)
+				textPos[i].x = posX;
+		}
+		// Establecemos la posición en Y
+		for(int i = 0; i < nOpt; i++){
+			if(textPos[i].h > biggest)
+				biggest = textPos[i].h;
+		}
+		if(flags & MENU_UP)
+			posY = MENU_MARGIN_V;
+		else {
+			if(flags & MENU_DOWN){
+				posY = sistema->height() - ((biggest + MENU_OPT_MARGIN) * nOpt) - MENU_MARGIN_V;
+			}
+			else {
+				int size = (biggest + MENU_OPT_MARGIN) * nOpt;
+				posY = (int)(((sistema->height() - 2 * MENU_MARGIN_V) / 2) - size / 2);
+			}
+		}
+		for(int i = 0; i < nOpt; i++){
+			textPos[i].y = posY + i * (biggest + MENU_OPT_MARGIN);
+		}
+	}
+	else
+		fprintf(stderr, "No se han podido alinear las opciones porque los textos no se han cargado correctamente.\n");
+}
+
+/**
  * @brief Gestiona los eventos dentro del menú.
  *
  * Activa los sonidos, cambia el elemento activo del menú, detecta cuando el usuario intenta entrar en una de las opciones
