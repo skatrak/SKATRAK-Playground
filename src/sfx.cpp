@@ -59,7 +59,7 @@ void sfx_t::setSound(string path){
 	}
 	sound = Mix_LoadWAV(compPath.c_str());
 	if(sound == NULL)
-		fprintf(stderr, "No se ha podido cargar el sonido \"%s\"", compPath.c_str());
+		fprintf(stderr, "No se ha podido cargar el sonido \"%s\": %s", compPath.c_str(), Mix_GetError());
 }
 
 /**

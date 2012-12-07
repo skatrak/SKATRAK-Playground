@@ -48,7 +48,7 @@ void nextTrack(){
  */
 music_t::music_t(): music(NULL), music_names(NULL), n_tracks(0), volume(128), current(0), running(false), playing(false), paused(false) {
 	if(Mix_OpenAudio(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT, 2, 4096)){
-		fprintf(stderr, "No se ha podido inicializar el sistema de audio.\n");
+		fprintf(stderr, "No se ha podido inicializar el sistema de audio: %s.\n", Mix_GetError());
 	}
 	else {
 		Mix_AllocateChannels(AUDIO_CHANNELS);
@@ -66,7 +66,7 @@ music_t::music_t(): music(NULL), music_names(NULL), n_tracks(0), volume(128), cu
  */
 music_t::music_t(int nT): music(NULL), music_names(NULL), n_tracks(nT), volume(128), current(0), running(false), playing(false), paused(false) {
 	if(Mix_OpenAudio(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT, 2, 4096)){
-		fprintf(stderr, "No se ha podido inicializar el sistema de audio.\n");
+		fprintf(stderr, "No se ha podido inicializar el sistema de audio: %s.\n", Mix_GetError());
 	}
 	else {
 		Mix_AllocateChannels(AUDIO_CHANNELS);
@@ -155,10 +155,8 @@ void music_t::setTrack(int index, string path){
 			music[index] = NULL;
 		}
 		music[index] = Mix_LoadMUS(compPath.c_str());
-		if(!music[index]){
-			fprintf(stderr, "No se ha podido cargar el fichero \"%s\".\n", compPath.c_str());
-			music[index] = NULL;
-		}
+		if(music[index] == NULL)
+			fprintf(stderr, "No se ha podido cargar el fichero \"%s\": %s.\n", compPath.c_str(), Mix_GetError());
 	}
 	else
 		fprintf(stderr, "No se puede cargar ninguna canción en memoria porque no se ha reservado previamente.\n");

@@ -69,10 +69,10 @@ void image_t::open(string path){
 			img = temp;
 		}
 		else
-			fprintf(stderr, "No se ha podido optimizar la imagen al formato de la pantalla.\n");
+			fprintf(stderr, "No se ha podido optimizar la imagen al formato de la pantalla: %s.\n", SDL_GetError());
 	}
 	else
-		fprintf(stderr, "No se puede cargar la imagen \"%s\".\n", compPath.c_str());
+		fprintf(stderr, "No se puede cargar la imagen \"%s\": %s.\n", compPath.c_str(), SDL_GetError());
 }
 
 /**

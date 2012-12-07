@@ -27,7 +27,7 @@
 font_t::font_t(): font(NULL), rendered(NULL), fontName(""), fontSize(DEFAULT_FONT_SIZE), fontStyle(DEFAULT_FONT_STYLE), fontText(""), fontAlpha(SDL_ALPHA_OPAQUE), changed(true) {
 	if(!TTF_WasInit()){
 		if(TTF_Init() < 0)
-			fprintf(stderr, "No se ha podido inicializar SDL_TTF.\n");
+			fprintf(stderr, "No se ha podido inicializar SDL_TTF: %s.\n", TTF_GetError());
 	}
 	setColor(0, 0, 0);
 }
@@ -188,7 +188,7 @@ void font_t::blit(int x, int y, SDL_Surface* screen){
 				SDL_Surface* temp = NULL;
 				temp = SDL_DisplayFormatAlpha(rendered);
 				if(temp == NULL)
-					fprintf(stderr, "No se ha podido optimizar el formato de la fuente.\n");
+					fprintf(stderr, "No se ha podido optimizar el formato de la fuente: %s.\n", SDL_GetError());
 				else {
 					SDL_FreeSurface(rendered);
 					rendered = temp;

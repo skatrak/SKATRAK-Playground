@@ -30,10 +30,10 @@
  */
 system_t::system_t(int scr_w, int scr_h, int depth): screen(NULL), wIcon(NULL), screenWidth(scr_w), screenHeight(scr_h), bpp(depth), fullscr(false) {
 	if(SDL_Init(SDL_INIT_EVERYTHING) < 0)
-		fprintf(stderr, "No se ha podido inicializar SDL.\n");
+		fprintf(stderr, "No se ha podido inicializar SDL: %s.\n", SDL_GetError());
 	screen = SDL_SetVideoMode(screenWidth, screenHeight, bpp, SDL_HWSURFACE | SDL_DOUBLEBUF);
 	if(screen == NULL)
-		fprintf(stderr, "No se ha podido iniciar el modo de video %dx%d a %d bits.\n", screenWidth, screenHeight, bpp);
+		fprintf(stderr, "No se ha podido iniciar el modo de video %dx%d a %d bits: %s.\n", screenWidth, screenHeight, bpp, SDL_GetError());
 	SDL_WM_SetCaption("SKATRAK Playground", NULL);
 }
 
@@ -58,11 +58,11 @@ void system_t::toggleFullscreen(){
 	if(fullscr){
 		screen = SDL_SetVideoMode(screenWidth, screenHeight, bpp, SDL_HWSURFACE | SDL_DOUBLEBUF | SDL_FULLSCREEN);
 		if(screen == NULL)
-			fprintf(stderr, "No se ha podido iniciar el modo de video %dx%d a %d bits con pantalla completa.\n", screenWidth, screenHeight, bpp);
+			fprintf(stderr, "No se ha podido iniciar el modo de video %dx%d a %d bits con pantalla completa: %s.\n", screenWidth, screenHeight, bpp, SDL_GetError());
 	} else {
 		screen = SDL_SetVideoMode(screenWidth, screenHeight, bpp, SDL_HWSURFACE | SDL_DOUBLEBUF);
 		if(screen == NULL)
-			fprintf(stderr, "No se ha podido iniciar el modo de video %dx%d a %d bits sin pantalla completa.\n", screenWidth, screenHeight, bpp);
+			fprintf(stderr, "No se ha podido iniciar el modo de video %dx%d a %d bits sin pantalla completa: %s.\n", screenWidth, screenHeight, bpp, SDL_GetError());
 	}
 }
 
@@ -81,7 +81,7 @@ void system_t::setIcon(string iconpath){
 	}
 	wIcon = IMG_Load(compPath.c_str());
 	if(wIcon == NULL)
-		fprintf(stderr, "No se ha podido cargar el icono del programa.\n");
+		fprintf(stderr, "No se ha podido cargar el icono del programa: %s.\n", SDL_GetError());
 	else
 		SDL_WM_SetIcon(wIcon, NULL);
 }
