@@ -115,7 +115,8 @@ int main(int argc, char* argv[]){
 		fondo.blit(0, 0, screen);
 		nombreJuego.blit((int)(screen->w / 2) - (int)(nombreJuego.width() / 2), (int)(screen->h / 2) - (int)(nombreJuego.height() / 2), screen);
 		empezar.blit((int)(screen->w / 2) - (int)(empezar.width() / 2), (int)(3 * screen->h / 4) - (int)(empezar.height() / 2), screen);
-		sistema->update();
+		if(!salir)
+			sistema->update();	// Esto es para que no se muestre la pantalla de inicio al salir
 
 		// Fijamos los FPS a 30
 		temporizador.waitFramerate(30);
