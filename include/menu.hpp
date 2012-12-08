@@ -26,10 +26,10 @@
 #include "../include/shared_attributes.hpp"
 
 /* Definición de los flags para alinear los menús */
-#define MENU_RIGHT	0x00000001
-#define MENU_LEFT	0x00000002
-#define MENU_UP		0x00000004
-#define MENU_DOWN	0x00000008
+#define MENU_ALIGN_RIGHT	0x00000001
+#define MENU_ALIGN_LEFT		0x00000002
+#define MENU_ALIGN_UP		0x00000004
+#define MENU_ALIGN_DOWN		0x00000008
 
 /* Definición de los márgenes de la pantalla */
 const int MENU_MARGIN_H = 64;

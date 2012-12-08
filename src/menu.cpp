@@ -264,11 +264,11 @@ void menu_t::align(unsigned int flags){
 
 	if(textPos != NULL){
 		// Establecemos la posición en X
-		if(flags & MENU_LEFT){
+		if(flags & MENU_ALIGN_LEFT){
 			posX = MENU_MARGIN_H;
 		}
 		else {
-			if(flags & MENU_RIGHT){
+			if(flags & MENU_ALIGN_RIGHT){
 				for(int i = 0; i < nOpt; i++){
 					if(textPos[i].w > biggest)
 						biggest = textPos[i].w;
@@ -290,10 +290,10 @@ void menu_t::align(unsigned int flags){
 			if(textPos[i].h > biggest)
 				biggest = textPos[i].h;
 		}
-		if(flags & MENU_UP)
+		if(flags & MENU_ALIGN_UP)
 			posY = MENU_MARGIN_V;
 		else {
-			if(flags & MENU_DOWN){
+			if(flags & MENU_ALIGN_DOWN){
 				posY = sistema->height() - ((biggest + MENU_OPT_MARGIN) * nOpt) - MENU_MARGIN_V;
 			}
 			else {
@@ -356,6 +356,8 @@ returnVal menu_t::update(SDL_Event* event){
 					break;
 				case SDLK_ESCAPE:
 					return PREV_MENU;
+				case SDLK_F12:
+					sistema->toggleFullscreen();
 				default: return ACTUAL_MENU;
 			}
 			break;
