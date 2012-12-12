@@ -45,7 +45,7 @@ if %errorlevel% neq 0 set error=true
 
 rem Juntamos todos los módulos objeto en un solo ejecutable.
 echo Compilando ejecutable...
-"%gpp%\g++.exe" -O2 -o %OUTPUT% %OBJECTS% %LIBS%
+"%gpp%\g++.exe" -s -O2 -o %OUTPUT% %OBJECTS% %LIBS%
 if %errorlevel% neq 0 set error=true
 
 rem Decimos que la compilación ha acabado y pausamos el programa para que el usuario pueda leer los fallos en el caso de que los haya.
