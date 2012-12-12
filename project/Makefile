@@ -15,40 +15,52 @@ EXECUTABLE=../bin/linux/SKATRAK-Playground
 all: $(SOURCES) $(EXECUTABLE)
 	
 $(EXECUTABLE): $(OBJECTS) 
-	$(CC) -O2 $(OBJECTS) -o $@ $(LDFLAGS)
+	@echo Compilando ejecutable...
+	@$(CC) -O2 $(OBJECTS) -o $@ $(LDFLAGS)
 
 ../bin/linux/obj/main.o:
-	$(CC) $(CFLAGS) ../src/main.cpp -o $@
+	@echo "Compilando \"$@\"..."
+	@$(CC) $(CFLAGS) ../src/main.cpp -o $@
 
 ../bin/linux/obj/music.o:
-	$(CC) $(CFLAGS) ../src/music.cpp -o $@
+	@echo "Compilando \"$@\"..."
+	@$(CC) $(CFLAGS) ../src/music.cpp -o $@
 
 ../bin/linux/obj/system.o:
-	$(CC) $(CFLAGS) ../src/system.cpp -o $@
+	@echo "Compilando \"$@\"..."
+	@$(CC) $(CFLAGS) ../src/system.cpp -o $@
 
 ../bin/linux/obj/image.o:
-	$(CC) $(CFLAGS) ../src/image.cpp -o $@
+	@echo "Compilando \"$@\"..."
+	@$(CC) $(CFLAGS) ../src/image.cpp -o $@
 
 ../bin/linux/obj/timekeeper.o:
-	$(CC) $(CFLAGS) ../src/timekeeper.cpp -o $@
+	@echo "Compilando \"$@\"..."
+	@$(CC) $(CFLAGS) ../src/timekeeper.cpp -o $@
 
 ../bin/linux/obj/font.o:
-	$(CC) $(CFLAGS) ../src/font.cpp -o $@
+	@echo "Compilando \"$@\"..."
+	@$(CC) $(CFLAGS) ../src/font.cpp -o $@
 
 ../bin/linux/obj/inifile.o:
-	$(CC) $(CFLAGS) ../src/inifile.cpp -o $@
+	@echo "Compilando \"$@\"..."
+	@$(CC) $(CFLAGS) ../src/inifile.cpp -o $@
 
 ../bin/linux/obj/sfx.o:
-	$(CC) $(CFLAGS) ../src/sfx.cpp -o $@
+	@echo "Compilando \"$@\"..."
+	@$(CC) $(CFLAGS) ../src/sfx.cpp -o $@
 
 ../bin/linux/obj/str_operations.o:
-	$(CC) $(CFLAGS) ../src/str_operations.cpp -o $@
+	@echo "Compilando \"$@\"..."
+	@$(CC) $(CFLAGS) ../src/str_operations.cpp -o $@
 
 ../bin/linux/obj/menu.o:
-	$(CC) $(CFLAGS) ../src/menu.cpp -o $@
+	@echo "Compilando \"$@\"..."
+	@$(CC) $(CFLAGS) ../src/menu.cpp -o $@
 
 ../bin/linux/obj/mainMenu.o:
-	$(CC) $(CFLAGS) ../src/mainMenu.cpp -o $@
+	@echo "Compilando \"$@\"..."
+	@$(CC) $(CFLAGS) ../src/mainMenu.cpp -o $@
 
 clean:
 	rm -f ../bin/linux/obj/*.o
