@@ -7,7 +7,7 @@ rem Preguntamos al usuario la dirección del compilador GNU
 set /p gpp="Introduce la ruta completa o relativa al directorio donde se encuentra g++ (Por defecto 'C:\MinGW\bin'): "
 
 rem Comprobamos que la respuesta no esté vacía
-if "%gpp%" equ "" echo Para compilar, debes descargar primero MinGW e indicar aqui la ruta de su carpeta bin. && pause>nul && exit
+if "%gpp%" equ "" echo Para compilar, debes descargar e instalar primero MinGW e indicar aqui la ruta de su carpeta bin. && pause>nul && exit
 
 rem esta variable comprobará si hay algún error en el proceso de compilado.
 set error=false
