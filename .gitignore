@@ -14,3 +14,18 @@ Makefile.win
 # Archivos que genera la ejecución del programa
 stdout.txt
 stderr.txt
+
+# Archivos generados por Visual C++ (Menudos spammers, por cierto)
+*.obj
+*.tlog
+*.lastbuildstate
+*.log
+*.unsuccessfulbuild
+*.idb
+*.pdb
+*.opensdf
+*.sdf
+*.sln
+*.suo
+*.filters
+*.user
