@@ -264,11 +264,11 @@ string inifile_t::readString(string section, string varName){
  */
 bool inifile_t::readBool(string section, string varName){
 	string temp = readString(section, varName);
-	if(strcasecmp(temp.c_str(), "true") == 0){
+	if(strcmp(temp.c_str(), "true") == 0){
 		error = false;
 		return true;
 	}
-	if(strcasecmp(temp.c_str(), "false") == 0){
+	if(strcmp(temp.c_str(), "false") == 0){
 		error = false;
 		return false;
 	}
