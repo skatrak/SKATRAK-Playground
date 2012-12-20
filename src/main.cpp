@@ -29,12 +29,8 @@ const char* FONT_PATH = "../../resources/fonts/";
 const char* IMG_PATH = "../../resources/images/";
 const char* INI_PATH = "../../resources/settings/";
 
-/* Prototipos de los menús de los distintos minijuegos */
+/* Prototipo del menú principal */
 returnVal mainMenu();
-//returnVal main3enRaya();
-//returnVal mainConecta4();
-//returnVal mainPong();
-//[...]
 
 system_t* sistema = NULL;			// La variable sistema se comparte entre todos los minijuegos y permanece igual para todos ellos.
 music_t* musica = NULL;				// La variable musica se comparte por todos los minijuegos y cada uno puede tener su propia lista de reproducción.

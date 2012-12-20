@@ -34,4 +34,8 @@ enum returnVal	{	MAIN,			// Volver al menú principal
 extern system_t* sistema;
 extern music_t* musica;
 
+/* Funciones de callback comunes */
+returnVal defaultCallback(void*);
+returnVal exitCallback(void*);
+
 #endif

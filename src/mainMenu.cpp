@@ -23,26 +23,23 @@
 #include "../include/shared_attributes.hpp"
 #include "../include/menu.hpp"
 
+/* Declaraciones de los submenús del menú principal */
+returnVal mainConecta4(void* data);
+
 returnVal defaultCallback(void* data){
-	printf("Entraste a algún juego.\n");
-	return EXIT;
-}
-
-returnVal optionsCallback(void* data){
-//	return optionsMenu();
-	printf("Entraste al menú de opciones.\n");
-	return ACTUAL_MENU;
-}
-
-returnVal aboutCallback(void* data){
-//	return aboutMenu();
-	printf("Entraste al menú 'Acerca de...'.\n");
 	return ACTUAL_MENU;
 }
 
 returnVal exitCallback(void* data){
-	printf("Salir.\n");
 	return EXIT;
+}
+
+returnVal optionsMenu(void* data){
+	return ACTUAL_MENU;
+}
+
+returnVal aboutMenu(void* data){
+	return ACTUAL_MENU;
 }
 
 returnVal mainMenu(){
@@ -50,20 +47,20 @@ returnVal mainMenu(){
 
 	menu.setTexts("font01.ttf", 48);
 
-	menu.setText(0, "Juego 1");
-	menu.setOpt(0, &defaultCallback);
+	menu.setText(0, "Conecta 4");
+	menu.setOpt(0, &mainConecta4);
 
 	menu.setText(1, "Juego 2");
 	menu.setOpt(1, &defaultCallback);
 
 	menu.setText(2, "Opciones");
-	menu.setOpt(2, &optionsCallback);
+	menu.setOpt(2, &optionsMenu);
 
 	menu.setText(3, "Salir");
 	menu.setOpt(3, &exitCallback);
 
 	menu.setText(4, "Acerca de...");
-	menu.setOpt(4, &aboutCallback);
+	menu.setOpt(4, &aboutMenu);
 
 	menu.setBackground("Fondo_inicio_prueba.png");
 	menu.setImage("marcador_prueba.png");
@@ -77,17 +74,22 @@ returnVal mainMenu(){
 		timer.refresh();
 		while(SDL_PollEvent(&event)){
 			switch(menu.update(&event)){
-				case EXIT:
-				case PREV_MENU:
-					salir = true;
-					break;
-				case ACTUAL_MENU:
-				case MAIN:
-				default: break;
+			case ERROR:
+				fprintf(stderr, "Saliendo del menú principal con un error.\n");
+				return ERROR;
+			case EXIT:
+			case PREV_MENU:
+				salir = true;
+				break;
+			case ACTUAL_MENU:
+			case MAIN:
+			default: break;
 			}
 		}
 		menu.blit(screen);
-		sistema->update();
+		if(!salir)
+			sistema->update();
+
 		timer.waitFramerate(30);
 	}
 	printf("Has estado %d segundos en el menú principal.\n", (int)(timer.elapsed()/1000));

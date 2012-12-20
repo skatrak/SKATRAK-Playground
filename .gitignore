@@ -15,7 +15,7 @@ Makefile.win
 stdout.txt
 stderr.txt
 
-# Archivos generados por Visual C++ (Menudos spammers, por cierto)
+# Archivos generados por Visual Studio (Menudos spammers, por cierto)
 *.obj
 *.tlog
 *.lastbuildstate
