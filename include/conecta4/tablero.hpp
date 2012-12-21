@@ -19,10 +19,47 @@
  *  Sergio M. Afonso Fumero <theSkatrak@gmail.com>
  */
 
-#include <SKATRAK_Playground.hpp>
-#include <shared_attributes.hpp>
-#include <conecta4/tablero.hpp>
+#ifndef __TABLERO_T__
+#define __TABLERO_T__
 
-returnVal Game_Conecta4(void* data){
-	return ACTUAL_MENU;
-}
+enum CellState {
+	CELL_P1,
+	CELL_P2,
+	CELL_EMPTY
+};
+
+const int FICHA_OFFSET = 15;
+
+/**
+ * @class tablero_t
+ * @brief Clase para representar el tablero donde se juega al Conecta 4.
+ */
+class tablero_t {
+	private:
+		SDL_Rect posicion;
+		int jugador, columna;
+		CellState** tablero;
+		image_t* img_tab;
+		image_t* sig[2];
+		image_t* ficha[2];
+		sfx_t* choque;
+	protected:
+		void creaTab(void);
+		void destruyeTab(void);
+		void soltarFicha(void);
+	public:
+		tablero_t(void);
+		tablero_t(int posx, int posy);
+		~tablero_t(void);
+		void setPos(int posx, int posy);
+		void setTab(string path);
+		void setMark(int player, string path);
+		void setFich(int player, string path);
+		void setSFX(string path);
+		void reset(void);
+		void update(SDL_Event* event);
+		void blit(SDL_Surface* screen);
+		int checkWin(void);
+};
+
+#endif
