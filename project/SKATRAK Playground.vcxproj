@@ -24,6 +24,7 @@
     <ClInclude Include="..\include\timekeeper.hpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\src\conecta4\Game_Conecta4.cpp" />
     <ClCompile Include="..\src\conecta4\mainConecta4.cpp" />
     <ClCompile Include="..\src\font.cpp" />
     <ClCompile Include="..\src\image.cpp" />

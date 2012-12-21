@@ -1,7 +1,7 @@
 [Project]
 FileName=SKATRAK Playground.dev
 Name=SKATRAK Playground
-UnitCount=22
+UnitCount=24
 PchHead=-1
 PchSource=-1
 Ver=3
@@ -327,6 +327,26 @@ BuildCmd=
 FileName=..\src\menu.cpp
 CompileCpp=1
 Folder=
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit23]
+FileName=..\src\conecta4\Game_Conecta4.cpp
+CompileCpp=1
+Folder=SKATRAK Playground
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit24]
+FileName=..\src\conecta4\mainConecta4.cpp
+CompileCpp=1
+Folder=SKATRAK Playground
 Compile=1
 Link=1
 Priority=1000

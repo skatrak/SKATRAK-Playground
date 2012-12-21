@@ -15,7 +15,7 @@ set error=false
 rem Argumentos para compilar y enlazar los códigos objeto. -mwindows para que no aparezca una consola.
 set CFLAGS=-Wall -c -I"..\include"
 set LIBS=-L"..\lib\windows" -mwindows -lmingw32 -lSDLmain -lSDL -lSDL_mixer -lSDL_image -lSDL_ttf
-set OBJECTS="..\bin\windows\obj\main.o" "..\bin\windows\obj\music.o" "..\bin\windows\obj\system.o" "..\bin\windows\obj\image.o" "..\bin\windows\obj\timekeeper.o" "..\bin\windows\obj\font.o" "..\bin\windows\obj\inifile.o" "..\bin\windows\obj\sfx.o" "..\bin\windows\obj\str_operations.o" "..\bin\windows\obj\menu.o" "..\bin\windows\obj\mainMenu.o"
+set OBJECTS="..\bin\windows\obj\main.o" "..\bin\windows\obj\music.o" "..\bin\windows\obj\system.o" "..\bin\windows\obj\image.o" "..\bin\windows\obj\timekeeper.o" "..\bin\windows\obj\font.o" "..\bin\windows\obj\inifile.o" "..\bin\windows\obj\sfx.o" "..\bin\windows\obj\str_operations.o" "..\bin\windows\obj\menu.o" "..\bin\windows\obj\mainMenu.o" "..\bin\windows\obj\mainConecta4.o" "..\bin\windows\obj\Game_Conecta4.o"
 set OUTPUT="..\bin\windows\SKATRAK Playground.exe"
 
 rem Compilamos los módulos objeto por separado
@@ -41,6 +41,11 @@ if %errorlevel% neq 0 set error=true
 "%gpp%\g++.exe" %CFLAGS% -o "..\bin\windows\obj\menu.o" "..\src\menu.cpp"
 if %errorlevel% neq 0 set error=true
 "%gpp%\g++.exe" %CFLAGS% -o "..\bin\windows\obj\mainMenu.o" "..\src\mainMenu.cpp"
+if %errorlevel% neq 0 set error=true
+rem Conecta 4
+"%gpp%\g++.exe" %CFLAGS% -o "..\bin\windows\obj\mainConecta4.o" "..\src\conecta4\mainConecta4.cpp"
+if %errorlevel% neq 0 set error=true
+"%gpp%\g++.exe" %CFLAGS% -o "..\bin\windows\obj\Game_Conecta4.o" "..\src\conecta4\Game_Conecta4.cpp"
 if %errorlevel% neq 0 set error=true
 
 rem Juntamos todos los módulos objeto en un solo ejecutable.
