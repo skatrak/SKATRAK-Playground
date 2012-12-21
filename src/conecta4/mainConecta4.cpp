@@ -24,20 +24,24 @@
 #include <menu.hpp>
 
 /* Declaraciones de los submenús del menú del Conecta 4 */
-//returnVal SP_Conecta4(void* data);
-//returnVal MP_Conecta4(void* data);
-//returnVal Opt_Conecta4(void* data);
+returnVal Game_Conecta4(void*);
 
 returnVal mainConecta4(void* data){
+	// Fuente del menú
+	font_t menuFont("font01.ttf");
+	menuFont.setColor(255, 0, 100);
+	menuFont.setSize(48);
+
+	// Menú
 	menu_t menu(2);
-	menu.setTexts("font01.ttf", 48);
+	menu.setTexts(&menuFont);
 
 	menu.setText(0, "Jugar");
-	menu.setOpt(0, &defaultCallback);
-	menu.setText(1, "Atrás");
-	menu.setOpt(1, &exitCallback);
+	menu.setOpt(0, &Game_Conecta4);
+	menu.setText(1, "Atras");
+	menu.setOpt(1, &backCallback);
 
-	menu.setBackground("Fondo_inicio_prueba.png");
+	menu.setBackground("Menu_Conecta4_prueba.png");
 	menu.setImage("marcador_prueba.png");
 	menu.align(MENU_ALIGN_LEFT | MENU_ALIGN_DOWN);
 
@@ -53,7 +57,6 @@ returnVal mainConecta4(void* data){
 				return ERROR;
 			case EXIT:
 				return EXIT;
-				break;
 			case ACTUAL_MENU:
 				break;
 			case MAIN:

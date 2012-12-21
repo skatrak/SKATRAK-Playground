@@ -19,25 +19,16 @@
  *  Sergio M. Afonso Fumero <theSkatrak@gmail.com>
  */
 
-#ifndef __SHARED_ATTRIBUTES__
-#define __SHARED_ATTRIBUTES__
+#include <SKATRAK_Playground.hpp>
+#include <shared_attributes.hpp>
 
-/* Valores de retorno de los menús */
-enum returnVal {
-	MAIN,			// Volver al menú principal
-	ACTUAL_MENU,	// Volver al menú del juego actual
-	PREV_MENU,		// Volver al menú anterior
-	EXIT,			// Salir del juego
-	ERROR			// Salir con error
+enum CellState {
+	CELL_P1,
+	CELL_P2,
+	CELL_EMPTY
 };
 
-/* Variables compartidas */
-extern system_t* sistema;
-extern music_t* musica;
-
-/* Funciones de callback comunes */
-returnVal defaultCallback(void*);
-returnVal exitCallback(void*);
-returnVal backCallback(void*);
-
-#endif
+returnVal Game_Conecta4(void* data){
+	CellState tablero[6][7] = { CELL_EMPTY };
+	return ACTUAL_MENU;
+}

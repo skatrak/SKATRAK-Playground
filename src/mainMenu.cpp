@@ -23,24 +23,13 @@
 #include "../include/shared_attributes.hpp"
 #include "../include/menu.hpp"
 
+/* Definición de las funciones de callback comunes */
+returnVal defaultCallback(void* data){ return ACTUAL_MENU; }
+returnVal backCallback(void* data){ return PREV_MENU; }
+returnVal exitCallback(void* data){ return EXIT; }
+
 /* Declaraciones de los submenús del menú principal */
 returnVal mainConecta4(void* data);
-
-returnVal defaultCallback(void* data){
-	return ACTUAL_MENU;
-}
-
-returnVal exitCallback(void* data){
-	return EXIT;
-}
-
-returnVal optionsMenu(void* data){
-	return ACTUAL_MENU;
-}
-
-returnVal aboutMenu(void* data){
-	return ACTUAL_MENU;
-}
 
 returnVal mainMenu(){
 	menu_t menu(5);
@@ -49,18 +38,14 @@ returnVal mainMenu(){
 
 	menu.setText(0, "Conecta 4");
 	menu.setOpt(0, &mainConecta4);
-
 	menu.setText(1, "Juego 2");
 	menu.setOpt(1, &defaultCallback);
-
 	menu.setText(2, "Opciones");
-	menu.setOpt(2, &optionsMenu);
-
+	menu.setOpt(2, &defaultCallback);
 	menu.setText(3, "Salir");
 	menu.setOpt(3, &exitCallback);
-
 	menu.setText(4, "Acerca de...");
-	menu.setOpt(4, &aboutMenu);
+	menu.setOpt(4, &defaultCallback);
 
 	menu.setBackground("Fondo_inicio_prueba.png");
 	menu.setImage("marcador_prueba.png");
@@ -69,8 +54,8 @@ returnVal mainMenu(){
 	SDL_Event event;
 	SDL_Surface* screen = sistema->scr();
 	timekeeper_t timer;
-	bool salir = false;
-	while(!salir){
+
+	while(true){
 		timer.refresh();
 		while(SDL_PollEvent(&event)){
 			switch(menu.update(&event)){
@@ -79,19 +64,16 @@ returnVal mainMenu(){
 				return ERROR;
 			case EXIT:
 			case PREV_MENU:
-				salir = true;
-				break;
+				return EXIT;
 			case ACTUAL_MENU:
 			case MAIN:
 			default: break;
 			}
 		}
 		menu.blit(screen);
-		if(!salir)
-			sistema->update();
+		sistema->update();
 
 		timer.waitFramerate(30);
 	}
-	printf("Has estado %d segundos en el menú principal.\n", (int)(timer.elapsed()/1000));
-	return EXIT;
+	return ERROR;
 }
