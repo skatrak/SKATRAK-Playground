@@ -24,7 +24,7 @@
 
 /* Definiciones de las rutas por defecto de los recursos */
 const char* MUS_PATH = "../../resources/sound/";
-const char* SFX_PATH = "../../resources/sound/";
+const char* SFX_PATH = "../../resources/sound/SFX/";
 const char* FONT_PATH = "../../resources/fonts/";
 const char* IMG_PATH = "../../resources/images/";
 const char* INI_PATH = "../../resources/settings/";
