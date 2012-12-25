@@ -79,31 +79,37 @@ void tablero_t::soltarFicha(){
 
 	// En tmp está el índice de la primera casilla libre. Vamos a calcular su posición en la pantalla
 	pos = posicion.y + (tmp+1)*(FICHA_OFFSET) + tmp*ficha[jugador]->height();
-	// En pos está la posición en y en la que se debe llevar a cabo el rebote
 
 	timekeeper_t timer;
 	int posx = posicion.x + (columna+1)*(FICHA_OFFSET) + columna*ficha[jugador]->width();
 	int posy = posicion.y - ficha[jugador]->height();
 	double vel = 0.0; // Velocidad en px/fot
-	double accel = -0.6968888889; // Gravedad en px/fot ^ 2 (64 px = 1m, 1s = 30 fot)
-	double COR = 0.75; // Coeficiente de restitución
+	double accel = 6.9688888889; // Gravedad en px/fot ^ 2 (32 px = 5cm, 1s = 30 fot)
+	double COR = 0.5; // Coeficiente de restitución
 
 	if(ficha[jugador] != NULL){
+		SDL_Surface* screen = sistema->scr();
+		SDL_Surface* background = SDL_ConvertSurface(screen, screen->format, screen->flags);
+		SDL_Event event;
 		do {
 			timer.refresh();
 			vel += accel;
-			posy -= (int)vel;
-			if(posy <= pos){
+			posy += (int)vel;
+			if(posy >= pos){
 				if(choque != NULL)
 					choque->play();
 				posy = pos;
 				vel = -(COR * vel);
 			}
-			ficha[jugador]->blit(posx, posy, sistema->scr());
-			blit(sistema->scr());
+			SDL_BlitSurface(background, NULL, screen, NULL);
+			ficha[jugador]->blit(posx, posy, screen);
+			blit(screen);
+			sistema->update();
 			timer.waitFramerate(30);
+			while(SDL_PollEvent(&event)); // Desechamos los eventos que surjan
 		}
-		while(vel != 0 && posy != pos);
+		while(vel < -5 || posy != pos);
+		SDL_FreeSurface(background);
 	}
 
 	tablero[columna][tmp] = (!jugador)? CELL_P1 : CELL_P2;
@@ -112,7 +118,7 @@ void tablero_t::soltarFicha(){
 /**
  * @brief Constructor. Inicializa las variables y crea el tablero.
  */
-tablero_t::tablero_t(): jugador(0), columna(0), tablero(NULL), img_tab(NULL), choque(NULL) {
+tablero_t::tablero_t(): fichas(0), jugador(0), columna(0), tablero(NULL), img_tab(NULL), choque(NULL) {
 	sig[0] = sig[1] = ficha[0] = ficha[1] = NULL;
 	posicion.x = posicion.y = posicion.w = posicion.h = 0;
 	creaTab();
@@ -124,7 +130,7 @@ tablero_t::tablero_t(): jugador(0), columna(0), tablero(NULL), img_tab(NULL), ch
  * @param posx Posición x del tablero.
  * @param posy Posición y del tablero.
  */
-tablero_t::tablero_t(int posx, int posy): jugador(0), columna(0), tablero(NULL), img_tab(NULL), choque(NULL) {
+tablero_t::tablero_t(int posx, int posy): fichas(0), jugador(0), columna(0), tablero(NULL), img_tab(NULL), choque(NULL) {
 	sig[0] = sig[1] = ficha[0] = ficha[1] = NULL;
 	posicion.w = posicion.h = 0;
 	creaTab();
@@ -240,6 +246,7 @@ void tablero_t::reset(){
 	}
 	else
 		fprintf(stderr, "No se puede resetear el tablero porque no se ha cargado.\n");
+	fichas = 0;
 }
 
 /**
@@ -261,6 +268,7 @@ void tablero_t::update(SDL_Event* event){
 			case SDLK_RETURN:
 				if(tablero[columna][0] == CELL_EMPTY){
 					soltarFicha();
+					fichas++;
 					jugador = (jugador+1) % 2;
 				}
 				break;
@@ -309,7 +317,32 @@ void tablero_t::blit(SDL_Surface* screen){
 /*
  *
  */
-// TODO: Hacer la función que detecta cuando un jugador gana la partida
-int tablero_t:: checkWin(){
-	return -1;
+ResultConecta4 tablero_t::checkWin(){
+	int cont = 0;
+	for(int i = 0; i < 7; i++){
+		for(int j = 5; j >= 0; j--){
+			switch(tablero[i][j]){
+			case CELL_P1:
+				for(int k = 0; k < 4 && i+k < 7; k++){
+					if(tablero[i+k][j] == CELL_P1)
+						cont++;
+					else {
+						cont = 0;
+						break;
+					}
+				}
+				if(cont == 4) return P1_WINS;
+				break;
+			case CELL_P2:
+				break;
+			case CELL_EMPTY:
+				j = -1;
+				break;
+			}
+		}
+	}
+	if(fichas == 42)
+		return NOBODY_WINS;
+	else
+		return NOT_FINISHED;
 }

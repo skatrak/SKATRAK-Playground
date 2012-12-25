@@ -19,10 +19,57 @@
  *  Sergio M. Afonso Fumero <theSkatrak@gmail.com>
  */
 
-#include <SKATRAK_Playground.hpp>
+#include <SKATRAK_PLAYGROUND.hpp>
 #include <shared_attributes.hpp>
 #include <conecta4/tablero.hpp>
 
+// TODO: Arreglar lo de que la bola se repite por la pantalla
 returnVal Game_Conecta4(void* data){
-	return ACTUAL_MENU;
+	SDL_Surface* screen = sistema->scr();
+	SDL_Event event;
+
+	image_t fondo("Fondo_Conecta4_prueba.png");
+
+	tablero_t tablero(0, 48);
+	tablero.setTab("Tab_Conecta4.png");
+	tablero.setMark(0, "Mark_Conecta4_P1.png");
+	tablero.setMark(1, "Mark_Conecta4_P2.png");
+	tablero.setFich(0, "Ficha_Conecta4_P1.png");
+	tablero.setFich(1, "Ficha_Conecta4_P2.png");
+	tablero.setSFX("Pin Drop.wav");
+
+	timekeeper_t timer;
+	while(true){
+		timer.refresh();
+		while(SDL_PollEvent(&event)){
+			tablero.update(&event);
+			switch(event.type){
+			case SDL_KEYDOWN:
+				if(event.key.keysym.sym == SDLK_ESCAPE) return ACTUAL_MENU;
+				break;
+			case SDL_QUIT:
+				return EXIT;
+			}
+			switch(tablero.checkWin()){
+			case NOT_FINISHED:
+				break;
+			case P1_WINS:
+				printf("Ha ganado el jugador 1.\n");
+				tablero.reset();
+				break;
+			case P2_WINS:
+				printf("Ha ganado el jugador 2.\n");
+				tablero.reset();
+				break;
+			case NOBODY_WINS:
+				tablero.reset();
+				break;
+			}
+		}
+		fondo.blit(0, 0, screen);
+		tablero.blit(screen);
+		sistema->update();
+		timer.waitFramerate(30);
+	}
+	return ERROR;
 }

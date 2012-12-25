@@ -28,6 +28,13 @@ enum CellState {
 	CELL_EMPTY
 };
 
+enum ResultConecta4 {
+	P1_WINS,
+	P2_WINS,
+	NOT_FINISHED,
+	NOBODY_WINS
+};
+
 const int FICHA_OFFSET = 15;
 
 /**
@@ -37,6 +44,7 @@ const int FICHA_OFFSET = 15;
 class tablero_t {
 	private:
 		SDL_Rect posicion;
+		int fichas;
 		int jugador, columna;
 		CellState** tablero;
 		image_t* img_tab;
@@ -59,7 +67,7 @@ class tablero_t {
 		void reset(void);
 		void update(SDL_Event* event);
 		void blit(SDL_Surface* screen);
-		int checkWin(void);
+		ResultConecta4 checkWin(void);
 };
 
 #endif
