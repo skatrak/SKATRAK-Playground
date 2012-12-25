@@ -24,7 +24,7 @@
 
 const int FADEIN_DELAY = 1000;
 const int MAX_VOLUME = 128;
-const int AUDIO_CHANNELS = 5;
+const int AUDIO_CHANNELS = 10;
 
 /**
  * @class music_t
