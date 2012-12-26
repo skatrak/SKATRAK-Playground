@@ -19,7 +19,9 @@
  *  Sergio M. Afonso Fumero <theSkatrak@gmail.com>
  */
 
-#include "../include/menu.hpp"
+#include <SKATRAK_PLAYGROUND.hpp>
+#include <shared_attributes.hpp>
+#include <menu.hpp>
 
 /**
  * @brief Constructor por defecto. Inicializa los valores de la clase.

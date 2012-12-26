@@ -19,7 +19,7 @@
  *  Sergio M. Afonso Fumero <theSkatrak@gmail.com>
  */
 
-#include "../include/SKATRAK_PLAYGROUND.hpp"
+#include <SKATRAK_PLAYGROUND.hpp>
 
 /**
  * @brief Constructor. Inicializa el volumen a DEFAULT_SFX_VOLUME

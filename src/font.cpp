@@ -19,7 +19,7 @@
  *  Sergio M. Afonso Fumero <theSkatrak@gmail.com>
  */
 
-#include "../include/SKATRAK_PLAYGROUND.hpp"
+#include <SKATRAK_PLAYGROUND.hpp>
 
 /**
  * @brief Constructor. Inicializa los valores de las variables e inicia SDL_TTF si no se ha iniciado.

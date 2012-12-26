@@ -19,8 +19,8 @@
  *  Sergio M. Afonso Fumero <theSkatrak@gmail.com>
  */
 
-#include "../include/SKATRAK_PLAYGROUND.hpp"
-#include "../include/shared_attributes.hpp"
+#include <SKATRAK_PLAYGROUND.hpp>
+#include <shared_attributes.hpp>
 
 /* Definiciones de las rutas por defecto de los recursos */
 const char* MUS_PATH = "../../resources/sound/";

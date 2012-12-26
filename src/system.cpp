@@ -19,7 +19,7 @@
  *  Sergio M. Afonso Fumero <theSkatrak@gmail.com>
  */
 
-#include "../include/SKATRAK_PLAYGROUND.hpp"
+#include <SKATRAK_PLAYGROUND.hpp>
 
 /**
  * @brief Crea la clase sistema e inicializa las propiedades de la pantalla. También inicializa SDL.

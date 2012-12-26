@@ -19,7 +19,7 @@
  *  Sergio M. Afonso Fumero <theSkatrak@gmail.com>
  */
 
-#include "../include/str_operations.hpp"
+#include <str_operations.hpp>
 #include <cstring>
 
 /**

@@ -19,9 +19,9 @@
  *  Sergio M. Afonso Fumero <theSkatrak@gmail.com>
  */
 
-#include "../include/SKATRAK_PLAYGROUND.hpp"
-#include "../include/shared_attributes.hpp"
-#include "../include/menu.hpp"
+#include <SKATRAK_PLAYGROUND.hpp>
+#include <shared_attributes.hpp>
+#include <menu.hpp>
 
 /* Definición de las funciones de callback comunes */
 returnVal defaultCallback(void* data){ return ACTUAL_MENU; }

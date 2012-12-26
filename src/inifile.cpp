@@ -19,8 +19,8 @@
  *  Sergio M. Afonso Fumero <theSkatrak@gmail.com>
  */
 
-#include "../include/SKATRAK_PLAYGROUND.hpp"
-#include "../include/str_operations.hpp"
+#include <SKATRAK_PLAYGROUND.hpp>
+#include <str_operations.hpp>
 
 /**
  * @brief Constructor. Inicialización de variables.
