@@ -19,7 +19,7 @@
  *  Sergio M. Afonso Fumero <theSkatrak@gmail.com>
  */
 
-#include <SKATRAK_Playground.hpp>
+#include <SKATRAK_PLAYGROUND.hpp>
 #include <shared_attributes.hpp>
 #include <menu.hpp>
 
