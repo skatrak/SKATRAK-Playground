@@ -342,7 +342,7 @@ void tablero_t::blit(SDL_Surface* screen){
 		fprintf(stderr, "No se puede mostrar el tablero porque no se ha cargado correctamente.\n");
 }
 
-/*
+/**
  * @brief Comprueba si algún jugador ha ganado la partida.
  * @return Resultado actual.
  */

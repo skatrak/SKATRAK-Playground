@@ -19,7 +19,7 @@
  *  Sergio M. Afonso Fumero <theSkatrak@gmail.com>
  */
 
-#include "../include/SKATRAK_PLAYGROUND.hpp"
+#include <SKATRAK_PLAYGROUND.hpp>
 
 /* Declaración de la variable musica que será la que contenga la lista de reproducción */
 extern music_t* musica;
@@ -136,7 +136,7 @@ void music_t::setTracks(int n){
 /**
  * @brief Carga una canción en un índice del array de la lista de reproducción.
  * @param index Posición en la lista de reproducción (Entre 0 y n-1).
- * @param name Nombre del fichero donde está guardada la canción.
+ * @param path Ruta del fichero donde está guardada la canción.
  * @note Para llamar a esta función hay que llamar previamente a music_t::setTracks para reservar la memoria.
  */
 void music_t::setTrack(int index, string path){
