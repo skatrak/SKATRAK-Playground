@@ -23,15 +23,16 @@
 #include <shared_attributes.hpp>
 #include <conecta4/tablero.hpp>
 
-// TODO: Arreglar lo de que la bola se repite por la pantalla
 returnVal Game_Conecta4(void* data){
 	SDL_Surface* screen = sistema->scr();
 	SDL_Event event;
+	static int victorias[2] = {0, 0};
 
 	image_t fondo("Fondo_Conecta4_prueba.png");
 
-	tablero_t tablero(0, 48);
+	tablero_t tablero;
 	tablero.setTab("Tab_Conecta4.png");
+	tablero.setPos((int)(screen->w / 2 - tablero.width() / 2), (int)(screen->h / 2 - tablero.height() / 2));
 	tablero.setMark(0, "Mark_Conecta4_P1.png");
 	tablero.setMark(1, "Mark_Conecta4_P2.png");
 	tablero.setFich(0, "Ficha_Conecta4_P1.png");
@@ -55,10 +56,12 @@ returnVal Game_Conecta4(void* data){
 				break;
 			case P1_WINS:
 				printf("Ha ganado el jugador 1.\n");
+				victorias[0]++;
 				tablero.reset();
 				break;
 			case P2_WINS:
 				printf("Ha ganado el jugador 2.\n");
+				victorias[1]++;
 				tablero.reset();
 				break;
 			case NOBODY_WINS:

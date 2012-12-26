@@ -35,7 +35,8 @@ enum ResultConecta4 {
 	NOBODY_WINS
 };
 
-const int FICHA_OFFSET = 15;
+// Separación entre agujeros en el tablero y separación de los agujeros y los bordes
+const int FICHA_OFFSET = 40;
 
 /**
  * @class tablero_t
@@ -63,6 +64,8 @@ class tablero_t {
 		void setMark(int player, string path);
 		void setFich(int player, string path);
 		void setSFX(string path);
+		int width(void);
+		int height(void);
 		void reset(void);
 		void update(SDL_Event* event);
 		void blit(SDL_Surface* screen);

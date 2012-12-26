@@ -118,7 +118,7 @@ void tablero_t::soltarFicha(){
 /**
  * @brief Constructor. Inicializa las variables y crea el tablero.
  */
-tablero_t::tablero_t(): jugador(0), columna(0), tablero(NULL), img_tab(NULL), choque(NULL) {
+tablero_t::tablero_t(): jugador(0), columna(3), tablero(NULL), img_tab(NULL), choque(NULL) {
 	sig[0] = sig[1] = ficha[0] = ficha[1] = NULL;
 	posicion.x = posicion.y = posicion.w = posicion.h = 0;
 	creaTab();
@@ -130,7 +130,7 @@ tablero_t::tablero_t(): jugador(0), columna(0), tablero(NULL), img_tab(NULL), ch
  * @param posx Posición x del tablero.
  * @param posy Posición y del tablero.
  */
-tablero_t::tablero_t(int posx, int posy): jugador(0), columna(0), tablero(NULL), img_tab(NULL), choque(NULL) {
+tablero_t::tablero_t(int posx, int posy): jugador(0), columna(3), tablero(NULL), img_tab(NULL), choque(NULL) {
 	sig[0] = sig[1] = ficha[0] = ficha[1] = NULL;
 	posicion.w = posicion.h = 0;
 	creaTab();
@@ -236,6 +236,28 @@ void tablero_t::setSFX(string path){
 }
 
 /**
+ * @brief Devuelve la anchura del tablero.
+ * @return Anchura del tablero.
+ */
+int tablero_t::width(){
+	if(img_tab != NULL)
+		return img_tab->width();
+	else
+		return 0;
+}
+
+/**
+ * @brief Devuelve la altura del tablero.
+ * @return Altura del tablero.
+ */
+int tablero_t::height(){
+	if(img_tab != NULL)
+		return img_tab->height();
+	else
+		return 0;
+}
+
+/**
  * @brief Vacía el tablero.
  */
 void tablero_t::reset(){
@@ -246,6 +268,7 @@ void tablero_t::reset(){
 	}
 	else
 		fprintf(stderr, "No se puede resetear el tablero porque no se ha cargado.\n");
+	columna = 3;
 }
 
 /**
@@ -274,7 +297,14 @@ void tablero_t::update(SDL_Event* event){
 			}
 			break;
 		case SDL_MOUSEMOTION:
-// TODO: Manejar eventos de ratón
+			if(event->motion.x >= posicion.x && event->motion.x <= posicion.x + posicion.w - (int)(FICHA_OFFSET / 2))
+				columna = (int)((event->motion.x - posicion.x) / (img_tab->width() / 7));
+			break;
+		case SDL_MOUSEBUTTONDOWN:
+			if(event->button.button == SDL_BUTTON_LEFT && tablero[columna][0] == CELL_EMPTY){
+				soltarFicha();
+				jugador = (jugador+1) % 2;
+			}
 			break;
 		default: break;
 		}
