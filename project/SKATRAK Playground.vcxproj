@@ -11,6 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\include\conecta4\tablero.hpp" />
     <ClInclude Include="..\include\font.hpp" />
     <ClInclude Include="..\include\image.hpp" />
     <ClInclude Include="..\include\inifile.hpp" />
@@ -26,6 +27,7 @@
   <ItemGroup>
     <ClCompile Include="..\src\conecta4\Game_Conecta4.cpp" />
     <ClCompile Include="..\src\conecta4\mainConecta4.cpp" />
+    <ClCompile Include="..\src\conecta4\tablero.cpp" />
     <ClCompile Include="..\src\font.cpp" />
     <ClCompile Include="..\src\image.cpp" />
     <ClCompile Include="..\src\inifile.cpp" />

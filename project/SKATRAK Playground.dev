@@ -1,19 +1,19 @@
 [Project]
 FileName=SKATRAK Playground.dev
 Name=SKATRAK Playground
-UnitCount=24
+UnitCount=26
 PchHead=-1
 PchSource=-1
 Ver=3
 IsCpp=1
 ProfilesCount=3
 ProfileIndex=0
-Folders=
+Folders="Conecta 4",Entorno
 
 [Unit1]
 FileName=..\include\music.hpp
 CompileCpp=1
-Folder=SKATRAK Playground
+Folder=Entorno
 Compile=1
 Link=1
 Priority=1000
@@ -23,7 +23,7 @@ BuildCmd=
 [Unit2]
 FileName=..\include\system.hpp
 CompileCpp=1
-Folder=SKATRAK Playground
+Folder=Entorno
 Compile=1
 Link=1
 Priority=1000
@@ -33,7 +33,7 @@ BuildCmd=
 [Unit3]
 FileName=..\src\main.cpp
 CompileCpp=1
-Folder=SKATRAK Playground
+Folder=
 Compile=1
 Link=1
 Priority=1000
@@ -43,7 +43,7 @@ BuildCmd=
 [Unit4]
 FileName=..\src\music.cpp
 CompileCpp=1
-Folder=SKATRAK Playground
+Folder=Entorno
 Compile=1
 Link=1
 Priority=1000
@@ -53,7 +53,7 @@ BuildCmd=$(CPP) -c music.cpp -o ../bin/objects/music.o $(CXXFLAGS)
 [Unit5]
 FileName=..\src\system.cpp
 CompileCpp=1
-Folder=SKATRAK Playground
+Folder=Entorno
 Compile=1
 Link=1
 Priority=1000
@@ -166,7 +166,7 @@ CompilerType=5
 [Unit6]
 FileName=..\include\image.hpp
 CompileCpp=1
-Folder=
+Folder=Entorno
 Compile=1
 Link=1
 Priority=1000
@@ -176,7 +176,7 @@ BuildCmd=
 [Unit7]
 FileName=..\src\image.cpp
 CompileCpp=1
-Folder=
+Folder=Entorno
 Compile=1
 Link=1
 Priority=1000
@@ -186,7 +186,7 @@ BuildCmd=$(CPP) -c image.cpp -o ../bin/objects/image.o $(CXXFLAGS)
 [Unit9]
 FileName=..\src\timekeeper.cpp
 CompileCpp=1
-Folder=SKATRAK Playground
+Folder=Entorno
 Compile=1
 Link=1
 Priority=1000
@@ -196,7 +196,7 @@ BuildCmd=
 [Unit8]
 FileName=..\include\timekeeper.hpp
 CompileCpp=1
-Folder=SKATRAK Playground
+Folder=Entorno
 Compile=1
 Link=1
 Priority=1000
@@ -206,7 +206,7 @@ BuildCmd=
 [Unit10]
 FileName=..\include\sfx.hpp
 CompileCpp=1
-Folder=
+Folder=Entorno
 Compile=1
 Link=1
 Priority=1000
@@ -216,7 +216,7 @@ BuildCmd=
 [Unit11]
 FileName=..\src\sfx.cpp
 CompileCpp=1
-Folder=
+Folder=Entorno
 Compile=1
 Link=1
 Priority=1000
@@ -226,7 +226,7 @@ BuildCmd=
 [Unit12]
 FileName=..\include\font.hpp
 CompileCpp=1
-Folder=SKATRAK Playground
+Folder=Entorno
 Compile=1
 Link=1
 Priority=1000
@@ -236,7 +236,7 @@ BuildCmd=
 [Unit13]
 FileName=..\src\font.cpp
 CompileCpp=1
-Folder=SKATRAK Playground
+Folder=Entorno
 Compile=1
 Link=1
 Priority=1000
@@ -246,7 +246,7 @@ BuildCmd=
 [Unit14]
 FileName=..\include\inifile.hpp
 CompileCpp=1
-Folder=
+Folder=Entorno
 Compile=1
 Link=1
 Priority=1000
@@ -256,7 +256,7 @@ BuildCmd=
 [Unit15]
 FileName=..\src\inifile.cpp
 CompileCpp=1
-Folder=
+Folder=Entorno
 Compile=1
 Link=1
 Priority=1000
@@ -266,7 +266,7 @@ BuildCmd=
 [Unit16]
 FileName=..\include\str_operations.hpp
 CompileCpp=1
-Folder=
+Folder=Entorno
 Compile=1
 Link=1
 Priority=1000
@@ -276,7 +276,7 @@ BuildCmd=
 [Unit17]
 FileName=..\src\str_operations.cpp
 CompileCpp=1
-Folder=
+Folder=Entorno
 Compile=1
 Link=1
 Priority=1000
@@ -286,7 +286,7 @@ BuildCmd=
 [Unit18]
 FileName=..\include\SKATRAK_PLAYGROUND.hpp
 CompileCpp=1
-Folder=
+Folder=Entorno
 Compile=1
 Link=1
 Priority=1000
@@ -296,7 +296,7 @@ BuildCmd=
 [Unit19]
 FileName=..\include\shared_attributes.hpp
 CompileCpp=1
-Folder=
+Folder=Entorno
 Compile=1
 Link=1
 Priority=1000
@@ -316,7 +316,7 @@ BuildCmd=
 [Unit21]
 FileName=..\include\menu.hpp
 CompileCpp=1
-Folder=
+Folder=Entorno
 Compile=1
 Link=1
 Priority=1000
@@ -326,7 +326,7 @@ BuildCmd=
 [Unit22]
 FileName=..\src\menu.cpp
 CompileCpp=1
-Folder=
+Folder=Entorno
 Compile=1
 Link=1
 Priority=1000
@@ -336,7 +336,7 @@ BuildCmd=
 [Unit23]
 FileName=..\src\conecta4\Game_Conecta4.cpp
 CompileCpp=1
-Folder=SKATRAK Playground
+Folder=Conecta 4
 Compile=1
 Link=1
 Priority=1000
@@ -346,7 +346,27 @@ BuildCmd=
 [Unit24]
 FileName=..\src\conecta4\mainConecta4.cpp
 CompileCpp=1
-Folder=SKATRAK Playground
+Folder=Conecta 4
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit25]
+FileName=..\src\conecta4\tablero.cpp
+CompileCpp=1
+Folder=Conecta 4
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit26]
+FileName=..\include\conecta4\tablero.hpp
+CompileCpp=1
+Folder=Conecta 4
 Compile=1
 Link=1
 Priority=1000
