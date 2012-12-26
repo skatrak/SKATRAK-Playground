@@ -41,10 +41,10 @@ class font_t {
 		int fontAlpha;
 		bool changed;
 	public:
-		font_t();
+		font_t(void);
 		font_t(font_t& copy);
 		font_t(string path);
-		~font_t();
+		~font_t(void);
 		void open(string path);
 		void setSize(int size);
 		void setStyle(int style);
@@ -52,9 +52,9 @@ class font_t {
 		void setColor(int R, int G, int B);
 		void setAlpha(int alpha);
 		void blit(int x, int y, SDL_Surface* screen);
-		int width();
-		int height();
-		int size(){ return fontSize; }
+		int width(void);
+		int height(void);
+		int size(void){ return fontSize; }
 };
 
 /**

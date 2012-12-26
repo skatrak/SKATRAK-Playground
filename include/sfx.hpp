@@ -35,13 +35,13 @@ class sfx_t {
 		Mix_Chunk* sound;
 		int volume;
 	public:
-		sfx_t();
+		sfx_t(void);
 		sfx_t(string path);
-		~sfx_t();
+		~sfx_t(void);
 		void setSound(string path);
 		void setVol(int vol);
-		void play();
-		int vol(){ return volume; }
+		void play(void);
+		int vol(void){ return volume; }
 };
 
 /**

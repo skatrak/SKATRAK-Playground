@@ -30,15 +30,15 @@ class image_t {
 	private:
 		SDL_Surface* img;
 	public:
-		image_t();
+		image_t(void);
 		image_t(string path);
-		~image_t();
+		~image_t(void);
 		void open(string path);
 		void setAlpha(int alpha);
 		void blit(int x, int y, SDL_Surface* screen, SDL_Rect* imZone = NULL);
 		void blit(int x, int y, SDL_Surface* screen, int imX, int imY, int imW, int imH);
-		int width();
-		int height();
+		int width(void);
+		int height(void);
 };
 
 #endif

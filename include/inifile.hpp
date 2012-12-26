@@ -33,15 +33,15 @@ class inifile_t {
 		ifstream input;
 		bool error;
 	public:
-		inifile_t();
+		inifile_t(void);
 		inifile_t(string path);
-		~inifile_t();
+		~inifile_t(void);
 		void open(string path);
 		int readInt(string section, string varName);
 		double readDouble(string section, string varName);
 		string readString(string section, string varName);
 		bool readBool(string section, string varName);
-		bool errorStatus(){ return error; }
+		bool errorStatus(void){ return error; }
 };
 
 /**

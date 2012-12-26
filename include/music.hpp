@@ -41,16 +41,16 @@ class music_t {
 		int current;
 		bool running, playing, paused;
 	public:
-		music_t();
+		music_t(void);
 		music_t(int nT);
-		~music_t();
+		~music_t(void);
 		void setTracks(int n);
 		void setTrack(int index, string path);
-		void play();
-		void pause();
-		void halt();
+		void play(void);
+		void pause(void);
+		void halt(void);
 		void setVol(int vol);
-		friend void nextTrack();
+		friend void nextTrack(void);
 };
 
 #endif

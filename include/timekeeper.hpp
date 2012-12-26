@@ -32,11 +32,11 @@ class timekeeper_t {
 		int current;
 		int frames;
 	public:
-		timekeeper_t(): current(0), frames(0) { start = SDL_GetTicks(); }
-		void refresh();
-		int elapsed();
+		timekeeper_t(void): current(0), frames(0) { start = SDL_GetTicks(); }
+		void refresh(void);
+		int elapsed(void);
 		void waitFramerate(int fps);
-		int renderedFrames();
+		int renderedFrames(void);
 };
 
 /**

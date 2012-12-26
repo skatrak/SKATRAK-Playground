@@ -37,13 +37,13 @@ class system_t {
 		bool fullscr;
 	public:
 		system_t(int scr_w, int scr_h, int depth);
-		~system_t();
-		void toggleFullscreen();
+		~system_t(void);
+		void toggleFullscreen(void);
 		void setIcon(string iconpath);
-		int width(){ return screenWidth; }
-		int height(){ return screenHeight; }
-		SDL_Surface* scr(){ return screen; }
-		void update();
+		int width(void){ return screenWidth; }
+		int height(void){ return screenHeight; }
+		SDL_Surface* scr(void){ return screen; }
+		void update(void);
 };
 
 /**

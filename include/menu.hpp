@@ -22,9 +22,6 @@
 #ifndef __MENU_T__
 #define __MENU_T__
 
-#include "../include/SKATRAK_PLAYGROUND.hpp"
-#include "../include/shared_attributes.hpp"
-
 /* Definición de los flags para alinear los menús */
 #define MENU_ALIGN_RIGHT	0x00000001
 #define MENU_ALIGN_LEFT		0x00000002
@@ -55,9 +52,9 @@ class menu_t {
 		sfx_t* selectSound;			// Sonido al cambiar de selección
 		MenuCallbackFunc* callback; // Array de callbacks (Uno por cada opción)
 	public:
-		menu_t();
+		menu_t(void);
 		menu_t(int optNumber);
-		~menu_t();
+		~menu_t(void);
 		void setOpts(int optNumber);
 		void setOpt(int index, MenuCallbackFunc func);
 		void setTexts(string fontName, int fontSize);
