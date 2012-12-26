@@ -118,7 +118,7 @@ void tablero_t::soltarFicha(){
 /**
  * @brief Constructor. Inicializa las variables y crea el tablero.
  */
-tablero_t::tablero_t(): fichas(0), jugador(0), columna(0), tablero(NULL), img_tab(NULL), choque(NULL) {
+tablero_t::tablero_t(): jugador(0), columna(0), tablero(NULL), img_tab(NULL), choque(NULL) {
 	sig[0] = sig[1] = ficha[0] = ficha[1] = NULL;
 	posicion.x = posicion.y = posicion.w = posicion.h = 0;
 	creaTab();
@@ -130,7 +130,7 @@ tablero_t::tablero_t(): fichas(0), jugador(0), columna(0), tablero(NULL), img_ta
  * @param posx Posición x del tablero.
  * @param posy Posición y del tablero.
  */
-tablero_t::tablero_t(int posx, int posy): fichas(0), jugador(0), columna(0), tablero(NULL), img_tab(NULL), choque(NULL) {
+tablero_t::tablero_t(int posx, int posy): jugador(0), columna(0), tablero(NULL), img_tab(NULL), choque(NULL) {
 	sig[0] = sig[1] = ficha[0] = ficha[1] = NULL;
 	posicion.w = posicion.h = 0;
 	creaTab();
@@ -246,7 +246,6 @@ void tablero_t::reset(){
 	}
 	else
 		fprintf(stderr, "No se puede resetear el tablero porque no se ha cargado.\n");
-	fichas = 0;
 }
 
 /**
@@ -268,7 +267,6 @@ void tablero_t::update(SDL_Event* event){
 			case SDLK_RETURN:
 				if(tablero[columna][0] == CELL_EMPTY){
 					soltarFicha();
-					fichas++;
 					jugador = (jugador+1) % 2;
 				}
 				break;
@@ -315,33 +313,52 @@ void tablero_t::blit(SDL_Surface* screen){
 }
 
 /*
- *
+ * @brief Comprueba si algún jugador ha ganado la partida.
+ * @return Resultado actual.
  */
 ResultConecta4 tablero_t::checkWin(){
-	int cont = 0;
+	CellState actual;
+	bool lleno = true;
 	for(int i = 0; i < 7; i++){
-		for(int j = 5; j >= 0; j--){
-			switch(tablero[i][j]){
-			case CELL_P1:
-				for(int k = 0; k < 4 && i+k < 7; k++){
-					if(tablero[i+k][j] == CELL_P1)
-						cont++;
-					else {
-						cont = 0;
-						break;
-					}
-				}
-				if(cont == 4) return P1_WINS;
-				break;
-			case CELL_P2:
-				break;
-			case CELL_EMPTY:
+		for(int j = 5; j >= 0; j--){ // Recorremos las columnas de abajo hacia arriba porque así podemos saltarnos las celdas vacías
+			actual = tablero[i][j];
+			if(actual == CELL_EMPTY){
 				j = -1;
-				break;
+				lleno = false;
+			}
+			else {
+				// Columna hacia arriba
+				if(j >= 3 && tablero[i][j-1] == actual && tablero[i][j-2] == actual && tablero[i][j-3] == actual){
+					if(actual == CELL_P1)
+						return P1_WINS;
+					else
+						return P2_WINS;
+				}
+				// Fila hacia la derecha
+				if(i <= 3 && tablero[i+1][j] == actual && tablero[i+2][j] == actual && tablero[i+3][j] == actual){
+					if(actual == CELL_P1)
+						return P1_WINS;
+					else
+						return P2_WINS;
+				}
+				// Diagonal derecha-arriba
+				if(i <= 3 && j >= 3 && tablero[i+1][j-1] == actual && tablero[i+2][j-2] == actual && tablero[i+3][j-3] == actual){
+					if(actual == CELL_P1)
+						return P1_WINS;
+					else
+						return P2_WINS;
+				}
+				// Diagonal derecha-abajo
+				if(i <= 3 && j <= 2 && tablero[i+1][j+1] == actual && tablero[i+2][j+2] == actual && tablero[i+3][j+3] == actual){
+					if(actual == CELL_P1)
+						return P1_WINS;
+					else
+						return P2_WINS;
+				}
 			}
 		}
 	}
-	if(fichas == 42)
+	if(lleno)
 		return NOBODY_WINS;
 	else
 		return NOT_FINISHED;

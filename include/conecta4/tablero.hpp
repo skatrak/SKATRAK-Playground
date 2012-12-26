@@ -44,7 +44,6 @@ const int FICHA_OFFSET = 15;
 class tablero_t {
 	private:
 		SDL_Rect posicion;
-		int fichas;
 		int jugador, columna;
 		CellState** tablero;
 		image_t* img_tab;
