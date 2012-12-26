@@ -78,7 +78,7 @@ int main(int argc, char* argv[]){
 		sistema->update();
 		temporizador.waitFramerate(30);
 		alpha += 3;
-		SDL_PollEvent(NULL);
+		while(SDL_PollEvent(&event)); // Vaciamos la cola de eventos para que no se propaguen por otros menús
 	}
 	nombreJuego.setAlpha(SDL_ALPHA_OPAQUE);
 
@@ -120,7 +120,6 @@ int main(int argc, char* argv[]){
 
 	// Paramos la música antes de salir y liberamos recursos
 	musica->halt();
-	printf("El programa ha estado abierto %d segundos y ha imprimido %d fotogramas.\n", (int)temporizador.elapsed()/1000, temporizador.renderedFrames());
 	if(musica != NULL)
 		delete musica;
 	if(sistema != NULL)

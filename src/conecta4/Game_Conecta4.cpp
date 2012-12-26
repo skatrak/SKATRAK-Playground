@@ -62,6 +62,7 @@ returnVal Game_Conecta4(void* data){
 				tablero.reset();
 				break;
 			case NOBODY_WINS:
+				printf("Empate.\n");
 				tablero.reset();
 				break;
 			}
