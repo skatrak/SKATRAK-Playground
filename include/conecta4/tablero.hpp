@@ -22,12 +22,14 @@
 #ifndef __TABLERO_T__
 #define __TABLERO_T__
 
+// Diferentes contenidos que puede tener una celda del tablero
 enum CellState {
 	CELL_P1,
 	CELL_P2,
 	CELL_EMPTY
 };
 
+// Diferentes resultados que pueden haber en una partida de Conecta 4
 enum ResultConecta4 {
 	P1_WINS,
 	P2_WINS,

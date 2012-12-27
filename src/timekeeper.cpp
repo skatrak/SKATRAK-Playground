@@ -40,6 +40,7 @@ int timekeeper_t::elapsed(){
  * @note Esta función aumenta el número de frames que se supone que se han mostrado por pantalla.
  *
  * Es recomendable llamar a esta función al final del game loop y llamar a timekeeper_t::refresh al principio del mismo.
+ * Así conseguimos que el juego funcione a la misma velocidad en cualquier máquina.
  */
 void timekeeper_t::waitFramerate(int fps){
 	if(fps > 0){

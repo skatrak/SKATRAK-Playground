@@ -25,6 +25,7 @@
 
 /**
  * @brief Crea la matriz que contiene los valores de las fichas en el tablero.
+ * @note La matriz se crea traspuesta, así que hay que tenerlo en cuenta a la hora de hacer modificaciones.
  */
 void tablero_t::creaTab(){
 	if(tablero != NULL)
