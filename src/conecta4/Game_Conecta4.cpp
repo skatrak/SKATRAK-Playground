@@ -90,12 +90,12 @@ returnVal Game_Conecta4(void* data){
 						tablero.reset();
 						continue;
 					}
-					else
+					else /* if(salir()) */
 						return ACTUAL_MENU;
 				}
 				break;
 			case SDL_KEYDOWN:
-				if(event.key.keysym.sym == SDLK_ESCAPE) return ACTUAL_MENU;
+				if(event.key.keysym.sym == SDLK_ESCAPE /* && salir() */) return ACTUAL_MENU;
 				break;
 			case SDL_QUIT:
 				return EXIT;
@@ -105,16 +105,19 @@ returnVal Game_Conecta4(void* data){
 			case NOT_FINISHED:
 				break;
 			case P1_WINS:
+				/* msgVictoria(P1_WINS) */
 				printf("Ha ganado el jugador 1.\n");
 				victorias[0]++;
 				tablero.reset();
 				break;
 			case P2_WINS:
+				/* msgVictoria(P2_WINS) */
 				printf("Ha ganado el jugador 2.\n");
 				victorias[1]++;
 				tablero.reset();
 				break;
 			case NOBODY_WINS:
+				/* msgVictoria(NOBODY_WINS) */
 				printf("Empate.\n");
 				tablero.reset();
 				break;
