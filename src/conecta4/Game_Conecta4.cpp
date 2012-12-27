@@ -23,34 +23,78 @@
 #include <shared_attributes.hpp>
 #include <conecta4/tablero.hpp>
 
+#ifdef _MSC_VER
+#define sprintf sprintf_s
+#endif
+
 returnVal Game_Conecta4(void* data){
 	SDL_Surface* screen = sistema->scr();
 	SDL_Event event;
 	static int victorias[2] = {0, 0};
+	char letreroJugador[32];
 
 	image_t fondo("Fondo_Conecta4_prueba.png");
 
+	font_t j1("font01.ttf");
+	j1.setColor(255, 255, 255);
+	j1.setSize(32);
+	font_t j2(j1);
+	font_t reset(j1);
+	font_t atras(j1);
+
+	reset.setText("Reiniciar");
+	atras.setText("Atras");
+
 	tablero_t tablero;
 	tablero.setTab("Tab_Conecta4.png");
-	tablero.setPos((int)(screen->w / 2 - tablero.width() / 2), (int)(screen->h / 2 - tablero.height() / 2));
+	tablero.setPos((int)(screen->w / 2 - tablero.width() / 2), (int)(screen->h - tablero.height() - tablero.height() / 6));
 	tablero.setMark(0, "Mark_Conecta4_P1.png");
 	tablero.setMark(1, "Mark_Conecta4_P2.png");
 	tablero.setFich(0, "Ficha_Conecta4_P1.png");
 	tablero.setFich(1, "Ficha_Conecta4_P2.png");
 	tablero.setSFX("Pin Drop.wav");
 
+	struct msgCoord {
+		int x;
+		int y;
+	};
+
+	msgCoord resC = {tablero.posX(), j1.height()};
+	msgCoord atrC = {tablero.posX() + tablero.width() - atras.width(), j2.height()};
+
+	enum optSelected { NONE, RESET, BACK };
+	optSelected selected = NONE;
+
 	timekeeper_t timer;
 	while(true){
 		timer.refresh();
 		while(SDL_PollEvent(&event)){
-			tablero.update(&event);
 			switch(event.type){
+			case SDL_MOUSEMOTION:
+				if(event.motion.x >= resC.x && event.motion.x <= resC.x + reset.width() && event.motion.y >= resC.y && event.motion.y <= resC.y + reset.height())
+					selected = RESET;
+				else if(event.motion.x >= atrC.x && event.motion.x <= atrC.x + atras.width() && event.motion.y >= atrC.y && event.motion.y <= atrC.y + atras.height())
+					selected = BACK;
+				else
+					selected = NONE;
+				break;
+			case SDL_MOUSEBUTTONDOWN:
+				if(event.button.button == SDL_BUTTON_LEFT && selected != NONE){
+					if(selected == RESET){
+						tablero.reset();
+						continue;
+					}
+					else
+						return ACTUAL_MENU;
+				}
+				break;
 			case SDL_KEYDOWN:
 				if(event.key.keysym.sym == SDLK_ESCAPE) return ACTUAL_MENU;
 				break;
 			case SDL_QUIT:
 				return EXIT;
 			}
+			tablero.update(&event);
 			switch(tablero.checkWin()){
 			case NOT_FINISHED:
 				break;
@@ -70,8 +114,19 @@ returnVal Game_Conecta4(void* data){
 				break;
 			}
 		}
+		// Textos de las puntuaciones
+		sprintf(letreroJugador, "Jugador 1: %d victorias", victorias[0]);
+		j1.setText(letreroJugador);
+		sprintf(letreroJugador, "Jugador 2: %d victorias", victorias[1]);
+		j2.setText(letreroJugador);
+		// Mostramos todo por pantalla
 		fondo.blit(0, 0, screen);
 		tablero.blit(screen);
+		j1.blit(tablero.posX(), 0, screen);
+		j2.blit(tablero.posX() + tablero.width() - j2.width(), 0, screen);
+		reset.blit(resC.x, resC.y, screen);
+		atras.blit(atrC.x, atrC.y, screen);
+		// Intercambiamos los buffers de vídeo y fijamos los FPS
 		sistema->update();
 		timer.waitFramerate(30);
 	}
