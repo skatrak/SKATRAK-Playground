@@ -30,21 +30,25 @@
 returnVal Game_Conecta4(void* data){
 	SDL_Surface* screen = sistema->scr();
 	SDL_Event event;
-	static int victorias[2] = {0, 0};
+	static int victorias[2] = {0, 0}; // Lo hacemos estático para que las puntuaciones se guarden mientras no se cierre el juego
 	char letreroJugador[32];
 
+	// Imagen de fondo del juego y marcador
 	image_t fondo("Fondo_Conecta4_prueba.png");
+	image_t mark("marcador_prueba.png");
 
+	// Creamos las fuentes que va a utilizar el juego
 	font_t j1("font01.ttf");
 	j1.setColor(255, 255, 255);
 	j1.setSize(32);
 	font_t j2(j1);
 	font_t reset(j1);
 	font_t atras(j1);
-
+	font_t tiempo(j1);
 	reset.setText("Reiniciar");
 	atras.setText("Atras");
 
+	// Creamos el tablero
 	tablero_t tablero;
 	tablero.setTab("Tab_Conecta4.png");
 	tablero.setPos((int)(screen->w / 2 - tablero.width() / 2), (int)(screen->h - tablero.height() - tablero.height() / 6));
@@ -54,17 +58,19 @@ returnVal Game_Conecta4(void* data){
 	tablero.setFich(1, "Ficha_Conecta4_P2.png");
 	tablero.setSFX("Pin Drop.wav");
 
+	// Posiciones del mensaje de Atrás y de Reiniciar
 	struct msgCoord {
 		int x;
 		int y;
 	};
-
 	msgCoord resC = {tablero.posX(), j1.height()};
 	msgCoord atrC = {tablero.posX() + tablero.width() - atras.width(), j2.height()};
 
+	// Para saber si hay algún botón seleccionado
 	enum optSelected { NONE, RESET, BACK };
 	optSelected selected = NONE;
 
+	// Game loop
 	timekeeper_t timer;
 	while(true){
 		timer.refresh();
@@ -114,18 +120,25 @@ returnVal Game_Conecta4(void* data){
 				break;
 			}
 		}
-		// Textos de las puntuaciones
+		// Textos de las puntuaciones y tiempo transcurrido
 		sprintf(letreroJugador, "Jugador 1: %d victorias", victorias[0]);
 		j1.setText(letreroJugador);
 		sprintf(letreroJugador, "Jugador 2: %d victorias", victorias[1]);
 		j2.setText(letreroJugador);
+		sprintf(letreroJugador, "%.2d:%.2d", (int)(timer.elapsed() / 60000), (int)(timer.elapsed() / 1000) % 60);
+		tiempo.setText(letreroJugador);
 		// Mostramos todo por pantalla
 		fondo.blit(0, 0, screen);
 		tablero.blit(screen);
+		if(selected == RESET)
+			mark.blit(resC.x, resC.y + (reset.height() - mark.height()), screen);
+		else if(selected == BACK)
+			mark.blit(atrC.x, atrC.y + (atras.height() - mark.height()), screen);
 		j1.blit(tablero.posX(), 0, screen);
 		j2.blit(tablero.posX() + tablero.width() - j2.width(), 0, screen);
 		reset.blit(resC.x, resC.y, screen);
 		atras.blit(atrC.x, atrC.y, screen);
+		tiempo.blit((int)((sistema->width() / 2) - (tiempo.width() / 2)), tablero.posY() + tablero.height() + 5, screen);
 		// Intercambiamos los buffers de vídeo y fijamos los FPS
 		sistema->update();
 		timer.waitFramerate(30);
