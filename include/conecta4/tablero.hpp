@@ -36,7 +36,8 @@ enum ResultConecta4 {
 };
 
 // Separación entre agujeros en el tablero y separación de los agujeros y los bordes
-const int FICHA_OFFSET = 40;
+const int FICHA_OFFSET_X = 40;
+const int FICHA_OFFSET_Y = 16;
 
 /**
  * @class tablero_t
@@ -66,10 +67,24 @@ class tablero_t {
 		void setSFX(string path);
 		int width(void);
 		int height(void);
+		int posX(void){ return posicion.x; }
+		int posY(void){ return posicion.y; }
 		void reset(void);
 		void update(SDL_Event* event);
 		void blit(SDL_Surface* screen);
 		ResultConecta4 checkWin(void);
 };
+
+/**
+ * @fn tablero_t::posX
+ * @brief Devuelve la posición en el eje x del tablero.
+ * @return Posición en el eje x del tablero.
+ */
+
+/**
+ * @fn tablero_t::posY
+ * @brief Devuelve la posición en el eje y del tablero.
+ * @return Posición en el eje y del tablero.
+ */
 
 #endif

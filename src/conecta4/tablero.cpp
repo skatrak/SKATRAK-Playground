@@ -78,10 +78,10 @@ void tablero_t::soltarFicha(){
 		tmp--;
 
 	// En tmp está el índice de la primera casilla libre. Vamos a calcular su posición en la pantalla
-	pos = posicion.y + (tmp+1)*(FICHA_OFFSET) + tmp*ficha[jugador]->height();
+	pos = posicion.y + (tmp+1)*(FICHA_OFFSET_Y) + tmp*ficha[jugador]->height();
 
 	timekeeper_t timer;
-	int posx = posicion.x + (columna+1)*(FICHA_OFFSET) + columna*ficha[jugador]->width();
+	int posx = posicion.x + (columna+1)*(FICHA_OFFSET_X) + columna*ficha[jugador]->width();
 	int posy = posicion.y - ficha[jugador]->height();
 	double vel = 0.0; // Velocidad en px/fot
 	double accel = 6.9688888889; // Gravedad en px/fot ^ 2 (32 px = 5cm, 1s = 30 fot)
@@ -110,6 +110,15 @@ void tablero_t::soltarFicha(){
 		}
 		while(vel < -5 || posy != pos);
 		SDL_FreeSurface(background);
+		// Ponemos un evento de movimiento de ratón en la cola por si el jugador lo movió mientras caía la ficha
+		// Y ya que estamos aprovechamos las variables posx y posy para no tener que reservar memoria extra
+		SDL_GetMouseState(&posx, &posy);
+		event.type = SDL_MOUSEMOTION;
+		event.motion.x = posx;
+		event.motion.y = posy;
+		event.motion.xrel = 0;
+		event.motion.yrel = 0;
+		SDL_PushEvent(&event);
 	}
 
 	tablero[columna][tmp] = (!jugador)? CELL_P1 : CELL_P2;
@@ -276,7 +285,7 @@ void tablero_t::reset(){
  * @param event Event que se quiere analizar.
  */
 void tablero_t::update(SDL_Event* event){
-	if(tablero != NULL){
+	if(tablero != NULL && event != NULL){
 		switch(event->type){
 		case SDL_KEYDOWN:
 			switch(event->key.keysym.sym){
@@ -297,7 +306,7 @@ void tablero_t::update(SDL_Event* event){
 			}
 			break;
 		case SDL_MOUSEMOTION:
-			if(event->motion.x >= posicion.x && event->motion.x <= posicion.x + posicion.w - (int)(FICHA_OFFSET / 2))
+			if(event->motion.x >= posicion.x && event->motion.x <= posicion.x + posicion.w - (int)(FICHA_OFFSET_X / 2))
 				columna = (int)((event->motion.x - posicion.x) / (img_tab->width() / 7));
 			break;
 		case SDL_MOUSEBUTTONDOWN:
@@ -318,16 +327,16 @@ void tablero_t::update(SDL_Event* event){
 void tablero_t::blit(SDL_Surface* screen){
 	if(tablero != NULL && img_tab != NULL){
 		if(sig[jugador] != NULL)
-			sig[jugador]->blit(posicion.x + (columna+1)*(FICHA_OFFSET) + columna*sig[jugador]->width(), posicion.y - sig[jugador]->height(), screen);
+			sig[jugador]->blit(posicion.x + (columna+1)*(FICHA_OFFSET_X) + columna*sig[jugador]->width(), posicion.y - sig[jugador]->height(), screen);
 		if(ficha[0] != NULL && ficha[1] != NULL){
 			for(int i = 0; i < 7; i++){
 				for(int j = 5; j >= 0; j--){
 					switch(tablero[i][j]){
 					case CELL_P1:
-						ficha[0]->blit(posicion.x + (i+1)*(FICHA_OFFSET) + i*ficha[0]->width(), posicion.y + (j+1)*(FICHA_OFFSET) + j*ficha[0]->height(), screen);
+						ficha[0]->blit(posicion.x + (i+1)*(FICHA_OFFSET_X) + i*ficha[0]->width(), posicion.y + (j+1)*(FICHA_OFFSET_Y) + j*ficha[0]->height(), screen);
 						break;
 					case CELL_P2:
-						ficha[1]->blit(posicion.x + (i+1)*(FICHA_OFFSET) + i*ficha[1]->width(), posicion.y + (j+1)*(FICHA_OFFSET) + j*ficha[1]->height(), screen);
+						ficha[1]->blit(posicion.x + (i+1)*(FICHA_OFFSET_X) + i*ficha[1]->width(), posicion.y + (j+1)*(FICHA_OFFSET_Y) + j*ficha[1]->height(), screen);
 						break;
 					case CELL_EMPTY:
 						j = -1;	// Saltamos de columna porque de aquí hacia arriba no hay nada.
