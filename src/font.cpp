@@ -195,7 +195,9 @@ void font_t::blit(int x, int y, SDL_Surface* screen){
 				}
 			}
 		}
-		SDL_Rect dest = {x, y, 0, 0};
+		int tmp = 0;
+		TTF_GlyphMetrics(font, 'l', NULL, NULL, NULL, &tmp, NULL);
+		SDL_Rect dest = {x, y - TTF_FontAscent(font) + tmp, 0, 0};
 		SDL_BlitSurface(rendered, NULL, screen, &dest);
 	}
 	else
@@ -219,5 +221,8 @@ int font_t::width(){
 int font_t::height(){
 	if(font == NULL)
 		return 0;
-	return TTF_FontHeight(font);
+	int miny = 0, maxy = 0;
+	TTF_GlyphMetrics(font, 'l', NULL, NULL, NULL, &maxy, NULL);
+	TTF_GlyphMetrics(font, 'p', NULL, NULL, &miny, NULL, NULL);
+	return maxy - miny;
 }

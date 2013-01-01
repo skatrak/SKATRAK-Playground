@@ -299,13 +299,12 @@ void menu_t::align(unsigned int flags){
 				posY = sistema->height() - ((biggest + MENU_OPT_MARGIN) * nOpt) - MENU_MARGIN_V;
 			}
 			else {
-				int size = (biggest + MENU_OPT_MARGIN) * nOpt;
-				posY = (int)(((sistema->height() - 2 * MENU_MARGIN_V) / 2) - size / 2);
+				int size = (biggest * nOpt) + (MENU_OPT_MARGIN * (nOpt - 1));
+				posY = (int)((sistema->height() / 2) - (size / 2));
 			}
 		}
-		for(int i = 0; i < nOpt; i++){
-			textPos[i].y = posY + i * (biggest + MENU_OPT_MARGIN);
-		}
+		for(int i = 0; i < nOpt; i++)
+			textPos[i].y = posY + (i * biggest) + ((i-1) * MENU_OPT_MARGIN);
 	}
 	else
 		fprintf(stderr, "No se han podido alinear las opciones porque los textos no se han cargado correctamente.\n");

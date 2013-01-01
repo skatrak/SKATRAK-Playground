@@ -31,9 +31,9 @@
 /* Definición de los márgenes de la pantalla */
 const int MENU_MARGIN_H = 64;
 const int MENU_MARGIN_V = 32;
-const int MENU_OPT_MARGIN = 16;
+const int MENU_OPT_MARGIN = 32;
 
-/* Definición de las funciones de callback: Reciben un puntero a algún dato o estructura que quieras y devuelven hasta dónde se retrocederá en la estructura de menús */
+/* Definición de las funciones de callback: Reciben un puntero a algún dato o estructura que quieras y devuelven hasta dónde se retrocederá en la jerarquía de menús */
 typedef returnVal (*MenuCallbackFunc)(void*);
 
 /**
