@@ -406,8 +406,9 @@ void menu_t::blit(SDL_Surface* screen){
 	else
 		fprintf(stderr, "No se puede mostrar el fondo de pantalla porque no se ha cargado.\n");
 	if(textPos != NULL && optName != NULL){
-		if(selImage != NULL)
-			selImage->blit(textPos[selIndex].x, textPos[selIndex].y + (textPos[selIndex].h - selImage->height()), screen);
+		if(selImage != NULL){
+			selImage->blit(textPos[selIndex].x, textPos[selIndex].y + (int)((textPos[selIndex].h - selImage->height()) / 2), screen);
+		}
 		else
 			fprintf(stderr, "No se puede imprimir el resaltador de opciones porque no se ha cargado en memoria.\n");
 		for(int i = 0; i < nOpt; i++){
