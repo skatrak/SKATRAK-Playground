@@ -222,7 +222,7 @@ int font_t::height(){
 	if(font == NULL)
 		return 0;
 	int miny = 0, maxy = 0;
-	TTF_GlyphMetrics(font, 'l', NULL, NULL, NULL, &maxy, NULL);
-	TTF_GlyphMetrics(font, 'p', NULL, NULL, &miny, NULL, NULL);
+	TTF_GlyphMetrics(font, 'l', NULL, NULL, NULL, &maxy, NULL); // Una letra larga por arriba
+	TTF_GlyphMetrics(font, 'p', NULL, NULL, &miny, NULL, NULL); // Una letra larga por abajo
 	return maxy - miny;
 }

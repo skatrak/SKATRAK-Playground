@@ -47,6 +47,9 @@ int main(int argc, char* argv[]){
 	musica->setTrack(1, "track02.ogg");
 	musica->setTrack(2, "track03.ogg");
 
+	// Activamos la repetición de teclas para los menús (Los juegos que no usen esta funcionalidad la tienen que volver a activar al salir)
+	SDL_EnableKeyRepeat(250, 75);
+
 	// Imágenes para mostrar en el menú inicio
 	SDL_Surface* screen = sistema->scr();
 	if(screen == NULL){
