@@ -23,15 +23,15 @@
 #include <shared_attributes.hpp>
 #include <conecta4/tablero.hpp>
 
-#ifdef _MSC_VER
-#define sprintf sprintf_s
-#endif
+bool salir(bool tablero_vacio);
+void msgVictoria(ResultConecta4 ganador);
 
 returnVal Game_Conecta4(void* data){
 	SDL_Surface* screen = sistema->scr();
 	SDL_Event event;
 	static int victorias[2] = {0, 0}; // Lo hacemos estático para que las puntuaciones se guarden mientras no se cierre el juego
 	char letreroJugador[32];
+	const int GAME_FONT_OFFSET = 15;
 
 	// Imagen de fondo del juego y marcador
 	image_t fondo("Fondo_Conecta4_prueba.png");
@@ -63,12 +63,15 @@ returnVal Game_Conecta4(void* data){
 		int x;
 		int y;
 	};
-	msgCoord resC = {tablero.posX(), j1.height()};
-	msgCoord atrC = {tablero.posX() + tablero.width() - atras.width(), j2.height()};
+	msgCoord resC = {tablero.posX(), j1.height() + 2*GAME_FONT_OFFSET};
+	msgCoord atrC = {tablero.posX() + tablero.width() - atras.width(), j2.height() + 2*GAME_FONT_OFFSET};
 
 	// Para saber si hay algún botón seleccionado
 	enum optSelected { NONE, RESET, BACK };
 	optSelected selected = NONE;
+
+	// Jugador que empezó la partida actual (Para el reset)
+	int startPlayer = 0;
 
 	// Game loop
 	timekeeper_t timer;
@@ -88,14 +91,16 @@ returnVal Game_Conecta4(void* data){
 				if(event.button.button == SDL_BUTTON_LEFT && selected != NONE){
 					if(selected == RESET){
 						tablero.reset();
+						tablero.setPlayer(startPlayer);
 						continue;
 					}
-					else /* if(salir()) */
+					else if(salir(tablero.isEmpty()))
 						return ACTUAL_MENU;
+					event.type = SDL_KEYUP; // Cambiamos el tipo de evento para que no caiga una ficha en el tablero por haber pulsado reset o atrás
 				}
 				break;
 			case SDL_KEYDOWN:
-				if(event.key.keysym.sym == SDLK_ESCAPE /* && salir() */) return ACTUAL_MENU;
+				if(event.key.keysym.sym == SDLK_ESCAPE && salir(tablero.isEmpty())) return ACTUAL_MENU;
 				break;
 			case SDL_QUIT:
 				return EXIT;
@@ -109,17 +114,20 @@ returnVal Game_Conecta4(void* data){
 				printf("Ha ganado el jugador 1.\n");
 				victorias[0]++;
 				tablero.reset();
+				startPlayer = tablero.actualPlayer();
 				break;
 			case P2_WINS:
 				/* msgVictoria(P2_WINS) */
 				printf("Ha ganado el jugador 2.\n");
 				victorias[1]++;
 				tablero.reset();
+				startPlayer = tablero.actualPlayer();
 				break;
 			case NOBODY_WINS:
 				/* msgVictoria(NOBODY_WINS) */
 				printf("Empate.\n");
 				tablero.reset();
+				startPlayer = tablero.actualPlayer();
 				break;
 			}
 		}
@@ -128,20 +136,20 @@ returnVal Game_Conecta4(void* data){
 		j1.setText(letreroJugador);
 		sprintf(letreroJugador, "Jugador 2: %d victorias", victorias[1]);
 		j2.setText(letreroJugador);
-		sprintf(letreroJugador, "%.2d:%.2d", (int)(timer.elapsed() / 60000), (int)(timer.elapsed() / 1000) % 60);
+		sprintf(letreroJugador, "%.2d:%.2d:%.2d", (int)(timer.elapsed() / 3600000), (int)(timer.elapsed() / 60000) % 60, (int)(timer.elapsed() / 1000) % 60);
 		tiempo.setText(letreroJugador);
 		// Mostramos todo por pantalla
 		fondo.blit(0, 0, screen);
 		tablero.blit(screen);
 		if(selected == RESET)
-			mark.blit(resC.x, resC.y + (reset.height() - mark.height()), screen);
+			mark.blit(resC.x, resC.y + (int)((reset.height() - mark.height()) / 2), screen);
 		else if(selected == BACK)
-			mark.blit(atrC.x, atrC.y + (atras.height() - mark.height()), screen);
-		j1.blit(tablero.posX(), 0, screen);
-		j2.blit(tablero.posX() + tablero.width() - j2.width(), 0, screen);
+			mark.blit(atrC.x, atrC.y + (int)((atras.height() - mark.height()) / 2), screen);
+		j1.blit(tablero.posX(), GAME_FONT_OFFSET, screen);
+		j2.blit(tablero.posX() + tablero.width() - j2.width(), GAME_FONT_OFFSET, screen);
 		reset.blit(resC.x, resC.y, screen);
 		atras.blit(atrC.x, atrC.y, screen);
-		tiempo.blit((int)((sistema->width() / 2) - (tiempo.width() / 2)), tablero.posY() + tablero.height() + 5, screen);
+		tiempo.blit((int)((sistema->width() / 2) - (tiempo.width() / 2)), tablero.posY() + tablero.height() + (int)(((sistema->height() - (tablero.posY() + tablero.height())) / 2) - tiempo.height() / 2), screen);
 		// Intercambiamos los buffers de vídeo y fijamos los FPS
 		sistema->update();
 		timer.waitFramerate(30);
