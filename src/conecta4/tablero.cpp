@@ -246,6 +246,18 @@ void tablero_t::setSFX(string path){
 }
 
 /**
+ * @brief Establece el turno del jugador.
+ * @param player Jugador del que ahora es el turno.
+ * @note No es necesario utilizar esta función durante el juego en general. El propio tablero va cambiando de jugador.
+ */
+void tablero_t::setPlayer(int player){
+	if(player >= 0 && player <= 1)
+		jugador = player;
+	else
+		fprintf(stderr, "Se ha intentado establecer un jugador erróneo.\n");
+}
+
+/**
  * @brief Devuelve la anchura del tablero.
  * @return Anchura del tablero.
  */
@@ -265,6 +277,22 @@ int tablero_t::height(){
 		return img_tab->height();
 	else
 		return 0;
+}
+
+/**
+ * @brief Te dice si el tablero está vacío.
+ * @return 'true' si el tablero está vacío y 'false' en otro caso.
+ */
+bool tablero_t::isEmpty(){
+	if(tablero != NULL){
+		for(int i = 0; i < 7; i++)
+			for(int j = 0; j < 6; j++)
+				if(tablero[i][j] != CELL_EMPTY)
+					return false;
+	}
+	else
+		fprintf(stderr, "No se puede determinar si el tablero está vacío porque no tiene memoria reservada.\n");
+	return true;
 }
 
 /**

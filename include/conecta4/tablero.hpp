@@ -67,10 +67,13 @@ class tablero_t {
 		void setMark(int player, string path);
 		void setFich(int player, string path);
 		void setSFX(string path);
+		void setPlayer(int player);
 		int width(void);
 		int height(void);
 		int posX(void){ return posicion.x; }
 		int posY(void){ return posicion.y; }
+		int actualPlayer(void){ return jugador; }
+		bool isEmpty(void);
 		void reset(void);
 		void update(SDL_Event* event);
 		void blit(SDL_Surface* screen);
@@ -87,6 +90,12 @@ class tablero_t {
  * @fn tablero_t::posY
  * @brief Devuelve la posición en el eje y del tablero.
  * @return Posición en el eje y del tablero.
+ */
+
+/**
+ * @fn tablero_t::actualPlayer
+ * @brief Devuelve el jugador del cual es el turno ahora.
+ * @return Un 0 si es el jugador 1 o un 1 si es el jugador 2.
  */
 
 #endif
