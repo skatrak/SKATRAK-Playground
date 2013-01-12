@@ -31,11 +31,14 @@ const char* INI_PATH = "../../resources/settings/";
 
 /* Prototipo del menú principal */
 returnVal mainMenu();
+void tryIni(void);
 
 system_t* sistema = NULL;			// La variable sistema se comparte entre todos los minijuegos y permanece igual para todos ellos.
 music_t* musica = NULL;				// La variable musica se comparte por todos los minijuegos y cada uno puede tener su propia lista de reproducción.
 
 int main(int argc, char* argv[]){
+	// Prueba de lectura en un archivo .ini
+	tryIni();
 	// Creamos la variable sistema (Iniciamos SDL)
 	sistema = new system_t(1024, 768, 32);
 	sistema->setIcon("icono_prueba.png");
@@ -128,4 +131,51 @@ int main(int argc, char* argv[]){
 	if(sistema != NULL)
 		delete sistema;
 	return 0;
+}
+
+/* FUNCIÓN PARA PROBAR EL FUNCIONAMIENTO DE LOS ARCHIVOS .INI */
+void tryIni(void){
+	inifile_t prueba("prueba.ini");
+	string cadenas[3];
+	int enteros[4];
+	double decimales[2];
+	bool booleanos[4];
+	// Lectura de cadenas
+	cadenas[0] = prueba.readString("Strings", "cad1");
+	cadenas[1] = prueba.readString("Strings", "cad2");
+	cadenas[2] = prueba.readString("Strings", "cad3");
+	// Lectura de enteros
+	enteros[0] = prueba.readInt("Integers", "numero1");
+	enteros[1] = prueba.readInt("Integers", "numero2");
+	enteros[2] = prueba.readInt("Integers", "numero3");
+	enteros[3] = prueba.readInt("Integers", "numero4");
+	// Lectura de decimales
+	decimales[0] = prueba.readDouble("Floats", "numero1");
+	decimales[1] = prueba.readDouble("Floats", "numero2");
+	// Lectura de booleanos
+	booleanos[0] = prueba.readBool("Bools", "booleano1");
+	booleanos[1] = prueba.readBool("Bools", "booleano2");
+	booleanos[2] = prueba.readBool("Bools", "booleano3");
+	booleanos[3] = prueba.readBool("Bools", "booleano4");
+	// Comprobación de los resultados
+	int i;
+	printf("PRUEBA DE LECTURA EN .INI:\n");
+	for(i = 0; i < 3; i++)
+		printf("Cadena %d: %s\n", i+1, cadenas[i].c_str());
+	printf("\n");
+	for(i = 0; i < 4; i++)
+		printf("Entero %d: %d\n", i+1, enteros[i]);
+	printf("\n");
+	for(i = 0; i < 2; i++)
+		printf("Decimal %d: %lf\n", i+1, decimales[i]);
+	printf("\n");
+	for(i = 0; i < 4; i++){
+		printf("Booleano %d: ", i+1);
+		if(booleanos[i])
+			printf("Verdadero");
+		else
+			printf("Falso");
+		printf("\n");
+	}
+	printf("\n");
 }
