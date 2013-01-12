@@ -79,6 +79,64 @@ int inifile_t::readInt(string section, string varName){
 		error = true;
 		return 0;
 	}
+	// Leemos el contenido de la variable y lo traducimos a entero
+	string content = readString(section, varName);
+	int value = str_op::strtoint(content.c_str());
+	// Comprobamos que la lectura haya sido correcta y devolvemos el resultado
+	if(value != ERROR_INT_VAL){
+		error = false;
+		return value;
+	}
+	else {
+		fprintf(stderr, "El contenido de la variable \"%s\" no es un entero.\n", varName.c_str());
+		error = true;
+		return 0;
+	}
+}
+
+/**
+ * @brief Lee un flotante de doble precisión guardado en una variable en el archivo .ini.
+ * @param section Nombre de la sección donde está guardada la variable. No se debe poner entre corchetes.
+ * @param varName Nombre de la variable a buscar en el archivo.
+ * @return El valor de la variable o '0' si hubo un error.
+ * @note Si devuelve el valor '0', utilizar errorStatus para decidir si fue un error o la variable tiene ese valor.
+ */
+double inifile_t::readDouble(string section, string varName){
+	// Comprobamos que haya un archivo cargado correctamente
+	if(!input.is_open()){
+		fprintf(stderr, "No se ha abierto un archivo '.ini', así que no se pueden leer valores.\n");
+		error = true;
+		return 0.0;
+	}
+	// Leemos el contenido de la variable y lo traducimos a flotante
+	string content = readString(section, varName);
+	double value = str_op::strtodouble(content.c_str());
+	// Comprobamos que la lectura haya sido correcta y devolvemos el resultado
+	if(value != (double)ERROR_INT_VAL){
+		error = false;
+		return value;
+	}
+	else {
+		fprintf(stderr, "El contenido de la variable \"%s\" no es un número decimal.\n", varName.c_str());
+		error = true;
+		return 0.0;
+	}
+}
+
+/**
+ * @brief Lee una cadena de caracteres guardada en una variable en el archivo .ini.
+ * @param section Nombre de la sección donde está guardada la variable. No se debe poner entre corchetes.
+ * @param varName Nombre de la variable a buscar en el archivo.
+ * @return El valor de la variable o la cadena vacía si hubo un error.
+ * @note Si devuelve la cadena vacía, utilizar errorStatus para decidir si fue un error o la variable tiene ese valor.
+ */
+string inifile_t::readString(string section, string varName){
+	// Comprobamos que haya un archivo cargado correctamente
+	if(!input.is_open()){
+		fprintf(stderr, "No se ha abierto un archivo '.ini', así que no se pueden leer valores.\n");
+		error = true;
+		return "";
+	}
 
 	int i;
 	string temp = "";	// Esta variable va leyendo cada línea del fichero.
@@ -88,8 +146,8 @@ int inifile_t::readInt(string section, string varName){
 
 	input.seekg(std::ios::beg);
 	while(!input.eof()){
-		getline(input, temp);
 		// Buscamos la sección
+		getline(input, temp);
 		if(temp2 == temp){
 			temp2 = varName;
 			while(!input.eof()){
@@ -108,16 +166,7 @@ int inifile_t::readInt(string section, string varName){
 								// Borramos la cadena desde el principio hasta el '=' incluído
 								temp.erase(0, i+1);
 								// Devolvemos el valor interpretado
-								int tmp = str_op::strtoint(temp.c_str());
-								if(tmp != ERROR_INT_VAL){
-									error = false;
-									return tmp;
-								}
-								else {
-									fprintf(stderr, "El contenido de la variable \"%s\" no es un entero.\n", varName.c_str());
-									error = true;
-									return 0;
-								}
+								return temp;
 							}
 							// Si no tienen el mismo nombre, seguimos buscando
 						}
@@ -126,121 +175,6 @@ int inifile_t::readInt(string section, string varName){
 					// Si es un comentario seguimos buscando
 				}
 				// Como nos hemos pasado de sección, quiere decir que la variable no existe en esa sección
-				else {
-					fprintf(stderr, "No se encuentra la variable \"%s\" en la sección \"[%s]\" en el archivo .ini.\n", varName.c_str(), section.c_str());
-					error = true;
-					return 0;
-				}
-			}
-		}
-		temp = "";
-	}
-	fprintf(stderr, "No se encuentra la sección \"[%s]\" en el archivo .ini.\n", section.c_str());
-	error = true;
-	return 0;
-}
-
-/**
- * @brief Lee un flotante de doble precisión guardado en una variable en el archivo .ini.
- * @param section Nombre de la sección donde está guardada la variable. No se debe poner entre corchetes.
- * @param varName Nombre de la variable a buscar en el archivo.
- * @return El valor de la variable o '0' si hubo un error.
- * @note Si devuelve el valor '0', utilizar errorStatus para decidir si fue un error o la variable tiene ese valor.
- */
-double inifile_t::readDouble(string section, string varName){
-	if(!input.is_open()){
-		fprintf(stderr, "No se ha abierto un archivo '.ini', así que no se pueden leer valores.\n");
-		error = true;
-		return 0.0;
-	}
-
-	int i;
-	string temp = "";
-	string temp2 = "[";
-	temp2 += section;
-	temp2 += "]";
-
-	input.seekg(std::ios::beg);
-	while(!input.eof()){
-		getline(input, temp);
-		if(temp2 == temp){
-			temp2 = varName;
-			while(!input.eof()){
-				temp = "";
-				getline(input, temp);
-				if(temp[0] != '['){
-					if(temp[0] != '#'){
-						for(i = 0; temp[i] != '=' && temp[i] != '\0'; i++);
-						if(temp[i] != '\0'){
-							if(strncmp(temp.c_str(), temp2.c_str(), i) == 0){
-								temp.erase(0, i+1);
-								double tmp = str_op::strtodouble(temp.c_str());
-								if(tmp != (double)ERROR_INT_VAL){
-									error = false;
-									return tmp;
-								}
-								else {
-									fprintf(stderr, "El contenido de la variable \"%s\" no es un flotante.\n", varName.c_str());
-									error = true;
-									return 0.0;
-								}
-							}
-						}
-					}
-				}
-				else {
-					fprintf(stderr, "No se encuentra la variable \"%s\" en la sección \"[%s]\" en el archivo .ini.\n", varName.c_str(), section.c_str());
-					error = true;
-					return 0.0;
-				}
-			}
-		}
-		temp = "";
-	}
-	fprintf(stderr, "No se encuentra la sección \"[%s]\" en el archivo .ini.\n", section.c_str());
-	error = true;
-	return 0.0;
-}
-
-/**
- * @brief Lee una cadena de caracteres guardada en una variable en el archivo .ini.
- * @param section Nombre de la sección donde está guardada la variable. No se debe poner entre corchetes.
- * @param varName Nombre de la variable a buscar en el archivo.
- * @return El valor de la variable o la cadena vacía si hubo un error.
- * @note Si devuelve la cadena vacía, utilizar errorStatus para decidir si fue un error o la variable tiene ese valor.
- */
-string inifile_t::readString(string section, string varName){
-	if(!input.is_open()){
-		fprintf(stderr, "No se ha abierto un archivo '.ini', así que no se pueden leer valores.\n");
-		error = true;
-		return "";
-	}
-
-	int i;
-	string temp = "";
-	string temp2 = "[";
-	temp2 += section;
-	temp2 += "]";
-
-	input.seekg(std::ios::beg);
-	while(!input.eof()){
-		getline(input, temp);
-		if(temp2 == temp){
-			temp2 = varName;
-			while(!input.eof()){
-				temp = "";
-				getline(input, temp);
-				if(temp[0] != '['){
-					if(temp[0] != '#'){
-						for(i = 0; temp[i] != '=' && temp[i] != '\0'; i++);
-						if(temp[i] != '\0'){
-							if(strncmp(temp.c_str(), temp2.c_str(), i) == 0){
-								temp.erase(0, i+1);
-								return temp;
-							}
-						}
-					}
-				}
 				else {
 					fprintf(stderr, "No se encuentra la variable \"%s\" en la sección \"[%s]\" en el archivo .ini.\n", varName.c_str(), section.c_str());
 					error = true;
@@ -264,11 +198,11 @@ string inifile_t::readString(string section, string varName){
  */
 bool inifile_t::readBool(string section, string varName){
 	string temp = readString(section, varName);
-	if(strcmp(temp.c_str(), "true") == 0){
+	if(strcmp(temp.c_str(), "true") == 0 || strcmp(temp.c_str(), "1") == 0){
 		error = false;
 		return true;
 	}
-	if(strcmp(temp.c_str(), "false") == 0){
+	if(strcmp(temp.c_str(), "false") == 0 || strcmp(temp.c_str(), "0") == 0){
 		error = false;
 		return false;
 	}
