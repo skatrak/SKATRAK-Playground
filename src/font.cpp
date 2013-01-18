@@ -25,10 +25,8 @@
  * @brief Constructor. Inicializa los valores de las variables e inicia SDL_TTF si no se ha iniciado.
  */
 font_t::font_t(): font(NULL), rendered(NULL), fontName(""), fontSize(DEFAULT_FONT_SIZE), fontStyle(DEFAULT_FONT_STYLE), fontText(""), fontAlpha(SDL_ALPHA_OPAQUE), changed(true) {
-	if(!TTF_WasInit()){
-		if(TTF_Init() < 0)
-			fprintf(stderr, "No se ha podido inicializar SDL_TTF: %s.\n", TTF_GetError());
-	}
+	if(!TTF_WasInit() && TTF_Init() < 0)
+		fprintf(stderr, "No se ha podido inicializar SDL_TTF: %s.\n", TTF_GetError());
 	setColor(0, 0, 0);
 }
 
@@ -37,12 +35,8 @@ font_t::font_t(): font(NULL), rendered(NULL), fontName(""), fontSize(DEFAULT_FON
  * @param copy Instancia de font_t que se desea copiar.
  */
 font_t::font_t(font_t& copy): font(NULL), rendered(NULL), fontName(""), fontSize(copy.fontSize), fontStyle(copy.fontStyle), fontText(""), fontAlpha(SDL_ALPHA_OPAQUE), changed(true) {
-	if(!TTF_WasInit()){
-		if(TTF_Init() < 0)
-			fprintf(stderr, "No se ha podido inicializar SDL_TTF: %s.\n", TTF_GetError());
-		else
-			open(copy.fontName);
-	}
+	if(!TTF_WasInit() && TTF_Init() < 0)
+		fprintf(stderr, "No se ha podido inicializar SDL_TTF: %s.\n", TTF_GetError());
 	else
 		open(copy.fontName);
 	fontColor = copy.fontColor;
@@ -53,12 +47,8 @@ font_t::font_t(font_t& copy): font(NULL), rendered(NULL), fontName(""), fontSize
  * @param path Ruta del archivo de fuentes .ttf o .fon que contiene la fuente a utilizar.
  */
 font_t::font_t(string path): font(NULL), rendered(NULL), fontName(path), fontSize(DEFAULT_FONT_SIZE), fontStyle(DEFAULT_FONT_STYLE), fontText(""), fontAlpha(SDL_ALPHA_OPAQUE), changed(true) {
-	if(!TTF_WasInit()){
-		if(TTF_Init() < 0)
-			fprintf(stderr, "No se ha podido inicializar SDL_TTF: %s.\n", TTF_GetError());
-		else
-			open(path);
-	}
+	if(!TTF_WasInit() && TTF_Init() < 0)
+		fprintf(stderr, "No se ha podido inicializar SDL_TTF: %s.\n", TTF_GetError());
 	else
 		open(path);
 	setColor(0, 0, 0);

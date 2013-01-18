@@ -29,7 +29,7 @@
  * @note En el caso de que la pantalla no se pudiera iniciar con las opciones especificadas, imprimirá un mensaje de error.
  */
 system_t::system_t(int scr_w, int scr_h, int depth): screen(NULL), wIcon(NULL), screenWidth(scr_w), screenHeight(scr_h), bpp(depth), fullscr(true) {
-	if(SDL_Init(SDL_INIT_EVERYTHING) < 0)
+	if(!SDL_WasInit(SDL_INIT_EVERYTHING) && SDL_Init(SDL_INIT_EVERYTHING) < 0)
 		fprintf(stderr, "No se ha podido inicializar SDL: %s.\n", SDL_GetError());
 	screen = SDL_SetVideoMode(screenWidth, screenHeight, bpp, SDL_HWSURFACE | SDL_DOUBLEBUF | SDL_FULLSCREEN);
 	if(screen == NULL)
