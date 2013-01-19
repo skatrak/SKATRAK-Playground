@@ -22,7 +22,8 @@
 #ifndef __STR_OPERATIONS__
 #define __STR_OPERATIONS__
 
-const int ERROR_INT_VAL = 2147483647;
+const int ERROR_INT_VAL = 2147483647;							// Límite de rango positivo en C2 para 32 bits: (2^(32-1)) - 1
+const double ERROR_DOUBLE_VAL = (double) 0x7FF0000000000000;	// +Infinito en precisión doble IEEE-754
 
 namespace str_op {
 	int chartoint(char caracter);

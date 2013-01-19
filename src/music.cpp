@@ -47,9 +47,8 @@ void nextTrack(){
  * @see sfx_t
  */
 music_t::music_t(): music(NULL), music_names(NULL), n_tracks(0), volume(128), current(0), running(false), playing(false), paused(false) {
-	if(!Mix_QuerySpec(NULL, NULL, NULL) && Mix_OpenAudio(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT, 2, 4096)){
+	if(!Mix_QuerySpec(NULL, NULL, NULL) && Mix_OpenAudio(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT, 2, 4096))
 		fprintf(stderr, "No se ha podido inicializar el sistema de audio: %s.\n", Mix_GetError());
-	}
 	else {
 		Mix_AllocateChannels(AUDIO_CHANNELS);
 		running = true;
@@ -65,9 +64,8 @@ music_t::music_t(): music(NULL), music_names(NULL), n_tracks(0), volume(128), cu
  * @see sfx_t
  */
 music_t::music_t(int nT): music(NULL), music_names(NULL), n_tracks(nT), volume(128), current(0), running(false), playing(false), paused(false) {
-	if(!Mix_QuerySpec(NULL, NULL, NULL) && Mix_OpenAudio(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT, 2, 4096)){
+	if(!Mix_QuerySpec(NULL, NULL, NULL) && Mix_OpenAudio(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT, 2, 4096))
 		fprintf(stderr, "No se ha podido inicializar el sistema de audio: %s.\n", Mix_GetError());
-	}
 	else {
 		Mix_AllocateChannels(AUDIO_CHANNELS);
 		running = true;
@@ -91,9 +89,6 @@ music_t::~music_t(){
 	}
 	if(music_names != NULL)
 		delete [] music_names;
-	n_tracks = 0;
-	volume = 0;
-	running = false;
 	Mix_CloseAudio();
 }
 

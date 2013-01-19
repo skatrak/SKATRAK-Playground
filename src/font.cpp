@@ -96,12 +96,14 @@ void font_t::setSize(int size){
 
 /**
  * @brief Cambia el estilo de la fuente.
- * @param style Máscara de bits que especifica las propiedades del estilo. Sus posibles máscaras son:
- * -TTF_STYLE_BOLD
- * -TTF_STYLE_ITALIC
- * -TTF_STYLE_UNDERLINE
- * -TTF_STYLE_STRIKETHROUGH
- * -TTF_STYLE_NORMAL
+ * @param style Máscara de bits que especifica las propiedades del estilo.
+ *
+ * Las posibles máscaras son:
+ * TTF_STYLE_BOLD,
+ * TTF_STYLE_ITALIC,
+ * TTF_STYLE_UNDERLINE,
+ * TTF_STYLE_STRIKETHROUGH,
+ * TTF_STYLE_NORMAL
  */
 void font_t::setStyle(int style){
 	if(style != fontStyle){
@@ -211,7 +213,9 @@ int font_t::width(){
 int font_t::height(){
 	if(font == NULL)
 		return 0;
+
 	int miny = 0, maxy = 0;
+	// Hago este truco porque usando las medidas por defecto de las fuentes quedan poco ajustadas
 	TTF_GlyphMetrics(font, 'l', NULL, NULL, NULL, &maxy, NULL); // Una letra larga por arriba
 	TTF_GlyphMetrics(font, 'p', NULL, NULL, &miny, NULL, NULL); // Una letra larga por abajo
 	return maxy - miny;

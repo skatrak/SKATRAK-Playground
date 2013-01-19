@@ -130,14 +130,12 @@ void image_t::blit(int x, int y, SDL_Surface* screen, int imX, int imY, int imW,
  * @return Anchura de la imagen completa.
  */
 int image_t::width(){
-	if(img != NULL) return img->w;
-	else return 0;
+	return img != NULL? img->w : 0;
 }
 
 /**
  * @return Altura de la imagen completa.
  */
 int image_t::height(){
-	if(img != NULL) return img->h;
-	else return 0;
+	return img != NULL? img->h : 0;
 }

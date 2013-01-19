@@ -123,9 +123,8 @@ void menu_t::setOpts(int optNumber){
 
 		nOpt = optNumber;	// Todo se ha cargado correctamente, así que actualizamos el número de opciones que tenemos
 	}
-	else {
+	else
 		fprintf(stderr, "No se ha especificado un número válido de opciones al menú.\n");
-	}
 }
 
 /**
@@ -134,7 +133,7 @@ void menu_t::setOpts(int optNumber){
  * @param func Función de callback de la forma: 'returnVal func(void* datos);'.
  */
 void menu_t::setOpt(int index, MenuCallbackFunc func){
-	if(index >= 0 && index < nOpt && callback != NULL)
+	if(callback != NULL && index >= 0 && index < nOpt)
 		callback[index] = func;
 	else
 		fprintf(stderr, "No se puede asignar un callback al elemento %d del menú porque no se ha reservado memoria para él.\n", index);
@@ -185,7 +184,7 @@ void menu_t::setTexts(font_t* fontStyle){
  * @param text Nombre de la opción.
  */
 void menu_t::setText(int index, string text){
-	if(index >= 0 && index < nOpt && optName != NULL && textPos != NULL){
+	if(optName != NULL && textPos != NULL && index >= 0 && index < nOpt){
 		if(optName[index] != NULL){
 			optName[index]->setText(text);
 			textPos[index].w = optName[index]->width();
@@ -295,13 +294,11 @@ void menu_t::align(unsigned int flags){
 		if(flags & MENU_ALIGN_UP)
 			posY = MENU_MARGIN_V;
 		else {
-			if(flags & MENU_ALIGN_DOWN){
-				posY = sistema->height() - ((biggest + MENU_OPT_MARGIN) * nOpt) - MENU_MARGIN_V;
-			}
-			else {
-				int size = (biggest * nOpt) + (MENU_OPT_MARGIN * (nOpt - 1));
+			int size = (biggest * nOpt) + (MENU_OPT_MARGIN * (nOpt - 1));
+			if(flags & MENU_ALIGN_DOWN)
+				posY = sistema->height() - size - MENU_MARGIN_V;
+			else 
 				posY = (int)((sistema->height() / 2) - (size / 2));
-			}
 		}
 		for(int i = 0; i < nOpt; i++)
 			textPos[i].y = posY + (i * biggest) + ((i-1) * MENU_OPT_MARGIN);

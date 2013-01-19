@@ -35,6 +35,7 @@ using std::string;
 /* Evitar Warnings en Microsoft Visual Studio */
 #ifdef _MSC_VER
 #define sprintf sprintf_s
+#define strcasecmp strcmp
 #endif
 
 /* Incluimos las cabeceras generales compartidas por todos los minijuegos */

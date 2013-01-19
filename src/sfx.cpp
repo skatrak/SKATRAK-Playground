@@ -77,7 +77,6 @@ void sfx_t::setVol(int vol){
  * @brief Reproduce el efecto de sonido una vez si se ha cargado
  */
 void sfx_t::play(){
-	if(sound != NULL){
+	if(sound != NULL)
 		Mix_PlayChannel(-1, sound, 0);
-	}
 }

@@ -105,7 +105,7 @@ double str_op::strtodouble(const char* str){
 			temp += (chartoint(str[i])*exp(10, pointPos-i-1));
 			i++;
 		}
-		else return (double)ERROR_INT_VAL;
+		else return ERROR_DOUBLE_VAL;
 	}
 	// Calculamos la parte decimal
 	if(str[pointPos] != '\0'){
@@ -115,10 +115,8 @@ double str_op::strtodouble(const char* str){
 				temp += (chartoint(str[i])*exp(10, -(i-pointPos)));
 				i++;
 			}
-			else return (double)ERROR_INT_VAL;
+			else return ERROR_DOUBLE_VAL;
 		}
 	}
-	if(negative)
-		return -temp;
-	return temp;
+	return negative? -temp : temp;
 }
