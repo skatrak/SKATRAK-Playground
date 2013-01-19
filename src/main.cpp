@@ -138,7 +138,7 @@ void tryIni(void){
 	inifile_t prueba("prueba.ini");
 	string cadenas[3];
 	int enteros[4];
-	double decimales[2];
+	double decimales[3];
 	bool booleanos[4];
 	// Lectura de cadenas
 	cadenas[0] = prueba.readString("Strings", "cad1");
@@ -152,6 +152,7 @@ void tryIni(void){
 	// Lectura de decimales
 	decimales[0] = prueba.readDouble("Floats", "numero1");
 	decimales[1] = prueba.readDouble("Floats", "numero2");
+	decimales[2] = prueba.readDouble("Floats", "numero3");
 	// Lectura de booleanos
 	booleanos[0] = prueba.readBool("Bools", "booleano1");
 	booleanos[1] = prueba.readBool("Bools", "booleano2");
@@ -166,7 +167,7 @@ void tryIni(void){
 	for(i = 0; i < 4; i++)
 		printf("Entero %d: %d\n", i+1, enteros[i]);
 	printf("\n");
-	for(i = 0; i < 2; i++)
+	for(i = 0; i < 3; i++)
 		printf("Decimal %d: %lf\n", i+1, decimales[i]);
 	printf("\n");
 	for(i = 0; i < 4; i++){

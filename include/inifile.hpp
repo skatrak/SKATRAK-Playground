@@ -24,6 +24,16 @@
 
 using std::ifstream;
 
+/* Enumeración con los distintos tipos de error que pueden suceder al leer un fichero .ini */
+enum iniError {
+	NOERROR = 0,	// No problemo
+	FILENOFOUND,	// Se ha intentado abrir un archivo inexistente
+	NOTOPENED,		// Se ha intentado acceder a datos sin abrir ningún archivo
+	WRONGTYPE,		// Se ha intentado leer una variable de un tipo distinto
+	NOEXISTVAR,		// La variable con el nombre especificado no existe en la sección especificada
+	NOEXISTSECTION	// La sección especificada no existe
+};
+
 /**
  * @class inifile_t
  * @brief Clase para gestionar información guardada en un fichero .ini
@@ -31,7 +41,7 @@ using std::ifstream;
 class inifile_t {
 	private:
 		ifstream input;
-		bool error;
+		iniError error;
 	public:
 		inifile_t(void);
 		inifile_t(string path);
@@ -41,13 +51,22 @@ class inifile_t {
 		double readDouble(string section, string varName);
 		string readString(string section, string varName);
 		bool readBool(string section, string varName);
-		bool errorStatus(void){ return error; }
+		iniError errorStatus(void){ return error; }
+		void resetError(void){ error = NOERROR; }
 };
 
 /**
  * @fn inifile_t::errorStatus
  * @brief Devuelve el estado de la última operación realizada.
- * @return 1 en caso de error y 0 en otro caso.
+ * @return Uno de los valores de iniError.
+ *
+ * NOERROR está definida como 0, lo que permite escribir cosas como:
+ * if(archivoIni.errorStatus()){ // Comprobar errores... }
+ */
+
+/**
+ * @fn inifile_t::resetError
+ * @brief Devuelve el estado de error a 'sin errores'
  */
 
 #endif
