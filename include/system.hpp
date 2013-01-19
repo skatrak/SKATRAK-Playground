@@ -22,6 +22,13 @@
 #ifndef __SYSTEM_T__
 #define __SYSTEM_T__
 
+/* Flags para especificar subsistemas a inicializar o cerrar */
+#define SUBST_SDL 0x00000001;
+#define SUBST_IMG 0x00000002;
+#define SUBST_MIX 0x00000004;
+#define SUBST_TTF 0x00000008;
+//#define SUBST_NET 0x00000010; En caso de que añada funciones de comunicación en LAN
+
 /**
  * @class system_t
  * @brief Representa todo lo necesario para inicializar y cerrar SDL.
@@ -38,6 +45,8 @@ class system_t {
 	public:
 		system_t(int scr_w, int scr_h, int depth);
 		~system_t(void);
+		void initSubsystems(unsigned int flags){} // TODO
+		void quitSubsystems(unsigned int flags){} // TODO
 		void toggleFullscreen(void);
 		void setIcon(string iconpath);
 		int width(void){ return screenWidth; }

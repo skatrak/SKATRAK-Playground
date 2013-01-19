@@ -10,13 +10,13 @@ Makefile.win
 
 # Archivos objeto intermedios
 *.o
+*.obj
 
 # Archivos que genera la ejecución del programa
 stdout.txt
 stderr.txt
 
 # Archivos generados por Visual Studio (Menudos spammers, por cierto)
-*.obj
 *.tlog
 *.lastbuildstate
 *.log
