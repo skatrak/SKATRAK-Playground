@@ -32,7 +32,6 @@ enum returnVal {
 };
 
 /* Variables compartidas */
-extern system_t* sistema;
 extern music_t* musica;
 
 /* Funciones de callback comunes */
