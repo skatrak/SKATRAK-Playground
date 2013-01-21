@@ -23,11 +23,11 @@
 #define __SYSTEM_T__
 
 /* Flags para especificar subsistemas a inicializar o cerrar */
-#define SUBST_SDL 0x00000001;
-#define SUBST_IMG 0x00000002;
-#define SUBST_MIX 0x00000004;
-#define SUBST_TTF 0x00000008;
-//#define SUBST_NET 0x00000010; En caso de que añada funciones de comunicación en LAN
+#define SYS_SUBST_ALL 0x0000000F
+#define SYS_SUBST_SDL 0x00000001
+#define SYS_SUBST_MIX 0x00000002
+#define SYS_SUBST_TTF 0x00000004
+//#define SUBST_NET 0x00000008 En caso de que añada funciones de comunicación en LAN
 
 /**
  * @class system_t
@@ -38,6 +38,7 @@ class system_t {
 	private:
 		SDL_Surface* screen;
 		SDL_Surface* wIcon;
+		unsigned int substInit;
 		int screenWidth;
 		int screenHeight;
 		int bpp;
@@ -45,8 +46,8 @@ class system_t {
 	public:
 		system_t(int scr_w, int scr_h, int depth);
 		~system_t(void);
-		void initSubsystems(unsigned int flags){} // TODO
-		void quitSubsystems(unsigned int flags){} // TODO
+		unsigned int initSubsystems(unsigned int flags);
+		void quitSubsystems(unsigned int flags);
 		void toggleFullscreen(void);
 		void setIcon(string iconpath);
 		int width(void){ return screenWidth; }

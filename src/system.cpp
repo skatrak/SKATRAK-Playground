@@ -28,13 +28,13 @@
  * @param depth Profundidad de bits de la pantalla.
  * @note En el caso de que la pantalla no se pudiera iniciar con las opciones especificadas, imprimirá un mensaje de error.
  */
-system_t::system_t(int scr_w, int scr_h, int depth): screen(NULL), wIcon(NULL), screenWidth(scr_w), screenHeight(scr_h), bpp(depth), fullscr(true) {
-	if(!SDL_WasInit(SDL_INIT_EVERYTHING) && SDL_Init(SDL_INIT_EVERYTHING) < 0)
-		fprintf(stderr, "No se ha podido inicializar SDL: %s.\n", SDL_GetError());
-	screen = SDL_SetVideoMode(screenWidth, screenHeight, bpp, SDL_HWSURFACE | SDL_DOUBLEBUF | SDL_FULLSCREEN);
-	if(screen == NULL)
-		fprintf(stderr, "No se ha podido iniciar el modo de video %dx%d a %d bits: %s.\n", screenWidth, screenHeight, bpp, SDL_GetError());
-	SDL_WM_SetCaption("SKATRAK Playground", NULL);
+system_t::system_t(int scr_w, int scr_h, int depth): screen(NULL), wIcon(NULL), substInit(0), screenWidth(scr_w), screenHeight(scr_h), bpp(depth), fullscr(true) {
+	if(initSubsystems(SYS_SUBST_SDL)){
+		screen = SDL_SetVideoMode(screenWidth, screenHeight, bpp, SDL_HWSURFACE | SDL_DOUBLEBUF | SDL_FULLSCREEN);
+		if(screen == NULL)
+			fprintf(stderr, "No se ha podido iniciar el modo de video %dx%d a %d bits: %s.\n", screenWidth, screenHeight, bpp, SDL_GetError());
+		SDL_WM_SetCaption("SKATRAK Playground", NULL);
+	}
 }
 
 /**
@@ -43,7 +43,66 @@ system_t::system_t(int scr_w, int scr_h, int depth): screen(NULL), wIcon(NULL), 
 system_t::~system_t(){
 	if(screen != NULL)
 		SDL_FreeSurface(screen);
-	SDL_Quit();
+	quitSubsystems(SYS_SUBST_ALL);
+}
+
+/**
+ * @brief Inicializar las librerías de SDL especificadas.
+ * @param flags Máscara de bits especificando las librerías a inicializar.
+ * @return Librerías que están inicializadas tras la llamada.
+ * @note No utilizar las funciones de SDL directamente, porque entonces el sistema
+ * no sabría qué es lo que tiene que cerrar antes de salir.
+ */
+unsigned int system_t::initSubsystems(unsigned int flags){
+	// Si ya lo hemos iniciado todo, evitamos tener que comprobarlo uno por uno
+	if((substInit & flags) == flags) return substInit;
+
+	if(flags & SYS_SUBST_SDL){
+		if(!SDL_WasInit(SDL_INIT_EVERYTHING) && SDL_Init(SDL_INIT_EVERYTHING) < 0)
+			fprintf(stderr, "No se ha podido inicializar SDL: %s.\n", SDL_GetError());
+		else
+			substInit |= SYS_SUBST_SDL;
+	}
+	if(flags & SYS_SUBST_MIX){
+		if(!Mix_QuerySpec(NULL, NULL, NULL) && Mix_OpenAudio(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT, 2, 4096))
+			fprintf(stderr, "No se ha podido inicializar SDL_mixer: %s.\n", Mix_GetError());
+		else {
+			Mix_AllocateChannels(AUDIO_CHANNELS);
+			substInit |= SYS_SUBST_MIX;
+		}
+	}
+	if(flags & SYS_SUBST_TTF){
+		if(!TTF_WasInit() && TTF_Init() < 0)
+			fprintf(stderr, "No se ha podido inicializar SDL_TTF: %s.\n", TTF_GetError());
+		else
+			substInit |= SYS_SUBST_TTF;
+	}
+	return substInit;
+}
+
+/**
+ * @brief Cerrar las librerías de SDL especificadas.
+ * @param flags Máscara de bits especificando las librerías a cerrar.
+ */
+void system_t::quitSubsystems(unsigned int flags){
+	// Si no hemos iniciado lo que nos piden, salimos sin perder tiempo
+	if(!(substInit & flags)) return;
+
+	if(flags & SYS_SUBST_TTF){
+		TTF_Quit();
+		printf("Se ha cerrado SDL_TTF.\n");
+		flags &= ~SYS_SUBST_TTF;
+	}
+	if(flags & SYS_SUBST_MIX){
+		Mix_CloseAudio();
+		printf("Se ha cerrado SDL_Mixer.\n");
+		flags &= ~SYS_SUBST_MIX;
+	}
+	if(flags & SYS_SUBST_SDL){
+		printf("Cerrando SDL...\n");
+		SDL_Quit();
+		flags &= ~SYS_SUBST_SDL;
+	}
 }
 
 /**
