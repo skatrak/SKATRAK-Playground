@@ -24,8 +24,8 @@
 /**
  * @brief Constructor. Inicializa el volumen a DEFAULT_SFX_VOLUME
  */
-sfx_t::sfx_t(): sound(NULL), volume(DEFAULT_SFX_VOLUME)
-{
+sfx_t::sfx_t(): sound(NULL), volume(DEFAULT_SFX_VOLUME) {
+	sistema->initSubsystems(SYS_SUBST_MIX);
 }
 
 /**
@@ -34,6 +34,7 @@ sfx_t::sfx_t(): sound(NULL), volume(DEFAULT_SFX_VOLUME)
  * @see setSound
  */
 sfx_t::sfx_t(string path): sound(NULL), volume(DEFAULT_SFX_VOLUME) {
+	sistema->initSubsystems(SYS_SUBST_MIX);
 	setSound(path);
 }
 
