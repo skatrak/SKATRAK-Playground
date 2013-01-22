@@ -16,6 +16,7 @@
     <ClInclude Include="..\include\image.hpp" />
     <ClInclude Include="..\include\inifile.hpp" />
     <ClInclude Include="..\include\menu.hpp" />
+    <ClInclude Include="..\include\messagebox.hpp" />
     <ClInclude Include="..\include\music.hpp" />
     <ClInclude Include="..\include\sfx.hpp" />
     <ClInclude Include="..\include\shared_attributes.hpp" />
@@ -35,6 +36,7 @@
     <ClCompile Include="..\src\main.cpp" />
     <ClCompile Include="..\src\mainMenu.cpp" />
     <ClCompile Include="..\src\menu.cpp" />
+    <ClCompile Include="..\src\messagebox.cpp" />
     <ClCompile Include="..\src\music.cpp" />
     <ClCompile Include="..\src\sfx.cpp" />
     <ClCompile Include="..\src\str_operations.cpp" />
