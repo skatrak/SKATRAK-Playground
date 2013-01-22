@@ -46,6 +46,7 @@ using std::string;
 #include "./timekeeper.hpp"
 #include "./font.hpp"
 #include "./inifile.hpp"
+#include "./messagebox.hpp"
 
 /* Rutas por defecto de los recursos */
 extern const char* MUS_PATH;

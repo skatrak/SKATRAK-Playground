@@ -34,8 +34,8 @@ menu_t::menu_t(): nOpt(0), selIndex(0), textPos(NULL), optName(NULL), selImage(N
  * @brief Constructor. Inicializa todos los valores y reserva espacio para todos los botones de opciones.
  * @param optNumber Número de opciones que van a haber en el menú.
  */
-menu_t::menu_t(int optNumber): nOpt(optNumber), selIndex(0), textPos(NULL), optName(NULL), selImage(NULL), backImage(NULL), clickSound(NULL), selectSound(NULL), callback(NULL) {
-	setOpts(nOpt);
+menu_t::menu_t(int optNumber): nOpt(0), selIndex(0), textPos(NULL), optName(NULL), selImage(NULL), backImage(NULL), clickSound(NULL), selectSound(NULL), callback(NULL) {
+	setOpts(optNumber);
 }
 
 /**
