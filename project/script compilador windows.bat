@@ -18,48 +18,53 @@ set error=false
 rem Argumentos para compilar y enlazar los códigos objeto. -mwindows para que no aparezca una consola.
 set CFLAGS=-Wall -c -I"..\include"
 set LIBS=-L"..\lib\windows" -mwindows -lmingw32 -lSDLmain -lSDL -lSDL_mixer -lSDL_image -lSDL_ttf
-set OBJECTS="..\bin\windows\obj\main.o" "..\bin\windows\obj\music.o" "..\bin\windows\obj\system.o" "..\bin\windows\obj\image.o" "..\bin\windows\obj\timekeeper.o" "..\bin\windows\obj\font.o" "..\bin\windows\obj\inifile.o" "..\bin\windows\obj\sfx.o" "..\bin\windows\obj\str_operations.o" "..\bin\windows\obj\menu.o" "..\bin\windows\obj\mainMenu.o" "..\bin\windows\obj\messagebox.o" "..\bin\windows\obj\tablero.o" "..\bin\windows\obj\mainConecta4.o" "..\bin\windows\obj\Game_Conecta4.o" "..\bin\windows\obj\messagesConecta4.o"
+
+rem Directorios importantes
+set OBJDIR=..\bin\windows\obj
+set SRCDIR=..\src
+set OBJECTS_GEN="%OBJDIR%\main.o" "%OBJDIR%\music.o" "%OBJDIR%\system.o" "%OBJDIR%\image.o" "%OBJDIR%\timekeeper.o" "%OBJDIR%\font.o" "%OBJDIR%\inifile.o" "%OBJDIR%\sfx.o" "%OBJDIR%\str_operations.o" "%OBJDIR%\menu.o" "%OBJDIR%\mainMenu.o" "%OBJDIR%\messagebox.o"
+set OBJECTS_C4="%OBJDIR%\tablero.o" "%OBJDIR%\mainConecta4.o" "%OBJDIR%\gameConecta4.o" "%OBJDIR%\messagesConecta4.o"
 set OUTPUT="..\bin\windows\SKATRAK Playground.exe"
 
 rem Compilamos los módulos objeto por separado
 echo Compilando modulos objeto...
-"%gpp%\g++.exe" %CFLAGS% -o "..\bin\windows\obj\main.o" "..\src\main.cpp"
+"%gpp%\g++.exe" %CFLAGS% -o "%OBJDIR%\main.o" "%SRCDIR%\main.cpp"
 if %errorlevel% neq 0 set error=true
-"%gpp%\g++.exe" %CFLAGS% -o "..\bin\windows\obj\music.o" "..\src\music.cpp"
+"%gpp%\g++.exe" %CFLAGS% -o "%OBJDIR%\music.o" "%SRCDIR%\music.cpp"
 if %errorlevel% neq 0 set error=true
-"%gpp%\g++.exe" %CFLAGS% -o "..\bin\windows\obj\system.o" "..\src\system.cpp"
+"%gpp%\g++.exe" %CFLAGS% -o "%OBJDIR%\system.o" "%SRCDIR%\system.cpp"
 if %errorlevel% neq 0 set error=true
-"%gpp%\g++.exe" %CFLAGS% -o "..\bin\windows\obj\image.o" "..\src\image.cpp"
+"%gpp%\g++.exe" %CFLAGS% -o "%OBJDIR%\image.o" "%SRCDIR%\image.cpp"
 if %errorlevel% neq 0 set error=true
-"%gpp%\g++.exe" %CFLAGS% -o "..\bin\windows\obj\timekeeper.o" "..\src\timekeeper.cpp"
+"%gpp%\g++.exe" %CFLAGS% -o "%OBJDIR%\timekeeper.o" "%SRCDIR%\timekeeper.cpp"
 if %errorlevel% neq 0 set error=true
-"%gpp%\g++.exe" %CFLAGS% -o "..\bin\windows\obj\font.o" "..\src\font.cpp"
+"%gpp%\g++.exe" %CFLAGS% -o "%OBJDIR%\font.o" "%SRCDIR%\font.cpp"
 if %errorlevel% neq 0 set error=true
-"%gpp%\g++.exe" %CFLAGS% -o "..\bin\windows\obj\inifile.o" "..\src\inifile.cpp"
+"%gpp%\g++.exe" %CFLAGS% -o "%OBJDIR%\inifile.o" "%SRCDIR%\inifile.cpp"
 if %errorlevel% neq 0 set error=true
-"%gpp%\g++.exe" %CFLAGS% -o "..\bin\windows\obj\sfx.o" "..\src\sfx.cpp"
+"%gpp%\g++.exe" %CFLAGS% -o "%OBJDIR%\sfx.o" "%SRCDIR%\sfx.cpp"
 if %errorlevel% neq 0 set error=true
-"%gpp%\g++.exe" %CFLAGS% -o "..\bin\windows\obj\str_operations.o" "..\src\str_operations.cpp"
+"%gpp%\g++.exe" %CFLAGS% -o "%OBJDIR%\str_operations.o" "%SRCDIR%\str_operations.cpp"
 if %errorlevel% neq 0 set error=true
-"%gpp%\g++.exe" %CFLAGS% -o "..\bin\windows\obj\menu.o" "..\src\menu.cpp"
+"%gpp%\g++.exe" %CFLAGS% -o "%OBJDIR%\menu.o" "%SRCDIR%\menu.cpp"
 if %errorlevel% neq 0 set error=true
-"%gpp%\g++.exe" %CFLAGS% -o "..\bin\windows\obj\mainMenu.o" "..\src\mainMenu.cpp"
+"%gpp%\g++.exe" %CFLAGS% -o "%OBJDIR%\mainMenu.o" "%SRCDIR%\mainMenu.cpp"
 if %errorlevel% neq 0 set error=true
-"%gpp%\g++.exe" %CFLAGS% -o "..\bin\windows\obj\messagebox.o" "..\src\messagebox.cpp"
+"%gpp%\g++.exe" %CFLAGS% -o "%OBJDIR%\messagebox.o" "%SRCDIR%\messagebox.cpp"
 if %errorlevel% neq 0 set error=true
 rem Conecta 4
-"%gpp%\g++.exe" %CFLAGS% -o "..\bin\windows\obj\tablero.o" "..\src\conecta4\tablero.cpp"
+"%gpp%\g++.exe" %CFLAGS% -o "%OBJDIR%\tablero.o" "%SRCDIR%\conecta4\tablero.cpp"
 if %errorlevel% neq 0 set error=true
-"%gpp%\g++.exe" %CFLAGS% -o "..\bin\windows\obj\mainConecta4.o" "..\src\conecta4\mainConecta4.cpp"
+"%gpp%\g++.exe" %CFLAGS% -o "%OBJDIR%\mainConecta4.o" "%SRCDIR%\conecta4\mainConecta4.cpp"
 if %errorlevel% neq 0 set error=true
-"%gpp%\g++.exe" %CFLAGS% -o "..\bin\windows\obj\Game_Conecta4.o" "..\src\conecta4\Game_Conecta4.cpp"
+"%gpp%\g++.exe" %CFLAGS% -o "%OBJDIR%\gameConecta4.o" "%SRCDIR%\conecta4\gameConecta4.cpp"
 if %errorlevel% neq 0 set error=true
-"%gpp%\g++.exe" %CFLAGS% -o "..\bin\windows\obj\messagesConecta4.o" "..\src\conecta4\messagesConecta4.cpp"
+"%gpp%\g++.exe" %CFLAGS% -o "%OBJDIR%\messagesConecta4.o" "%SRCDIR%\conecta4\messagesConecta4.cpp"
 if %errorlevel% neq 0 set error=true
 
 rem Juntamos todos los módulos objeto en un solo ejecutable.
 echo Compilando ejecutable...
-"%gpp%\g++.exe" -s -O2 -o %OUTPUT% %OBJECTS% %LIBS%
+"%gpp%\g++.exe" -s -O2 -o %OUTPUT% %OBJECTS_GEN% %OBJECTS_C4% %LIBS%
 if %errorlevel% neq 0 set error=true
 
 rem Decimos que la compilación ha acabado y pausamos el programa para que el usuario pueda leer los fallos en el caso de que los haya.

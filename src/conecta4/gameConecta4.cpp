@@ -38,7 +38,7 @@ returnVal Game_Conecta4(void* data){
 	image_t mark("marcador_prueba.png");
 
 	// Creamos las fuentes que va a utilizar el juego
-	font_t j1("font01.ttf");
+	font_t j1("AlteHaasGroteskRegular.ttf");
 	j1.setColor(255, 255, 255);
 	j1.setSize(32);
 	font_t j2(j1);
@@ -46,7 +46,7 @@ returnVal Game_Conecta4(void* data){
 	font_t atras(j1);
 	font_t tiempo(j1);
 	reset.setText("Reiniciar");
-	atras.setText("Atras");
+	atras.setText("Atrás");
 
 	// Creamos el tablero
 	tablero_t tablero;

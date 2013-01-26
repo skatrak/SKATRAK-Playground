@@ -1,16 +1,24 @@
 # MAKEFILE PARA COMPILAR EN UBUNTU
 # ESCRITO POR SERGIO M. AFONSO FUMERO (theSkatrak@gmail.com)
 
+# Para determinar qué librerías (x86, x64) utilizar
 ARCH := $(shell getconf LONG_BIT)
 
+# Argumentos para el compilador
 CC=g++
 CFLAGS=-Wall -c -I../include
 LIBSPATH32=../lib/linux/x86
 LIBSPATH64=../lib/linux/x64
 LDFLAGS=-L$(LIBSPATH$(ARCH)) -lSDL -lSDL_image -lSDL_mixer -lSDL_ttf
-SOURCES=../src/main.cpp ../src/music.cpp ../src/system.cpp ../src/image.cpp ../src/timekeeper.cpp ../src/font.cpp ../src/inifile.cpp ../src/sfx.cpp ../src/str_operations.cpp ../src/menu.cpp ../src/mainMenu.cpp ../src/messagebox.cpp ../src/conecta4/tablero.cpp ../src/conecta4/mainConecta4.cpp ../src/conecta4/Game_Conecta4.cpp ../src/conecta4/messagesConecta4.cpp
-OBJECTS=../bin/linux/obj/main.o ../bin/linux/obj/music.o ../bin/linux/obj/system.o ../bin/linux/obj/image.o ../bin/linux/obj/timekeeper.o ../bin/linux/obj/font.o ../bin/linux/obj/inifile.o ../bin/linux/obj/sfx.o ../bin/linux/obj/str_operations.o ../bin/linux/obj/menu.o ../bin/linux/obj/mainMenu.o ../bin/linux/obj/messagebox.o ../bin/linux/obj/tablero.o ../bin/linux/obj/mainConecta4.o ../bin/linux/obj/Game_Conecta4.o ../bin/linux/obj/messagesConecta4.o
-EXECUTABLE=../bin/linux/SKATRAK-Playground
+
+# Directorios importantes
+OBJPATH=../bin/linux/obj
+SRCPATH=../src
+
+# Rutas de los archivos
+SOURCES="$(SRCPATH)/main.cpp" "$(SRCPATH)/music.cpp" "$(SRCPATH)/system.cpp" "$(SRCPATH)/image.cpp" "$(SRCPATH)/timekeeper.cpp" "$(SRCPATH)/font.cpp" "$(SRCPATH)/inifile.cpp" "$(SRCPATH)/sfx.cpp" "$(SRCPATH)/str_operations.cpp" "$(SRCPATH)/menu.cpp" "$(SRCPATH)/mainMenu.cpp" "$(SRCPATH)/messagebox.cpp" "$(SRCPATH)/conecta4/tablero.cpp" "$(SRCPATH)/conecta4/mainConecta4.cpp" "$(SRCPATH)/conecta4/gameConecta4.cpp" "$(SRCPATH)/conecta4/messagesConecta4.cpp"
+OBJECTS="$(OBJPATH)/main.o" "$(OBJPATH)/music.o" "$(OBJPATH)/system.o" "$(OBJPATH)/image.o" "$(OBJPATH)/timekeeper.o" "$(OBJPATH)/font.o" "$(OBJPATH)/inifile.o" "$(OBJPATH)/sfx.o" "$(OBJPATH)/str_operations.o" "$(OBJPATH)/menu.o" "$(OBJPATH)/mainMenu.o" "$(OBJPATH)/messagebox.o" "$(OBJPATH)/tablero.o" "$(OBJPATH)/mainConecta4.o" "$(OBJPATH)/gameConecta4.o" "$(OBJPATH)/messagesConecta4.o"
+EXECUTABLE="../bin/linux/SKATRAK Playground"
 
 all: $(SOURCES) $(EXECUTABLE)
 
@@ -18,71 +26,71 @@ $(EXECUTABLE): $(OBJECTS)
 	@echo Compilando ejecutable...
 	@$(CC) -O2 $(OBJECTS) -o $@ $(LDFLAGS)
 
-../bin/linux/obj/main.o:
+$(OBJPATH)/main.o:
 	@echo "Compilando \"$@\"..."
-	@$(CC) $(CFLAGS) ../src/main.cpp -o $@
+	@$(CC) $(CFLAGS) $(SRCPATH)/main.cpp -o $@
 
-../bin/linux/obj/music.o:
+$(OBJPATH)/music.o:
 	@echo "Compilando \"$@\"..."
-	@$(CC) $(CFLAGS) ../src/music.cpp -o $@
+	@$(CC) $(CFLAGS) $(SRCPATH)/music.cpp -o $@
 
-../bin/linux/obj/system.o:
+$(OBJPATH)/system.o:
 	@echo "Compilando \"$@\"..."
-	@$(CC) $(CFLAGS) ../src/system.cpp -o $@
+	@$(CC) $(CFLAGS) $(SRCPATH)/system.cpp -o $@
 
-../bin/linux/obj/image.o:
+$(OBJPATH)/image.o:
 	@echo "Compilando \"$@\"..."
-	@$(CC) $(CFLAGS) ../src/image.cpp -o $@
+	@$(CC) $(CFLAGS) $(SRCPATH)/image.cpp -o $@
 
-../bin/linux/obj/timekeeper.o:
+$(OBJPATH)/timekeeper.o:
 	@echo "Compilando \"$@\"..."
-	@$(CC) $(CFLAGS) ../src/timekeeper.cpp -o $@
+	@$(CC) $(CFLAGS) $(SRCPATH)/timekeeper.cpp -o $@
 
-../bin/linux/obj/font.o:
+$(OBJPATH)/font.o:
 	@echo "Compilando \"$@\"..."
-	@$(CC) $(CFLAGS) ../src/font.cpp -o $@
+	@$(CC) $(CFLAGS) $(SRCPATH)/font.cpp -o $@
 
-../bin/linux/obj/inifile.o:
+$(OBJPATH)/inifile.o:
 	@echo "Compilando \"$@\"..."
-	@$(CC) $(CFLAGS) ../src/inifile.cpp -o $@
+	@$(CC) $(CFLAGS) $(SRCPATH)/inifile.cpp -o $@
 
-../bin/linux/obj/sfx.o:
+$(OBJPATH)/sfx.o:
 	@echo "Compilando \"$@\"..."
-	@$(CC) $(CFLAGS) ../src/sfx.cpp -o $@
+	@$(CC) $(CFLAGS) $(SRCPATH)/sfx.cpp -o $@
 
-../bin/linux/obj/str_operations.o:
+$(OBJPATH)/str_operations.o:
 	@echo "Compilando \"$@\"..."
-	@$(CC) $(CFLAGS) ../src/str_operations.cpp -o $@
+	@$(CC) $(CFLAGS) $(SRCPATH)/str_operations.cpp -o $@
 
-../bin/linux/obj/menu.o:
+$(OBJPATH)/menu.o:
 	@echo "Compilando \"$@\"..."
-	@$(CC) $(CFLAGS) ../src/menu.cpp -o $@
+	@$(CC) $(CFLAGS) $(SRCPATH)/menu.cpp -o $@
 
-../bin/linux/obj/mainMenu.o:
+$(OBJPATH)/mainMenu.o:
 	@echo "Compilando \"$@\"..."
-	@$(CC) $(CFLAGS) ../src/mainMenu.cpp -o $@
+	@$(CC) $(CFLAGS) $(SRCPATH)/mainMenu.cpp -o $@
 
-../bin/linux/obj/messagebox.o:
+$(OBJPATH)/messagebox.o:
 	@echo "Compilando \"$@\"..."
-	@$(CC) $(CFLAGS) ../src/messagebox.cpp -o $@
+	@$(CC) $(CFLAGS) $(SRCPATH)/messagebox.cpp -o $@
 
 # CONECTA 4
 
-../bin/linux/obj/tablero.o:
+$(OBJPATH)/tablero.o:
 	@echo "Compilando \"$@\"..."
-	@$(CC) $(CFLAGS) ../src/conecta4/tablero.cpp -o $@
+	@$(CC) $(CFLAGS) $(SRCPATH)/conecta4/tablero.cpp -o $@
 
-../bin/linux/obj/mainConecta4.o:
+$(OBJPATH)/mainConecta4.o:
 	@echo "Compilando \"$@\"..."
-	@$(CC) $(CFLAGS) ../src/conecta4/mainConecta4.cpp -o $@
+	@$(CC) $(CFLAGS) $(SRCPATH)/conecta4/mainConecta4.cpp -o $@
 
-../bin/linux/obj/Game_Conecta4.o:
+$(OBJPATH)/gameConecta4.o:
 	@echo "Compilando \"$@\"..."
-	@$(CC) $(CFLAGS) ../src/conecta4/Game_Conecta4.cpp -o $@
+	@$(CC) $(CFLAGS) $(SRCPATH)/conecta4/gameConecta4.cpp -o $@
 
-../bin/linux/obj/messagesConecta4.o:
+$(OBJPATH)/messagesConecta4.o:
 	@echo "Compilando \"$@\"..."
-	@$(CC) $(CFLAGS) ../src/conecta4/messagesConecta4.cpp -o $@
+	@$(CC) $(CFLAGS) $(SRCPATH)/conecta4/messagesConecta4.cpp -o $@
 
 clean:
 	rm -f ../bin/linux/obj/*.o

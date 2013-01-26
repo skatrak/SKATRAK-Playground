@@ -334,7 +334,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit23]
-FileName=..\src\conecta4\Game_Conecta4.cpp
+FileName=..\src\conecta4\gameConecta4.cpp
 CompileCpp=1
 Folder=Conecta 4
 Compile=1
