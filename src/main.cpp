@@ -60,10 +60,10 @@ int main(int argc, char* argv[]){
 		return 1;
 	}
 	image_t fondo("Fondo_inicio_prueba.png");
-	font_t nombreJuego("font01.ttf");
+	font_t nombreJuego("BOOTERFF.ttf");
 	nombreJuego.setSize(72);
 	nombreJuego.setText("SKATRAK Playground");
-	font_t empezar("font01.ttf");
+	font_t empezar("BOOTERFF.ttf");
 	empezar.setSize(32);
 	empezar.setText("Pulse una tecla para comenzar");
 	timekeeper_t temporizador;

@@ -28,10 +28,10 @@ bool salir(bool tablero_vacio){
 
 	messagebox_t msg(2);
 
-	msg.setFont("font01.ttf", 32);
+	msg.setFont("AlteHaasGroteskRegular.ttf", 32);
 	msg.setBackground("ventana_prueba.png");
-	msg.setText(0, "Deseas abandonar la partida?");
-	msg.setText(1, "Si");
+	msg.setText(0, "¿Deseas abandonar la partida?");
+	msg.setText(1, "Sí");
 	msg.setText(2, "No");
 	msg.locateTexts();
 
@@ -46,7 +46,7 @@ bool salir(bool tablero_vacio){
 void msgVictoria(ResultConecta4 ganador){
 	string mensaje;
 	messagebox_t msg(1);
-	msg.setFont("font01.ttf", 32);
+	msg.setFont("AlteHaasGroteskRegular.ttf", 32);
 	msg.setBackground("ventana_prueba.png");
 	msg.setText(1, "Aceptar");
 

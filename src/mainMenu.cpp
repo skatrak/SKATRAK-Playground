@@ -34,7 +34,7 @@ returnVal mainConecta4(void* data);
 returnVal mainMenu(){
 	menu_t menu(5);
 
-	menu.setTexts("font01.ttf", 48);
+	menu.setTexts("BOOTERFF.ttf", 48);
 
 	menu.setText(0, "Conecta 4");
 	menu.setOpt(0, &mainConecta4);

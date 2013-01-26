@@ -28,7 +28,7 @@ returnVal Game_Conecta4(void*);
 
 returnVal mainConecta4(void* data){
 	// Fuente del menú
-	font_t menuFont("font01.ttf");
+	font_t menuFont("AlteHaasGroteskRegular.ttf");
 	menuFont.setColor(255, 0, 100);
 	menuFont.setSize(48);
 
@@ -38,7 +38,7 @@ returnVal mainConecta4(void* data){
 
 	menu.setText(0, "Jugar");
 	menu.setOpt(0, &Game_Conecta4);
-	menu.setText(1, "Atras");
+	menu.setText(1, "Atrás");
 	menu.setOpt(1, &backCallback);
 
 	menu.setBackground("Menu_Conecta4_prueba.png");
