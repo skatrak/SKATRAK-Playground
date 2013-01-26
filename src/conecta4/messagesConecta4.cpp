@@ -60,6 +60,7 @@ void msgVictoria(ResultConecta4 ganador){
 	case NOBODY_WINS:
 		mensaje = "Empate";
 		break;
+	default: break;
 	}
 
 	msg.setText(0, mensaje);

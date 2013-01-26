@@ -297,6 +297,7 @@ int messagebox_t::loop(SDL_Surface* screen){
 							selIndex--;
 					}
 					break;
+				default: break;
 				}
 				if(event.key.keysym.sym == SDLK_RETURN)
 					return selIndex;
