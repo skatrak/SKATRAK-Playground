@@ -21,14 +21,24 @@
 
 #include <SKATRAK_PLAYGROUND.hpp>
 
-messagebox_t::messagebox_t(): nOpt(0), selIndex(0), text(NULL), box(NULL), msgPos(NULL)
+/**
+ * @brief Constructor. Inicializa la clase con sus valores por defecto.
+ */
+messagebox_t::messagebox_t(): nOpt(0), selIndex(1), text(NULL), box(NULL), msgPos(NULL)
 {
 }
 
-messagebox_t::messagebox_t(int optNumber): nOpt(0), selIndex(0), text(NULL), box(NULL), msgPos(NULL) {
+/**
+ * @brief Constructor. Inicializa la clase.
+ * @param optNumber Número de posibles respuestas a la pregunta.
+ */
+messagebox_t::messagebox_t(int optNumber): nOpt(0), selIndex(1), text(NULL), box(NULL), msgPos(NULL) {
 	setOpts(optNumber);
 }
 
+/**
+ * @brief Destructor. Libera la memoria ocupada por el mensaje y todos sus elementos.
+ */
 messagebox_t::~messagebox_t(){
 	if(text != NULL){
 		for(int i = 0; i <= nOpt; i++){
@@ -43,6 +53,10 @@ messagebox_t::~messagebox_t(){
 		delete [] msgPos;
 }
 
+/**
+ * @brief Asigna el número de posibles respuestas y reserva espacio para estos elementos.
+ * @param optNumber Número de posibles respuestas.
+ */
 void messagebox_t::setOpts(int optNumber){
 	// Borramos todo antes de nada
 	if(text != NULL){
@@ -64,7 +78,7 @@ void messagebox_t::setOpts(int optNumber){
 
 	// Esto viene siendo lo mismo de la clase menu_t
 	nOpt = 0;
-	selIndex = 0;
+	selIndex = 1;	// Tener en cuenta que el índice 0 es el del enunciado
 
 	if(optNumber > 0 && optNumber < 5){ // Como máximo 4 opciones para que quepa bien
 		msgPos = new SDL_Rect[optNumber + 1]; // Reservamos uno más para el enunciado
@@ -89,6 +103,11 @@ void messagebox_t::setOpts(int optNumber){
 		fprintf(stderr, "No has especificado un número válido de opciones para el mensaje.\n");
 }
 
+/**
+ * @brief Le asigna una fuente al mensaje.
+ * @param fontName Nombre de la fuente utilizada.
+ * @param fontSize Tamaño de la fuente.
+ */
 void messagebox_t::setFont(string fontName, int fontSize){
 	if(text != NULL){
 		for(int i = 0; i <= nOpt; i++){
@@ -105,6 +124,10 @@ void messagebox_t::setFont(string fontName, int fontSize){
 		fprintf(stderr, "No se ha podido asignar una fuente al mensaje porque no se había reservado memoria para ella.\n");
 }
 
+/**
+ * @brief Le asigna una fuente al mensaje.
+ * @param fontStyle Dirección a un objeto font_t con el estilo a utilizar.
+ */
 void messagebox_t::setFont(font_t* fontStyle){
 	if(text != NULL){
 		for(int i = 0; i <= nOpt; i++){
@@ -119,6 +142,11 @@ void messagebox_t::setFont(font_t* fontStyle){
 		fprintf(stderr, "No se pueden especificar las características de los textos de los menús sin haber decidido cuántos van a haber.\n");
 }
 
+/**
+ * @brief Le asigna un texto a alguno de los campos.
+ * @param index Índice del texto. Desde 0 (Enunciado) hasta nOpt.
+ * @param fontText Texto a asignar.
+ */
 void messagebox_t::setText(int index, string fontText){
 	if(text != NULL && msgPos != NULL && index >= 0 && index <= nOpt){
 		if(text[index] != NULL){
@@ -133,6 +161,10 @@ void messagebox_t::setText(int index, string fontText){
 		fprintf(stderr, "No se puede asignar un texto al elemento %d del mensaje porque no se ha reservado memoria para él.\n", index);
 }
 
+/**
+ * @brief Le da una imagen a utilizar para el fondo del mensaje.
+ * @param path Nombre de la imagen a utilizar.
+ */
 void messagebox_t::setBackground(string path){
 	if(box != NULL){
 		delete box;
@@ -143,6 +175,13 @@ void messagebox_t::setBackground(string path){
 		fprintf(stderr, "Ha habido un error al crear la imagen de fondo del mensaje.\n");
 }
 
+/**
+ * @brief Distribuye los textos por el recuadro.
+ * @note No llamar a esta función hasta que se haya especificado la cantidad de campos y los textos.
+ * @return -1 En caso de error y 0 si no hay errores.
+ *
+ * Sólo hay que llamar a esta función una vez. Una vez se hayan distribuido los mensajes, sólo hay que imprimirlos por pantalla.
+ */
 int messagebox_t::locateTexts(){
 	if(box == NULL || text == NULL || msgPos == NULL){
 		fprintf(stderr, "No se pueden situar los textos porque la memoria no está reservada.\n");
@@ -188,5 +227,100 @@ int messagebox_t::locateTexts(){
 		msgPos[4].x = wndPos.x + (int)((3 * box->width() / 4) - (text[4]->width() / 2));
 		msgPos[4].y = wndPos.y + (int)((3 * box->height() / 4) - (text[4]->height() / 2));
 		break;
+	}
+	return 0;
+}
+
+/**
+ * @brief Entra en un bucle y le da el control de la entrada del usuario al mensaje.
+ * @param screen Superficie donde se hará el blitting del cuadro de mensaje.
+ * @return El número de índice de la opción seleccionada o 0 en caso de que el usuario envíe un evento SDL_QUIT.
+ */
+int messagebox_t::loop(SDL_Surface* screen){
+	SDL_Surface* background = NULL;
+	background = SDL_ConvertSurface(screen, screen->format, screen->flags);
+
+	timekeeper_t timer;
+	SDL_Event event;
+	while(true){
+		timer.refresh();
+		while(SDL_PollEvent(&event)){
+			switch(event.type){
+			case SDL_MOUSEMOTION:
+				for(int i = 1; i <= nOpt; i++){
+					if(event.motion.x >= msgPos[i].x && event.motion.x <= msgPos[i].x + msgPos[i].w && event.motion.y >= msgPos[i].y && event.motion.y <= msgPos[i].y + msgPos[i].h){
+						selIndex = i;
+						break;
+					}
+				}
+				break;
+			case SDL_MOUSEBUTTONDOWN:
+				if(event.button.button == SDL_BUTTON_LEFT){
+					for(int i = 1; i <= nOpt; i++){
+						if(event.motion.x >= msgPos[i].x && event.motion.x <= msgPos[i].x + msgPos[i].w && event.motion.y >= msgPos[i].y && event.motion.y <= msgPos[i].y + msgPos[i].h)
+							return i;
+					}
+				}
+				break;
+			case SDL_KEYDOWN:
+				switch(event.key.keysym.sym){
+				case SDLK_RIGHT:
+					selIndex++;
+					break;
+				case SDLK_LEFT:
+					selIndex--;
+					break;
+				case SDLK_UP:
+				case SDLK_DOWN:
+					if(nOpt == 4){
+						switch(selIndex){
+						case 1:
+						case 2:
+							if(event.key.keysym.sym == SDLK_UP)
+								selIndex += 2;
+							else
+								selIndex -= 2;
+							break;
+						case 3:
+						case 4:
+							if(event.key.keysym.sym == SDLK_UP)
+								selIndex -= 2;
+							else
+								selIndex += 2;
+							break;
+						}
+					}
+					else {
+						if(event.key.keysym.sym == SDLK_UP)
+							selIndex++;
+						else
+							selIndex--;
+					}
+					break;
+				}
+				if(event.key.keysym.sym == SDLK_RETURN)
+					return selIndex;
+				break;
+			case SDL_QUIT:
+				return 0;
+				break;
+			}
+		}
+		// Evitamos que el índice se salga del rango
+		if(selIndex > nOpt) selIndex = 1;
+		else if(selIndex < 1) selIndex = nOpt;
+		// Colocamos el resaltador en el texto seleccionado
+		marker.x = msgPos[selIndex].x - 5;
+		marker.y = msgPos[selIndex].y - 5;
+		marker.h = msgPos[selIndex].h + 10;
+		marker.w = msgPos[selIndex].w + 10;
+		// Imprimimos todo por pantalla
+		SDL_BlitSurface(background, NULL, screen, NULL);
+		box->blit(wndPos.x, wndPos.y, screen);
+		SDL_FillRect(screen, &marker, SDL_MapRGB(screen->format, 0, 255, 128));
+		for(int i = 0; i <= nOpt; i++)
+			text[i]->blit(msgPos[i].x, msgPos[i].y, screen);
+		sistema->update();
+		timer.waitFramerate(30);
 	}
 }
