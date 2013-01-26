@@ -72,6 +72,8 @@ returnVal Game_Conecta4(void* data){
 
 	// Jugador que empezó la partida actual (Para el reset)
 	int startPlayer = 0;
+	// Estado de la partida tras la última comprobación
+	ResultConecta4 estado = NOT_FINISHED;
 
 	// Game loop
 	timekeeper_t timer;
@@ -100,35 +102,23 @@ returnVal Game_Conecta4(void* data){
 				}
 				break;
 			case SDL_KEYDOWN:
-				if(event.key.keysym.sym == SDLK_ESCAPE && salir(tablero.isEmpty())) return ACTUAL_MENU;
+				if(event.key.keysym.sym == SDLK_ESCAPE && salir(tablero.isEmpty()))
+					return ACTUAL_MENU;
 				break;
 			case SDL_QUIT:
 				return EXIT;
 			}
+			// Dejamos esto aquí porque no puede cambiar el estado del juego cuando no hay eventos, así evitamos comprobaciones innecesarias
 			tablero.update(&event);
-			switch(tablero.checkWin()){
-			case NOT_FINISHED:
-				break;
-			case P1_WINS:
-				/* msgVictoria(P1_WINS) */
-				printf("Ha ganado el jugador 1.\n");
-				victorias[0]++;
+			estado = tablero.checkWin();
+			if(estado != NOT_FINISHED){
+				if(estado == P1_WINS)
+					victorias[0]++;
+				else if(estado == P2_WINS)
+					victorias[1]++;
+				msgVictoria(estado);
 				tablero.reset();
 				startPlayer = tablero.actualPlayer();
-				break;
-			case P2_WINS:
-				/* msgVictoria(P2_WINS) */
-				printf("Ha ganado el jugador 2.\n");
-				victorias[1]++;
-				tablero.reset();
-				startPlayer = tablero.actualPlayer();
-				break;
-			case NOBODY_WINS:
-				/* msgVictoria(NOBODY_WINS) */
-				printf("Empate.\n");
-				tablero.reset();
-				startPlayer = tablero.actualPlayer();
-				break;
 			}
 		}
 		// Textos de las puntuaciones y tiempo transcurrido
