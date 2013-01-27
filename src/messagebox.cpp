@@ -80,16 +80,16 @@ void messagebox_t::setOpts(int optNumber){
 	nOpt = 0;
 	selIndex = 1;	// Tener en cuenta que el índice 0 es el del enunciado
 
-	if(optNumber > 0 && optNumber < 5){ // Como máximo 4 opciones para que quepa bien
-		msgPos = new SDL_Rect[optNumber + 1]; // Reservamos uno más para el enunciado
+	if(optNumber > 0 && optNumber < 5){	// Como máximo 4 opciones para que quepa bien
+		msgPos = new SDL_Rect[optNumber + 1];	// Reservamos uno más para el enunciado
 		if(msgPos == NULL){
-			fprintf(stderr, "No se ha podido reservar memoria para las posiciones de los textos del mensaje.\n");
+			fprintf(stderr, "messagebox_t::setOpts: No se ha podido reservar memoria para las posiciones.\n");
 			return;
 		}
 
 		text = new font_t*[optNumber + 1];
 		if(text == NULL){
-			fprintf(stderr, "No se ha podido reservar memoria para los textos del mensaje.\n");
+			fprintf(stderr, "messagebox_t::setOpts: No se ha podido reservar memoria para los textos.\n");
 			delete [] msgPos;
 			msgPos = NULL;
 			return;
@@ -100,7 +100,7 @@ void messagebox_t::setOpts(int optNumber){
 		nOpt = optNumber;
 	}
 	else
-		fprintf(stderr, "No has especificado un número válido de opciones para el mensaje.\n");
+		fprintf(stderr, "messagebox_t::setOpts: No has especificado un número válido de opciones para el mensaje.\n");
 }
 
 /**
@@ -117,11 +117,11 @@ void messagebox_t::setFont(string fontName, int fontSize){
 				text[i]->setText("[UNDEFINED]");
 			}
 			else
-				fprintf(stderr, "No se ha podido reservar memoria para la fuente nº %d.\n", i);
+				fprintf(stderr, "messagebox_t::setFont: No se ha podido reservar memoria para la fuente nº %d.\n", i);
 		}
 	}
 	else
-		fprintf(stderr, "No se ha podido asignar una fuente al mensaje porque no se había reservado memoria para ella.\n");
+		fprintf(stderr, "messagebox_t::setFont: No se ha podido asignar una fuente porque no se había reservado memoria para ella.\n");
 }
 
 /**
@@ -133,13 +133,13 @@ void messagebox_t::setFont(font_t* fontStyle){
 		for(int i = 0; i <= nOpt; i++){
 			text[i] = new font_t(*fontStyle);
 			if(text[i] == NULL)
-				fprintf(stderr, "No se ha podido reservar memoria para la fuente nº %d.\n", i);
+				fprintf(stderr, "messagebox_t::setFont: No se ha podido reservar memoria para la fuente nº %d.\n", i);
 			else
 				setText(i, "[UNDEFINED]");
 		}
 	}
 	else
-		fprintf(stderr, "No se pueden especificar las características de los textos de los menús sin haber decidido cuántos van a haber.\n");
+		fprintf(stderr, "messagebox_t::setFont: No se ha podido asignar una fuente porque no se había reservado memoria para ella.\n");
 }
 
 /**
@@ -155,10 +155,10 @@ void messagebox_t::setText(int index, string fontText){
 			msgPos[index].h = text[index]->height();
 		}
 		else
-			fprintf(stderr, "No se puede asignar un texto al elemento %d del mensaje porque ha habido un error al asignarle propiedades.\n", index);
+			fprintf(stderr, "messagebox_t::setText: No se puede asignar un texto al elemento %d porque ha habido un error al asignarle propiedades.\n", index);
 	}
 	else
-		fprintf(stderr, "No se puede asignar un texto al elemento %d del mensaje porque no se ha reservado memoria para él.\n", index);
+		fprintf(stderr, "messagebox_t::setText: No se puede asignar un texto al elemento %d porque no se ha reservado memoria para él.\n", index);
 }
 
 /**
@@ -172,7 +172,7 @@ void messagebox_t::setBackground(string path){
 	}
 	box = new image_t(path);
 	if(box == NULL)
-		fprintf(stderr, "Ha habido un error al crear la imagen de fondo del mensaje.\n");
+		fprintf(stderr, "messagebox_t::setBackground: Ha habido un error al crear la imagen de fondo.\n");
 }
 
 /**
@@ -184,7 +184,7 @@ void messagebox_t::setBackground(string path){
  */
 int messagebox_t::locateTexts(){
 	if(box == NULL || text == NULL || msgPos == NULL){
-		fprintf(stderr, "No se pueden situar los textos porque la memoria no está reservada.\n");
+		fprintf(stderr, "messsagebox_t::locateTexts: No se pueden colocar los textos porque no se han cargado correctamente.\n");
 		return -1;
 	}
 

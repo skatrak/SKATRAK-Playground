@@ -110,15 +110,19 @@ void music_t::setTracks(int n){
 	}
 	n_tracks = n;
 	music = new Mix_Music*[n_tracks];
-	if(music == NULL)
-		fprintf(stderr, "Error en la reserva de memoria para la lista de reproducción.\n");
-	else {
-		for(int i = 0; i < n_tracks; i++)
-			music[i] = NULL;
+	if(music == NULL){
+		fprintf(stderr, "music_t::setTracks: Error en la reserva de memoria para la lista de reproducción.\n");
+		return;
 	}
+	for(int i = 0; i < n_tracks; i++)
+		music[i] = NULL;
+
 	music_names = new string[n_tracks];
-	if(music_names == NULL)
-		fprintf(stderr, "Error en la reserva de memoria para los nombres de las canciones de la lista de reproducción.\n");
+	if(music_names == NULL){
+		fprintf(stderr, "music_t::setTracks: Error en la reserva de memoria para los nombres de las canciones.\n");
+		delete [] music;
+		music = NULL;
+	}
 }
 
 /**
@@ -131,7 +135,7 @@ void music_t::setTrack(int index, string path){
 	if(playing)
 		halt();
 	if(index < 0 || index >= n_tracks){
-		fprintf(stderr, "Se ha intentado cargar una canción en una zona de memoria no reservada. Se sobreescribirá la primera canción.\n");
+		fprintf(stderr, "music_t::setTrack: Se ha intentado cargar una canción en una zona de memoria no reservada. Se sobreescribirá la primera canción.\n");
 		index = 0;
 	}
 	if(music != NULL && music_names != NULL){
@@ -144,10 +148,10 @@ void music_t::setTrack(int index, string path){
 		}
 		music[index] = Mix_LoadMUS(compPath.c_str());
 		if(music[index] == NULL)
-			fprintf(stderr, "No se ha podido cargar el fichero \"%s\": %s.\n", compPath.c_str(), Mix_GetError());
+			fprintf(stderr, "music_t::setTrack: No se ha podido cargar el fichero \"%s\": %s.\n", compPath.c_str(), Mix_GetError());
 	}
 	else
-		fprintf(stderr, "No se puede cargar ninguna canción en memoria porque no se ha reservado previamente.\n");
+		fprintf(stderr, "music_t::setTrack: No se puede cargar ninguna canción en memoria porque no se ha reservado previamente.\n");
 }
 
 /**
@@ -168,7 +172,7 @@ void music_t::play(){
 		}
 	}
 	else
-		fprintf(stderr, "No se puede reproducir la música porque no se ha inicializado correctamente.\n");
+		fprintf(stderr, "music_t::play: No se puede iniciar la reproducción de música porque no hay una lista cargada.\n");
 }
 
 /**

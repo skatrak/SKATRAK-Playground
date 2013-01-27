@@ -95,13 +95,13 @@ void menu_t::setOpts(int optNumber){
 	if(optNumber > 0){
 		textPos = new SDL_Rect[optNumber];
 		if(textPos == NULL){
-			fprintf(stderr, "No se ha podido reservar memoria para las posiciones de los textos del menú.\n");
+			fprintf(stderr, "menu_t::setOpts: No se ha podido reservar memoria para las posiciones de los textos.\n");
 			return;
 		}
 
 		callback = new MenuCallbackFunc[optNumber];
 		if(callback == NULL){
-			fprintf(stderr, "No se ha podido reservar memoria para las funciones de callback del menú.\n");
+			fprintf(stderr, "menu_t::setOpts: No se ha podido reservar memoria para las funciones de callback.\n");
 			delete [] textPos;
 			textPos = NULL;
 			return;
@@ -111,7 +111,7 @@ void menu_t::setOpts(int optNumber){
 
 		optName = new font_t*[optNumber];
 		if(optName == NULL){
-			fprintf(stderr, "No se ha podido reservar memoria para las fuentes de los textos de opciones del menú.\n");
+			fprintf(stderr, "menu_t::setOpts: No se ha podido reservar memoria para las fuentes de los textos de opciones.\n");
 			delete [] textPos;
 			delete [] callback;
 			textPos = NULL;
@@ -124,7 +124,7 @@ void menu_t::setOpts(int optNumber){
 		nOpt = optNumber;	// Todo se ha cargado correctamente, así que actualizamos el número de opciones que tenemos
 	}
 	else
-		fprintf(stderr, "No se ha especificado un número válido de opciones al menú.\n");
+		fprintf(stderr, "menu_t::setOpts: No se ha especificado un número válido de opciones.\n");
 }
 
 /**
@@ -136,7 +136,7 @@ void menu_t::setOpt(int index, MenuCallbackFunc func){
 	if(callback != NULL && index >= 0 && index < nOpt)
 		callback[index] = func;
 	else
-		fprintf(stderr, "No se puede asignar un callback al elemento %d del menú porque no se ha reservado memoria para él.\n", index);
+		fprintf(stderr, "menu_t::setOpt: No se puede asignar un callback al elemento %d porque no se ha reservado memoria para él.\n", index);
 }
 
 /**
@@ -153,11 +153,11 @@ void menu_t::setTexts(string fontName, int fontSize){
 				optName[i]->setText("[UNDEFINED]");
 			}
 			else
-				fprintf(stderr, "No se ha podido reservar memoria para la fuente nº %d.\n", i);
+				fprintf(stderr, "menu_t::setTexts: No se ha podido reservar memoria para la fuente nº %d.\n", i);
 		}
 	}
 	else
-		fprintf(stderr, "No se pueden especificar las características de los textos de los menús sin haber decidido cuántos van a haber.\n");
+		fprintf(stderr, "menu_t::setTexts: No se pueden especificar las características de los textos sin haber decidido cuántos van a haber.\n");
 }
 
 /**
@@ -169,13 +169,13 @@ void menu_t::setTexts(font_t* fontStyle){
 		for(int i = 0; i < nOpt; i++){
 			optName[i] = new font_t(*fontStyle);
 			if(optName[i] == NULL)
-				fprintf(stderr, "No se ha podido reservar memoria para la fuente nº %d.\n", i);
+				fprintf(stderr, "menu_t::setTexts: No se ha podido reservar memoria para la fuente nº %d.\n", i);
 			else
 				setText(i, "[UNDEFINED]");
 		}
 	}
 	else
-		fprintf(stderr, "No se pueden especificar las características de los textos de los menús sin haber decidido cuántos van a haber.\n");
+		fprintf(stderr, "menu_t::setTexts: No se pueden especificar las características de los textos sin haber decidido cuántos van a haber.\n");
 }
 
 /**
@@ -191,10 +191,10 @@ void menu_t::setText(int index, string text){
 			textPos[index].h = optName[index]->height();
 		}
 		else
-			fprintf(stderr, "No se puede asignar un texto al elemento %d del menú porque ha habido un error al asignarle propiedades.\n", index);
+			fprintf(stderr, "menu_t::setText: No se puede asignar un texto al elemento %d porque ha habido un error al asignarle propiedades.\n", index);
 	}
 	else
-		fprintf(stderr, "No se puede asignar un texto al elemento %d del menú porque no se ha reservado memoria para él.\n", index);
+		fprintf(stderr, "menu_t::setText: No se puede asignar un texto al elemento %d porque no se ha reservado memoria para él.\n", index);
 }
 
 /**
@@ -210,7 +210,7 @@ void menu_t::setBackground(string imageName){
 	}
 	backImage = new image_t(imageName);
 	if(backImage == NULL)
-		fprintf(stderr, "No se ha podido cargar la imagen de fondo del menú desde %s.\n", imageName.c_str());
+		fprintf(stderr, "menu_t::setBackground: No se ha podido cargar la imagen de fondo.\n");
 }
 
 /**
@@ -224,7 +224,7 @@ void menu_t::setImage(string imageName){
 	}
 	selImage = new image_t(imageName);
 	if(selImage == NULL)
-		fprintf(stderr, "No se ha podido cargar la imagen para resaltar la opción activa del menú desde %s.\n", imageName.c_str());
+		fprintf(stderr, "menu_t::setImage: No se ha podido cargar la imagen para resaltar la opción activa.\n");
 }
 
 /**
@@ -238,7 +238,7 @@ void menu_t::setClickSFX(string soundName){
 	}
 	clickSound = new sfx_t(soundName);
 	if(clickSound == NULL)
-		fprintf(stderr, "No se ha podido cargar el sonido de 'click' del menú.\n");
+		fprintf(stderr, "menu_t::setClickSFX: No se ha podido cargar el sonido de 'click'.\n");
 }
 
 /**
@@ -252,7 +252,7 @@ void menu_t::setSelectSFX(string soundName){
 	}
 	selectSound = new sfx_t(soundName);
 	if(selectSound == NULL)
-		fprintf(stderr, "No se ha podido cargar el sonido de selección del menú.\n");
+		fprintf(stderr, "menu_t::setSelectSFX: No se ha podido cargar el sonido de selección.\n");
 }
 
 /**
@@ -304,7 +304,7 @@ void menu_t::align(unsigned int flags){
 			textPos[i].y = posY + (i * biggest) + ((i-1) * MENU_OPT_MARGIN);
 	}
 	else
-		fprintf(stderr, "No se han podido alinear las opciones porque los textos no se han cargado correctamente.\n");
+		fprintf(stderr, "menu_t::align: No se han podido alinear las opciones porque los textos no se han cargado correctamente.\n");
 }
 
 /**
@@ -401,20 +401,20 @@ void menu_t::blit(SDL_Surface* screen){
 	if(backImage != NULL)
 		backImage->blit(0, 0, screen);
 	else
-		fprintf(stderr, "No se puede mostrar el fondo de pantalla porque no se ha cargado.\n");
+		fprintf(stderr, "menu_t::blit: No se puede mostrar el fondo de pantalla porque no se ha cargado.\n");
 	if(textPos != NULL && optName != NULL){
 		if(selImage != NULL){
 			selImage->blit(textPos[selIndex].x, textPos[selIndex].y + (int)((textPos[selIndex].h - selImage->height()) / 2), screen);
 		}
 		else
-			fprintf(stderr, "No se puede imprimir el resaltador de opciones porque no se ha cargado en memoria.\n");
+			fprintf(stderr, "menu_t::blit: No se puede imprimir el resaltador de opciones porque no se ha cargado en memoria.\n");
 		for(int i = 0; i < nOpt; i++){
 			if(optName[i] != NULL)
 				optName[i]->blit(textPos[i].x, textPos[i].y, screen);
 			else
-				fprintf(stderr, "No se puede imprimir por pantalla la opción %d porque la imagen no está cargada en memoria.\n", i);
+				fprintf(stderr, "menu_t::blit: No se puede imprimir por pantalla la opción %d porque la imagen no está cargada en memoria.\n", i);
 		}
 	}
 	else
-		fprintf(stderr, "No se pueden imprimir las opciones porque no están cargadas en memoria.\n");
+		fprintf(stderr, "menu_t::blit: No se pueden imprimir las opciones porque no están cargadas en memoria.\n");
 }

@@ -69,10 +69,10 @@ void image_t::open(string path){
 			img = temp;
 		}
 		else
-			fprintf(stderr, "No se ha podido optimizar la imagen al formato de la pantalla: %s.\n", SDL_GetError());
+			fprintf(stderr, "image_t::open: No se ha podido optimizar la imagen al formato de la pantalla: %s.\n", SDL_GetError());
 	}
 	else
-		fprintf(stderr, "No se puede cargar la imagen \"%s\": %s.\n", compPath.c_str(), SDL_GetError());
+		fprintf(stderr, "image_t::open: No se puede cargar la imagen \"%s\": %s.\n", compPath.c_str(), SDL_GetError());
 }
 
 /**
@@ -99,7 +99,7 @@ void image_t::blit(int x, int y, SDL_Surface* screen, SDL_Rect* imZone){
 		SDL_BlitSurface(img, imZone, screen, &dest);
 	}
 	else
-		fprintf(stderr, "No se puede imprimir la imagen por pantalla porque no se ha cargado.\n");
+		fprintf(stderr, "image_t::blit: No se puede imprimir por pantalla porque no se ha cargado.\n");
 }
 
 /**
@@ -123,7 +123,7 @@ void image_t::blit(int x, int y, SDL_Surface* screen, int imX, int imY, int imW,
 		SDL_BlitSurface(img, &src, screen, &dest);
 	}
 	else
-		fprintf(stderr, "No se puede imprimir la imagen por pantalla porque no se ha cargado.\n");
+		fprintf(stderr, "image_t::blit: No se puede imprimir por pantalla porque no se ha cargado.\n");
 }
 
 /**

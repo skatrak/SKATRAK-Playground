@@ -72,7 +72,7 @@ void font_t::open(string path){
 	}
 	font = TTF_OpenFont(fontName.c_str(), fontSize);
 	if(font == NULL)
-		fprintf(stderr, "No se ha podido abrir la fuente \"%s\": %s.\n", fontName.c_str(), TTF_GetError());
+		fprintf(stderr, "font_t::open: No se ha podido abrir \"%s\": %s.\n", fontName.c_str(), TTF_GetError());
 	changed = true;
 	fontName = path;	// Hay que resetear la variable, porque si no se va añadiendo FONT_PATH al principio todo el rato
 }
@@ -161,12 +161,12 @@ void font_t::blit(int x, int y, SDL_Surface* screen){
 			if(fontAlpha == SDL_ALPHA_OPAQUE){
 				rendered = TTF_RenderText_Blended(font, fontText.c_str(), fontColor);
 				if(rendered == NULL)
-					fprintf(stderr, "No se ha podido renderizar la fuente: %s.\n", TTF_GetError());
+					fprintf(stderr, "font_t::blit: No se ha podido renderizar: %s.\n", TTF_GetError());
 			}
 			else {
 				rendered = TTF_RenderText_Solid(font, fontText.c_str(), fontColor);
 				if(rendered == NULL)
-					fprintf(stderr, "No se ha podido renderizar la fuente: %s.\n", TTF_GetError());
+					fprintf(stderr, "font_t::blit: No se ha podido renderizar: %s.\n", TTF_GetError());
 				else
 					SDL_SetAlpha(rendered, SDL_SRCALPHA | SDL_RLEACCEL, fontAlpha);
 			}
@@ -175,7 +175,7 @@ void font_t::blit(int x, int y, SDL_Surface* screen){
 				SDL_Surface* temp = NULL;
 				temp = SDL_DisplayFormatAlpha(rendered);
 				if(temp == NULL)
-					fprintf(stderr, "No se ha podido optimizar el formato de la fuente: %s.\n", SDL_GetError());
+					fprintf(stderr, "font_t::blit: No se ha podido optimizar el formato: %s.\n", SDL_GetError());
 				else {
 					SDL_FreeSurface(rendered);
 					rendered = temp;
@@ -188,7 +188,7 @@ void font_t::blit(int x, int y, SDL_Surface* screen){
 		SDL_BlitSurface(rendered, NULL, screen, &dest);
 	}
 	else
-		fprintf(stderr, "No se puede imprimir la fuente por la pantalla porque no se ha cargado.\n");
+		fprintf(stderr, "font_t::blit: No se puede imprimir por pantalla porque no se ha cargado.\n");
 }
 
 /**

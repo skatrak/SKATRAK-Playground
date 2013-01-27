@@ -32,7 +32,7 @@ system_t::system_t(int scr_w, int scr_h, int depth): screen(NULL), wIcon(NULL), 
 	if(initSubsystems(SYS_SUBST_SDL)){
 		screen = SDL_SetVideoMode(screenWidth, screenHeight, bpp, SDL_HWSURFACE | SDL_DOUBLEBUF | SDL_FULLSCREEN);
 		if(screen == NULL)
-			fprintf(stderr, "No se ha podido iniciar el modo de video %dx%d a %d bits: %s.\n", screenWidth, screenHeight, bpp, SDL_GetError());
+			fprintf(stderr, "system_t::system_t: No se ha podido iniciar el modo de video %dx%d a %d bits: %s.\n", screenWidth, screenHeight, bpp, SDL_GetError());
 		SDL_WM_SetCaption("SKATRAK Playground", NULL);
 	}
 }
@@ -59,13 +59,13 @@ unsigned int system_t::initSubsystems(unsigned int flags){
 
 	if(flags & SYS_SUBST_SDL){
 		if(!SDL_WasInit(SDL_INIT_EVERYTHING) && SDL_Init(SDL_INIT_EVERYTHING) < 0)
-			fprintf(stderr, "No se ha podido inicializar SDL: %s.\n", SDL_GetError());
+			fprintf(stderr, "system_t::initSubsystems: No se ha podido inicializar SDL: %s.\n", SDL_GetError());
 		else
 			substInit |= SYS_SUBST_SDL;
 	}
 	if(flags & SYS_SUBST_MIX){
 		if(!Mix_QuerySpec(NULL, NULL, NULL) && Mix_OpenAudio(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT, 2, 4096))
-			fprintf(stderr, "No se ha podido inicializar SDL_mixer: %s.\n", Mix_GetError());
+			fprintf(stderr, "system_t::initSubsystems: No se ha podido inicializar SDL_mixer: %s.\n", Mix_GetError());
 		else {
 			Mix_AllocateChannels(AUDIO_CHANNELS);
 			substInit |= SYS_SUBST_MIX;
@@ -73,7 +73,7 @@ unsigned int system_t::initSubsystems(unsigned int flags){
 	}
 	if(flags & SYS_SUBST_TTF){
 		if(!TTF_WasInit() && TTF_Init() < 0)
-			fprintf(stderr, "No se ha podido inicializar SDL_TTF: %s.\n", TTF_GetError());
+			fprintf(stderr, "system_t::initSubsystems: No se ha podido inicializar SDL_TTF: %s.\n", TTF_GetError());
 		else
 			substInit |= SYS_SUBST_TTF;
 	}
@@ -117,11 +117,11 @@ void system_t::toggleFullscreen(){
 	if(fullscr){
 		screen = SDL_SetVideoMode(screenWidth, screenHeight, bpp, SDL_HWSURFACE | SDL_DOUBLEBUF | SDL_FULLSCREEN);
 		if(screen == NULL)
-			fprintf(stderr, "No se ha podido iniciar el modo de video %dx%d a %d bits con pantalla completa: %s.\n", screenWidth, screenHeight, bpp, SDL_GetError());
+			fprintf(stderr, "system_t::toggleFullscreen: No se ha podido iniciar el modo de video %dx%d a %d bits con pantalla completa: %s.\n", screenWidth, screenHeight, bpp, SDL_GetError());
 	} else {
 		screen = SDL_SetVideoMode(screenWidth, screenHeight, bpp, SDL_HWSURFACE | SDL_DOUBLEBUF);
 		if(screen == NULL)
-			fprintf(stderr, "No se ha podido iniciar el modo de video %dx%d a %d bits sin pantalla completa: %s.\n", screenWidth, screenHeight, bpp, SDL_GetError());
+			fprintf(stderr, "system_t::toggleFullscreen: No se ha podido iniciar el modo de video %dx%d a %d bits sin pantalla completa: %s.\n", screenWidth, screenHeight, bpp, SDL_GetError());
 	}
 }
 
@@ -140,7 +140,7 @@ void system_t::setIcon(string iconpath){
 	}
 	wIcon = IMG_Load(compPath.c_str());
 	if(wIcon == NULL)
-		fprintf(stderr, "No se ha podido cargar el icono del programa: %s.\n", SDL_GetError());
+		fprintf(stderr, "system_t::setIcon: No se ha podido cargar el icono del programa: %s.\n", SDL_GetError());
 	else
 		SDL_WM_SetIcon(wIcon, NULL);
 }
@@ -153,5 +153,5 @@ void system_t::update(){
 	if(screen != NULL)
 		SDL_Flip(screen);
 	else
-		fprintf(stderr, "No se ha podido mostrar la pantalla.\n");
+		fprintf(stderr, "system_t::update: No se ha podido mostrar la pantalla.\n");
 }

@@ -60,7 +60,7 @@ void inifile_t::open(string path){
 	if(input.is_open())
 		error = NOERROR;
 	else {
-		fprintf(stderr, "No se ha podido abrir el fichero .ini \"%s\".\n", compPath.c_str());
+		fprintf(stderr, "inifile_t::open: No se ha podido abrir \"%s\".\n", compPath.c_str());
 		error = FILENOFOUND;
 	}
 }
@@ -75,7 +75,7 @@ void inifile_t::open(string path){
 int inifile_t::readInt(string section, string varName){
 	// Comprobamos que haya un archivo cargado correctamente
 	if(!input.is_open()){
-		fprintf(stderr, "No se ha abierto un archivo '.ini', así que no se pueden leer valores.\n");
+		fprintf(stderr, "inifile_t::readInt: No se ha abierto un archivo, así que no se pueden leer valores.\n");
 		error = NOTOPENED;
 		return 0;
 	}
@@ -88,7 +88,7 @@ int inifile_t::readInt(string section, string varName){
 		return value;
 	}
 	else {
-		fprintf(stderr, "El contenido de la variable \"%s\" no es un entero.\n", varName.c_str());
+		fprintf(stderr, "inifile_t::readInt: El contenido de la variable \"%s\" no es un entero.\n", varName.c_str());
 		error = WRONGTYPE;
 		return 0;
 	}
@@ -104,7 +104,7 @@ int inifile_t::readInt(string section, string varName){
 double inifile_t::readDouble(string section, string varName){
 	// Comprobamos que haya un archivo cargado correctamente
 	if(!input.is_open()){
-		fprintf(stderr, "No se ha abierto un archivo '.ini', así que no se pueden leer valores.\n");
+		fprintf(stderr, "inifile_t::readDouble: No se ha abierto un archivo, así que no se pueden leer valores.\n");
 		error = NOTOPENED;
 		return 0.0;
 	}
@@ -117,7 +117,7 @@ double inifile_t::readDouble(string section, string varName){
 		return value;
 	}
 	else {
-		fprintf(stderr, "El contenido de la variable \"%s\" no es un número decimal.\n", varName.c_str());
+		fprintf(stderr, "inifile_t::readDouble: El contenido de la variable \"%s\" no es un número decimal.\n", varName.c_str());
 		error = WRONGTYPE;
 		return ERROR_DOUBLE_VAL;
 	}
@@ -133,7 +133,7 @@ double inifile_t::readDouble(string section, string varName){
 string inifile_t::readString(string section, string varName){
 	// Comprobamos que haya un archivo cargado correctamente
 	if(!input.is_open()){
-		fprintf(stderr, "No se ha abierto un archivo '.ini', así que no se pueden leer valores.\n");
+		fprintf(stderr, "inifile_t::readString: No se ha abierto un archivo, así que no se pueden leer valores.\n");
 		error = NOTOPENED;
 		return "";
 	}
@@ -150,7 +150,7 @@ string inifile_t::readString(string section, string varName){
 		// Buscamos la sección
 		getline(input, temp);
 		if(temp2 == temp){
-			temp2 = varName;
+			temp2 = varName;	// temp2 = NombreDeLaVariable
 			while(!input.eof()){
 				temp = "";
 				getline(input, temp);
@@ -178,7 +178,7 @@ string inifile_t::readString(string section, string varName){
 				}
 				// Como nos hemos pasado de sección, quiere decir que la variable no existe en esa sección
 				else {
-					fprintf(stderr, "No se encuentra la variable \"%s\" en la sección \"[%s]\" en el archivo .ini.\n", varName.c_str(), section.c_str());
+					fprintf(stderr, "inifile_t::readString: No se encuentra la variable \"%s\" en la sección \"[%s]\" en el archivo.\n", varName.c_str(), section.c_str());
 					error = NOEXISTVAR;
 					return "";
 				}
@@ -186,7 +186,7 @@ string inifile_t::readString(string section, string varName){
 		}
 		temp = "";
 	}
-	fprintf(stderr, "No se encuentra la sección \"[%s]\" en el archivo .ini.\n", section.c_str());
+	fprintf(stderr, "inifile_t::readString: No se encuentra la sección \"[%s]\" en el archivo.\n", section.c_str());
 	error = NOEXISTSECTION;
 	return "";
 }
@@ -208,7 +208,7 @@ bool inifile_t::readBool(string section, string varName){
 		error = NOERROR;
 		return false;
 	}
-	fprintf(stderr, "La variable \"%s\" de la sección \"[%s]\" del archivo .ini no contiene un valor booleano.\n", varName.c_str(), section.c_str());
+	fprintf(stderr, "inifile_t::readBool: El contenido de la variable \"%s\" no es un valor booleano.\n", varName.c_str());
 	error = WRONGTYPE;
 	return false;
 }
