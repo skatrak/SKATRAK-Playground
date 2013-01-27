@@ -41,8 +41,12 @@ system_t::system_t(int scr_w, int scr_h, int depth): screen(NULL), wIcon(NULL), 
  * @brief Destructor. Libera la memoria ocupada por la pantalla y cierra SDL.
  */
 system_t::~system_t(){
-	if(screen != NULL)
+	if(wIcon != NULL)
+		SDL_FreeSurface(wIcon);
+	if(screen != NULL){
 		SDL_FreeSurface(screen);
+		screen = NULL;
+	}
 	quitSubsystems(SYS_SUBST_ALL);
 }
 

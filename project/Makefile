@@ -16,9 +16,9 @@ OBJPATH=../bin/linux/obj
 SRCPATH=../src
 
 # Rutas de los archivos
-SOURCES="$(SRCPATH)/main.cpp" "$(SRCPATH)/music.cpp" "$(SRCPATH)/system.cpp" "$(SRCPATH)/image.cpp" "$(SRCPATH)/timekeeper.cpp" "$(SRCPATH)/font.cpp" "$(SRCPATH)/inifile.cpp" "$(SRCPATH)/sfx.cpp" "$(SRCPATH)/str_operations.cpp" "$(SRCPATH)/menu.cpp" "$(SRCPATH)/mainMenu.cpp" "$(SRCPATH)/messagebox.cpp" "$(SRCPATH)/conecta4/tablero.cpp" "$(SRCPATH)/conecta4/mainConecta4.cpp" "$(SRCPATH)/conecta4/gameConecta4.cpp" "$(SRCPATH)/conecta4/messagesConecta4.cpp"
-OBJECTS="$(OBJPATH)/main.o" "$(OBJPATH)/music.o" "$(OBJPATH)/system.o" "$(OBJPATH)/image.o" "$(OBJPATH)/timekeeper.o" "$(OBJPATH)/font.o" "$(OBJPATH)/inifile.o" "$(OBJPATH)/sfx.o" "$(OBJPATH)/str_operations.o" "$(OBJPATH)/menu.o" "$(OBJPATH)/mainMenu.o" "$(OBJPATH)/messagebox.o" "$(OBJPATH)/tablero.o" "$(OBJPATH)/mainConecta4.o" "$(OBJPATH)/gameConecta4.o" "$(OBJPATH)/messagesConecta4.o"
-EXECUTABLE="../bin/linux/SKATRAK Playground"
+SOURCES=$(SRCPATH)/main.cpp $(SRCPATH)/music.cpp $(SRCPATH)/system.cpp $(SRCPATH)/image.cpp $(SRCPATH)/timekeeper.cpp $(SRCPATH)/font.cpp $(SRCPATH)/inifile.cpp $(SRCPATH)/sfx.cpp $(SRCPATH)/str_operations.cpp $(SRCPATH)/menu.cpp $(SRCPATH)/mainMenu.cpp $(SRCPATH)/messagebox.cpp $(SRCPATH)/conecta4/tablero.cpp $(SRCPATH)/conecta4/mainConecta4.cpp $(SRCPATH)/conecta4/gameConecta4.cpp $(SRCPATH)/conecta4/messagesConecta4.cpp
+OBJECTS=$(OBJPATH)/main.o $(OBJPATH)/music.o $(OBJPATH)/system.o $(OBJPATH)/image.o $(OBJPATH)/timekeeper.o $(OBJPATH)/font.o $(OBJPATH)/inifile.o $(OBJPATH)/sfx.o $(OBJPATH)/str_operations.o $(OBJPATH)/menu.o $(OBJPATH)/mainMenu.o $(OBJPATH)/messagebox.o $(OBJPATH)/tablero.o $(OBJPATH)/mainConecta4.o $(OBJPATH)/gameConecta4.o $(OBJPATH)/messagesConecta4.o
+EXECUTABLE=../bin/linux/SKATRAK-Playground
 
 all: $(SOURCES) $(EXECUTABLE)
 
@@ -93,4 +93,5 @@ $(OBJPATH)/messagesConecta4.o:
 	@$(CC) $(CFLAGS) $(SRCPATH)/conecta4/messagesConecta4.cpp -o $@
 
 clean:
-	rm -f ../bin/linux/obj/*.o
+	rm -f $(EXECUTABLE)
+	rm -f $(OBJPATH)/*.o
