@@ -93,13 +93,13 @@ void system_t::quitSubsystems(unsigned int flags){
 	if(!(substInit & flags)) return;
 
 	if(flags & SYS_SUBST_TTF){
+		printf("Cerrando SDL_TTF...\n");
 		TTF_Quit();
-		printf("Se ha cerrado SDL_TTF.\n");
 		flags &= ~SYS_SUBST_TTF;
 	}
 	if(flags & SYS_SUBST_MIX){
+		printf("Cerrando SDL_Mixer...\n");
 		Mix_CloseAudio();
-		printf("Se ha cerrado SDL_Mixer.\n");
 		flags &= ~SYS_SUBST_MIX;
 	}
 	if(flags & SYS_SUBST_SDL){

@@ -24,7 +24,7 @@
 #include <menu.hpp>
 
 /* Declaraciones de los submenús del menú del Conecta 4 */
-returnVal Game_Conecta4(void*);
+returnVal gameConecta4(void*);
 
 returnVal mainConecta4(void* data){
 	// Fuente del menú
@@ -37,11 +37,11 @@ returnVal mainConecta4(void* data){
 	menu.setTexts(&menuFont);
 
 	menu.setText(0, "Jugar");
-	menu.setOpt(0, &Game_Conecta4);
+	menu.setOpt(0, &gameConecta4);
 	menu.setText(1, "Atrás");
 	menu.setOpt(1, &backCallback);
 
-	menu.setBackground("Menu_Conecta4_prueba.png");
+	menu.setBackground("conecta4/menu_prueba.png");
 	menu.setImage("marcador_prueba.png");
 	menu.align(MENU_ALIGN_LEFT | MENU_ALIGN_DOWN);
 
