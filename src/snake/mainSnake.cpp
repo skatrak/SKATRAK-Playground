@@ -23,34 +23,27 @@
 #include <shared_attributes.hpp>
 #include <menu.hpp>
 
-/* Definición de las funciones de callback comunes */
-returnVal defaultCallback(void* data){ return ACTUAL_MENU; }
-returnVal backCallback(void* data){ return PREV_MENU; }
-returnVal exitCallback(void* data){ return EXIT; }
+/* Declaraciones de los submenús del menú del Snake */
+returnVal gameSnake(void*){ return ACTUAL_MENU; }
 
-/* Declaraciones de los submenús del menú principal */
-returnVal mainConecta4(void* data);
-returnVal mainSnake(void* data);
+returnVal mainSnake(void* data){
+	// Fuente del menú
+	font_t menuFont("AlteHaasGroteskRegular.ttf");
+	menuFont.setColor(255, 128, 0);
+	menuFont.setSize(48);
 
-returnVal mainMenu(){
-	menu_t menu(5);
+	// Menú
+	menu_t menu(2);
+	menu.setTexts(&menuFont);
 
-	menu.setTexts("BOOTERFF.ttf", 48);
+	menu.setText(0, "Jugar");
+	menu.setOpt(0, &gameSnake);
+	menu.setText(1, "Atrás");
+	menu.setOpt(1, &backCallback);
 
-	menu.setText(0, "Conecta 4");
-	menu.setOpt(0, &mainConecta4);
-	menu.setText(1, "Snake");
-	menu.setOpt(1, &mainSnake);
-	menu.setText(2, "Opciones");
-	menu.setOpt(2, &defaultCallback);
-	menu.setText(3, "Salir");
-	menu.setOpt(3, &exitCallback);
-	menu.setText(4, "Acerca de...");
-	menu.setOpt(4, &defaultCallback);
-
-	menu.setBackground("menu_prueba.png");
+	menu.setBackground("snake/menu_prueba.png");
 	menu.setImage("marcador_prueba.png");
-	menu.align(0);
+	menu.align(MENU_ALIGN_RIGHT | MENU_ALIGN_DOWN);
 
 	SDL_Event event;
 	SDL_Surface* screen = sistema->scr();
@@ -61,19 +54,18 @@ returnVal mainMenu(){
 		while(SDL_PollEvent(&event)){
 			switch(menu.update(&event)){
 			case ERROR:
-				fprintf(stderr, "Saliendo del menú principal con un error.\n");
 				return ERROR;
 			case EXIT:
-			case PREV_MENU:
 				return EXIT;
 			case ACTUAL_MENU:
+				break;
 			case MAIN:
-			default: break;
+			case PREV_MENU:
+				return ACTUAL_MENU;
 			}
 		}
 		menu.blit(screen);
 		sistema->update();
-
 		timer.waitFramerate(30);
 	}
 	return ERROR;
