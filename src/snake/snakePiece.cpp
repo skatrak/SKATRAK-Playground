@@ -25,7 +25,7 @@
 /**
  * @brief Constructor por defecto. Inicializa las variables de la clase con un valor conocido.
  */
-snakePiece_t::snakePiece_t(): x(-1), y(-1), next(NULL)
+snakePiece_t::snakePiece_t(): x(-1), y(-1), next(NULL), prev(NULL)
 {
 }
 
@@ -33,18 +33,18 @@ snakePiece_t::snakePiece_t(): x(-1), y(-1), next(NULL)
  * @brief Constructor. Inicializa la posición del eslabón.
  * @posX Posición del eslabón en el eje X.
  * @posY Posición del eslabón en el eje Y.
- * @param (OPCIONAL) Puntero al siguiente elemento de la lista.
+ * @param (OPCIONAL) Puntero al elemento anterior de la lista.
  */
-snakePiece_t::snakePiece_t(int posX, int posY, snakePiece_t* nextPiece): x(posX), y(posY), next(nextPiece)
+snakePiece_t::snakePiece_t(int posX, int posY, snakePiece_t* prevPiece): x(posX), y(posY), next(NULL), prev(prevPiece)
 {
 }
 
 /**
  * @brief Constructor de copia.
  * @param copy Referencia al objeto snakePiece_t al que copiar.
- * @param nextPiece (OPCIONAL) Puntero al siguiente elemento de la lista.
+ * @param prevPiece (OPCIONAL) Puntero al elemento anterior de la lista.
  */
-snakePiece_t::snakePiece_t(snakePiece_t& copy, snakePiece_t* nextPiece): x(copy.x), y(copy.y), next(nextPiece)
+snakePiece_t::snakePiece_t(snakePiece_t* copy, snakePiece_t* prevPiece): x(copy->x), y(copy->y), next(NULL), prev(prevPiece)
 {
 }
 

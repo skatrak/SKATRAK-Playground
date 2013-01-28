@@ -32,16 +32,17 @@ enum Direction {
 
 /**
  * @class snakePiece_t
- * @brief Representa un elemento para una lista simplemente enlazada de 'eslabones' de la serpiente.
+ * @brief Representa un elemento para una lista doblemente enlazada de 'eslabones' de la serpiente.
  */
 class snakePiece_t {
 	private:
 		int x, y;
 	public:
 		snakePiece_t* next;
+		snakePiece_t* prev;
 		snakePiece_t(void);
-		snakePiece_t(int posX, int posY, snakePiece_t* nextPiece = NULL);
-		snakePiece_t(snakePiece_t& copy, snakePiece_t* nextPiece = NULL);
+		snakePiece_t(int posX, int posY, snakePiece_t* prevPiece = NULL);
+		snakePiece_t(snakePiece_t* copy, snakePiece_t* prevPiece = NULL);
 		~snakePiece_t(void){}
 		int posX(void){ return x; }
 		int posY(void){ return y; }
