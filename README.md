@@ -7,7 +7,7 @@ Este juego estará bajo la licencia **LGPL** (GNU Lesser General Public License).
 
 ## Posibles juegos ##
 - 3 en raya
-- Conecta 4
+- Conecta 4 (HECHO)
 - Hundir la flota
 - Pong
 - Encontrar las parejas

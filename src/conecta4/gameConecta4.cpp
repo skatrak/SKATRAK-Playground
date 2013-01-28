@@ -23,10 +23,11 @@
 #include <shared_attributes.hpp>
 #include <conecta4/tablero.hpp>
 
-bool salir(bool tablero_vacio);
+bool msgSalir(bool tablero_vacio);
+bool msgReset(bool tablero_vacio);
 void msgVictoria(ResultConecta4 ganador);
 
-returnVal Game_Conecta4(void* data){
+returnVal gameConecta4(void* data){
 	SDL_Surface* screen = sistema->scr();
 	SDL_Event event;
 	static int victorias[2] = {0, 0}; // Lo hacemos estático para que las puntuaciones se guarden mientras no se cierre el juego
@@ -34,7 +35,7 @@ returnVal Game_Conecta4(void* data){
 	const int GAME_FONT_OFFSET = 15;
 
 	// Imagen de fondo del juego y marcador
-	image_t fondo("Fondo_Conecta4_prueba.png");
+	image_t fondo("conecta4/fondo_prueba.png");
 	image_t mark("marcador_prueba.png");
 
 	// Creamos las fuentes que va a utilizar el juego
@@ -50,12 +51,12 @@ returnVal Game_Conecta4(void* data){
 
 	// Creamos el tablero
 	tablero_t tablero;
-	tablero.setTab("Tab_Conecta4.png");
+	tablero.setTab("conecta4/tab.png");
 	tablero.setPos((int)(screen->w / 2 - tablero.width() / 2), (int)(screen->h - tablero.height() - tablero.height() / 6));
-	tablero.setMark(0, "Mark_Conecta4_P1.png");
-	tablero.setMark(1, "Mark_Conecta4_P2.png");
-	tablero.setFich(0, "Ficha_Conecta4_P1.png");
-	tablero.setFich(1, "Ficha_Conecta4_P2.png");
+	tablero.setMark(0, "conecta4/mark_P1.png");
+	tablero.setMark(1, "conecta4/mark_P2.png");
+	tablero.setFich(0, "conecta4/ficha_P1.png");
+	tablero.setFich(1, "conecta4/ficha_P2.png");
 	tablero.setSFX("Pin Drop.wav");
 
 	// Posiciones del mensaje de Atrás y de Reiniciar
@@ -92,17 +93,19 @@ returnVal Game_Conecta4(void* data){
 			case SDL_MOUSEBUTTONDOWN:
 				if(event.button.button == SDL_BUTTON_LEFT && selected != NONE){
 					if(selected == RESET){
-						tablero.reset();
-						tablero.setPlayer(startPlayer);
+						if(msgReset(tablero.isEmpty())){
+							tablero.reset();
+							tablero.setPlayer(startPlayer);
+						}
 						continue;
 					}
-					else if(salir(tablero.isEmpty()))
+					else if(msgSalir(tablero.isEmpty()))
 						return ACTUAL_MENU;
 					event.type = SDL_KEYUP; // Cambiamos el tipo de evento para que no caiga una ficha en el tablero por haber pulsado reset o atrás
 				}
 				break;
 			case SDL_KEYDOWN:
-				if(event.key.keysym.sym == SDLK_ESCAPE && salir(tablero.isEmpty()))
+				if(event.key.keysym.sym == SDLK_ESCAPE && msgSalir(tablero.isEmpty()))
 					return ACTUAL_MENU;
 				break;
 			case SDL_QUIT:

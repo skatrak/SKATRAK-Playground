@@ -23,7 +23,7 @@
 #include <shared_attributes.hpp>
 #include <conecta4/tablero.hpp>
 
-bool salir(bool tablero_vacio){
+bool msgSalir(bool tablero_vacio){
 	if(tablero_vacio) return true;
 
 	messagebox_t msg(2);
@@ -40,7 +40,25 @@ bool salir(bool tablero_vacio){
 	case 1: return true;
 	default: return false;
 	}
+}
 
+bool msgReset(bool tablero_vacio){
+	if(tablero_vacio) return true;
+
+	messagebox_t msg(2);
+
+	msg.setFont("AlteHaasGroteskRegular.ttf", 32);
+	msg.setBackground("ventana_prueba.png");
+	msg.setText(0, "¿Deseas reiniciar el juego?");
+	msg.setText(1, "Sí");
+	msg.setText(2, "No");
+	msg.locateTexts();
+
+	switch(msg.loop(sistema->scr())){
+	case 0: return true;
+	case 1: return true;
+	default: return false;
+	}
 }
 
 void msgVictoria(ResultConecta4 ganador){
