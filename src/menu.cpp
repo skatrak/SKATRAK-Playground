@@ -26,7 +26,7 @@
 /**
  * @brief Constructor por defecto. Inicializa los valores de la clase.
  */
-menu_t::menu_t(): nOpt(0), selIndex(0), textPos(NULL), optName(NULL), selImage(NULL), backImage(NULL), clickSound(NULL), selectSound(NULL), callback(NULL)
+menu_t::menu_t(): nOpt(0), selIndex(0), posFlags(0), textPos(NULL), optName(NULL), selImage(NULL), backImage(NULL), clickSound(NULL), selectSound(NULL), callback(NULL)
 {
 }
 
@@ -34,7 +34,7 @@ menu_t::menu_t(): nOpt(0), selIndex(0), textPos(NULL), optName(NULL), selImage(N
  * @brief Constructor. Inicializa todos los valores y reserva espacio para todos los botones de opciones.
  * @param optNumber Número de opciones que van a haber en el menú.
  */
-menu_t::menu_t(int optNumber): nOpt(0), selIndex(0), textPos(NULL), optName(NULL), selImage(NULL), backImage(NULL), clickSound(NULL), selectSound(NULL), callback(NULL) {
+menu_t::menu_t(int optNumber): nOpt(0), selIndex(0), posFlags(0), textPos(NULL), optName(NULL), selImage(NULL), backImage(NULL), clickSound(NULL), selectSound(NULL), callback(NULL) {
 	setOpts(optNumber);
 }
 
@@ -302,6 +302,8 @@ void menu_t::align(unsigned int flags){
 		}
 		for(int i = 0; i < nOpt; i++)
 			textPos[i].y = posY + (i * biggest) + ((i-1) * MENU_OPT_MARGIN);
+
+		posFlags = flags;	// Actualizamos el estado de los flags de posición
 	}
 	else
 		fprintf(stderr, "menu_t::align: No se han podido alinear las opciones porque los textos no se han cargado correctamente.\n");
@@ -404,7 +406,12 @@ void menu_t::blit(SDL_Surface* screen){
 		fprintf(stderr, "menu_t::blit: No se puede mostrar el fondo de pantalla porque no se ha cargado.\n");
 	if(textPos != NULL && optName != NULL){
 		if(selImage != NULL){
-			selImage->blit(textPos[selIndex].x, textPos[selIndex].y + (int)((textPos[selIndex].h - selImage->height()) / 2), screen);
+			if(posFlags & MENU_ALIGN_LEFT)
+				selImage->blit(textPos[selIndex].x - 10, textPos[selIndex].y + (int)((textPos[selIndex].h - selImage->height()) / 2), screen);
+			else if(posFlags & MENU_ALIGN_RIGHT)
+				selImage->blit(textPos[selIndex].x - (selImage->width() - textPos[selIndex].w) + 10, textPos[selIndex].y + (int)((textPos[selIndex].h - selImage->height()) / 2), screen);
+			else
+				selImage->blit(textPos[selIndex].x - (int)((selImage->width() - textPos[selIndex].w) / 2), textPos[selIndex].y + (int)((textPos[selIndex].h - selImage->height()) / 2), screen);
 		}
 		else
 			fprintf(stderr, "menu_t::blit: No se puede imprimir el resaltador de opciones porque no se ha cargado en memoria.\n");
