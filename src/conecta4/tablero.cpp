@@ -21,7 +21,6 @@
 
 #include <SKATRAK_PLAYGROUND.hpp>
 #include <conecta4/tablero.hpp>
-#include <shared_attributes.hpp>
 
 /**
  * @brief Crea la matriz que contiene los valores de las fichas en el tablero.
