@@ -1,14 +1,14 @@
 [Project]
 FileName=SKATRAK Playground.dev
 Name=SKATRAK Playground
-UnitCount=28
+UnitCount=33
 PchHead=-1
 PchSource=-1
 Ver=3
 IsCpp=1
 ProfilesCount=3
 ProfileIndex=0
-Folders="Conecta 4",Entorno
+Folders="Conecta 4",Entorno,Snake
 
 [Unit1]
 FileName=..\include\music.hpp
@@ -387,6 +387,56 @@ BuildCmd=
 FileName=..\src\messagebox.cpp
 CompileCpp=1
 Folder=Entorno
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit29]
+FileName=..\src\snake\mainSnake.cpp
+CompileCpp=1
+Folder=Snake
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit30]
+FileName=..\src\snake\snake.cpp
+CompileCpp=1
+Folder=Snake
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit31]
+FileName=..\src\snake\snakePiece.cpp
+CompileCpp=1
+Folder=Snake
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit32]
+FileName=..\include\snake\snake.hpp
+CompileCpp=1
+Folder=Snake
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit33]
+FileName=..\include\snake\snakePiece.hpp
+CompileCpp=1
+Folder=Snake
 Compile=1
 Link=1
 Priority=1000

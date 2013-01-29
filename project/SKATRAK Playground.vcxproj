@@ -21,6 +21,8 @@
     <ClInclude Include="..\include\sfx.hpp" />
     <ClInclude Include="..\include\shared_attributes.hpp" />
     <ClInclude Include="..\include\SKATRAK_PLAYGROUND.hpp" />
+    <ClInclude Include="..\include\snake\snake.hpp" />
+    <ClInclude Include="..\include\snake\snakePiece.hpp" />
     <ClInclude Include="..\include\str_operations.hpp" />
     <ClInclude Include="..\include\system.hpp" />
     <ClInclude Include="..\include\timekeeper.hpp" />
@@ -39,6 +41,9 @@
     <ClCompile Include="..\src\messagebox.cpp" />
     <ClCompile Include="..\src\music.cpp" />
     <ClCompile Include="..\src\sfx.cpp" />
+    <ClCompile Include="..\src\snake\mainSnake.cpp" />
+    <ClCompile Include="..\src\snake\snake.cpp" />
+    <ClCompile Include="..\src\snake\snakePiece.cpp" />
     <ClCompile Include="..\src\str_operations.cpp" />
     <ClCompile Include="..\src\system.cpp" />
     <ClCompile Include="..\src\timekeeper.cpp" />
