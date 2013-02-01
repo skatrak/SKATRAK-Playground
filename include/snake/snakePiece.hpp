@@ -24,7 +24,7 @@
 
 // Direcciones de movimiento de la serpiente
 enum Direction {
-	MOVE_UP,
+	MOVE_UP = 0,
 	MOVE_DOWN,
 	MOVE_LEFT,
 	MOVE_RIGHT
@@ -40,6 +40,7 @@ class snakePiece_t {
 	public:
 		snakePiece_t* next;
 		snakePiece_t* prev;
+	public:
 		snakePiece_t(void);
 		snakePiece_t(int posX, int posY, snakePiece_t* prevPiece = NULL);
 		snakePiece_t(snakePiece_t* copy, snakePiece_t* prevPiece = NULL);
@@ -48,6 +49,7 @@ class snakePiece_t {
 		int posY(void){ return y; }
 		void setPos(int posX, int posY);
 		void move(Direction direction);
+		void blit(SDL_Surface* screen, SDL_Rect* zone, image_t* tiles);
 };
 
 /**
