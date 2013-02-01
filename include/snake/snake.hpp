@@ -22,8 +22,15 @@
 #ifndef __SNAKE_T__
 #define __SNAKE_T__
 
-// Número por defecto de eslabones de la serpiente
+/* Número por defecto de eslabones de la serpiente */
 const int SNAKE_DEFAULT_PIECES = 5;
+
+/* Diferentes partes de la serpiente */
+enum SnakePart {
+	SNAKE_HEAD = 0,
+	SNAKE_BODY,
+	SNAKE_TAIL
+};
 
 /**
  * @class snake_t
@@ -35,14 +42,23 @@ class snake_t {
 		Direction direction;
 		snakePiece_t* head;		// Para recorrer la lista
 		snakePiece_t* tail;		// Para recorrer la lista de forma inversa o añadir rápidamente más elementos
+		image_t* snake;			// Fichero de tiles con las posiciones de la serpiente
+		int tileSize;			// Tamaño de cada segmento de la serpiente (son cuadrados)
+	protected:
+		void getTilePos(SDL_Rect* tilePos, snakePiece_t* next, snakePiece_t* prev, snakePiece_t* actual);
+		int getTilePosX(int nPosX, int nPosY, int pPosX, int pPosY, int aPosX, int aPosY);
+		int getTilePosY(SnakePart part);
 	public:
 		snake_t(int pieces = SNAKE_DEFAULT_PIECES);
 		~snake_t(void);
 		void setPos(int posX, int posY, Direction newDirection);
+		void setImg(string path, int newTileSize);
 		int headPos(int* x, int* y);
+		void turn(Direction newDirection);
 		void step(void);
 		void addPiece(int nPieces = 1);
 		bool checkCollision(void);
+		void blit(SDL_Surface* screen);
 };
 
 #endif
