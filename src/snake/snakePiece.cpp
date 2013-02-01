@@ -82,9 +82,12 @@ void snakePiece_t::move(Direction direction){
 /**
  * @brief Imprime el eslabón de la serpiente por pantalla.
  * @param screen Superficie sobre la que realizar el blitting.
+ * @param posX Posición en el eje X de comienzo de la zona de movimiento de la serpiente en pantalla.
+ * @param posY Posición en el eje Y de comienzo de la zona de movimiento de la serpiente en pantalla.
  * @param zone Zona en la imagen donde se encuentra el tile.
  * @param tiles Imagen de tiles.
+ * @param tileSize Tamaño de la imagen en pantalla.
  */
-void snakePiece_t::blit(SDL_Surface* screen, SDL_Rect* zone, image_t* tiles){
-	tiles->blit(x, y, screen, zone);
+void snakePiece_t::blit(SDL_Surface* screen, int posX, int posY, SDL_Rect* zone, image_t* tiles, int tileSize){
+	tiles->blit((x*tileSize) + posX, (y*tileSize) + posY, screen, zone);
 }

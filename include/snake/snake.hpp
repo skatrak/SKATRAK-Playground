@@ -54,11 +54,12 @@ class snake_t {
 		void setPos(int posX, int posY, Direction newDirection);
 		void setImg(string path, int newTileSize);
 		int headPos(int* x, int* y);
+		void setHeadPos(int x, int y);
 		void turn(Direction newDirection);
 		void step(void);
 		void addPiece(int nPieces = 1);
 		bool checkCollision(void);
-		void blit(SDL_Surface* screen);
+		void blit(SDL_Surface* screen, int x, int y);
 };
 
 #endif

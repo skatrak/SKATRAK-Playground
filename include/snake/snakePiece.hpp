@@ -49,7 +49,7 @@ class snakePiece_t {
 		int posY(void){ return y; }
 		void setPos(int posX, int posY);
 		void move(Direction direction);
-		void blit(SDL_Surface* screen, SDL_Rect* zone, image_t* tiles);
+		void blit(SDL_Surface* screen, int posX, int posY, SDL_Rect* zone, image_t* tiles, int tileSize);
 };
 
 /**

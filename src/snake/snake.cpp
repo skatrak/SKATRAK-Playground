@@ -31,17 +31,30 @@
  * @param actual Puntero al elemento actual de la lista.
  */
 void snake_t::getTilePos(SDL_Rect* tilePos, snakePiece_t* next, snakePiece_t* prev, snakePiece_t* actual){
-	if(tilePos == NULL || head == NULL) return;
+	if(tilePos == NULL || head == NULL || actual == NULL) return;
 
 	// Es la cabeza
 	if(prev == NULL){
-		tilePos->x = getTilePosX(next->posX(), next->posY(), prev->posX(), prev->posY(), actual->posX(), actual->posY());
+		switch(direction){
+		case MOVE_UP:
+			tilePos->x = getTilePosX(next->posX(), next->posY(), actual->posX(), actual->posY()-1, actual->posX(), actual->posY());
+			break;
+		case MOVE_DOWN:
+			tilePos->x = getTilePosX(next->posX(), next->posY(), actual->posX(), actual->posY()+1, actual->posX(), actual->posY());
+			break;
+		case MOVE_LEFT:
+			tilePos->x = getTilePosX(next->posX(), next->posY(), actual->posX()-1, actual->posY(), actual->posX(), actual->posY());
+			break;
+		case MOVE_RIGHT:
+			tilePos->x = getTilePosX(next->posX(), next->posY(), actual->posX()+1, actual->posY(), actual->posX(), actual->posY());
+			break;
+		}
 		tilePos->y = getTilePosY(SNAKE_HEAD);
 		tilePos->w = tilePos->h = tileSize;
 	}
 	// Es la cola
 	else if(next == NULL){
-		tilePos->x = getTilePosX(next->posX(), next->posY(), prev->posX(), prev->posY(), actual->posX(), actual->posY());
+		tilePos->x = getTilePosX(-1, -1, prev->posX(), prev->posY(), actual->posX(), actual->posY());
 		tilePos->y = getTilePosY(SNAKE_TAIL);
 		tilePos->w = tilePos->h = tileSize;
 	}
@@ -64,8 +77,19 @@ void snake_t::getTilePos(SDL_Rect* tilePos, snakePiece_t* next, snakePiece_t* pr
  * @return Posición en el eje X del tile o -1 en caso de error.
  */
 int snake_t::getTilePosX(int nPosX, int nPosY, int pPosX, int pPosY, int aPosX, int aPosY){
-	int relX = nPosX - pPosX;
-	int relY = nPosY - pPosY;
+	if(nPosX == -1 || nPosY == -1){
+		if(aPosX > pPosX)
+			return 6*tileSize;
+		else if(aPosX < pPosX)
+			return 9*tileSize;
+		else if(aPosY > pPosY)
+			return 0;
+		else if(aPosY < pPosY)
+			return 3*tileSize;
+	}
+
+	int relX = pPosX - nPosX;
+	int relY = pPosY - nPosY;
 
 	switch(relX){
 	case 0:
@@ -73,31 +97,38 @@ int snake_t::getTilePosX(int nPosX, int nPosY, int pPosX, int pPosY, int aPosX, 
 			return 0;
 		else if(relY == 2)
 			return 3*tileSize;
+		// La serpiente se ha cortado verticalmente
+		else {
+			if(relY < 0)
+				return 3*tileSize;
+			else if(relY > 0)
+				return 0;
+		}
 	case -1:
 		if(relY == -1){
-			if(aPosX == nPosX)
+			if(aPosX == pPosX)
 				return 7*tileSize;
-			else if(aPosY == nPosY)
+			else if(aPosY == pPosY)
 				return tileSize;
 		}
 		else if(relY == 1){
-			if(aPosX == nPosX)
+			if(aPosX == pPosX)
 				return 4*tileSize;
-			else if(aPosY == nPosY)
+			else if(aPosY == pPosY)
 				return 8*tileSize;
 		}
 		break;
 	case 1:
 		if(relY == -1){
-			if(aPosX == nPosX)
+			if(aPosX == pPosX)
 				return 10*tileSize;
-			else if(aPosY == nPosY)
+			else if(aPosY == pPosY)
 				return 2*tileSize;
 		}
 		else if(relY == 1){
-			if(aPosX == nPosX)
+			if(aPosX == pPosX)
 				return 11*tileSize;
-			else if(aPosY == nPosY)
+			else if(aPosY == pPosY)
 				return 5*tileSize;
 		}
 		break;
@@ -105,22 +136,12 @@ int snake_t::getTilePosX(int nPosX, int nPosY, int pPosX, int pPosY, int aPosX, 
 		return 6*tileSize;
 	case 2:
 		return 9*tileSize;
-	// La serpiente está dividida (atravesó la pared y salió por otro lado)
+	// La serpiente se ha cortado horizontalmente
 	default:
-		if(relX < 0){
+		if(relX < 0)
 			return 9*tileSize;
-		}
-		else if(relX > 0){
+		else if(relX > 0)
 			return 6*tileSize;
-		}
-		else {
-			if(relY < 0){
-				return 3*tileSize;
-			}
-			else if(relY > 0){
-				return 0;
-			}
-		}
 	}
 
 	// No se debería llegar hasta aquí
@@ -196,6 +217,7 @@ void snake_t::setPos(int posX, int posY, Direction newDirection){
 /**
  * @brief Abre una imagen que contenga los tiles de la serpiente.
  * @param path Nombre de la imagen.
+ * @param newTileSize Tamaño de cada tile en la imagen.
  */
 void snake_t::setImg(string path, int newTileSize){
 	if(snake != NULL){
@@ -234,6 +256,22 @@ int snake_t::headPos(int* x, int* y){
 }
 
 /**
+ * @brief Cambia la posición de la cabeza de la serpiente.
+ * @param x Posición en el eje X de la cabeza de la serpiente.
+ * @param y Posición en el eje Y de la cabeza de la serpiente.
+ *
+ * Esta función está pensada para permitir a la serpiente aparecer por otro lado al salir de la zona de juego.
+ * No se cambia la posición de ningún otro elemento.
+ */
+void snake_t::setHeadPos(int x, int y){
+	if(head == NULL || x < 0 || y < 0){
+		fprintf(stderr, "snake_t::setHeadPos: No se ha podido recolocar la cabeza.\n");
+		return;
+	}
+	head->setPos(x, y);
+}
+
+/**
  * @brief Gira la serpiente hacia una nueva dirección.
  * @param newDirection Dirección hacia la que se moverá la serpiente a partir de ahora.
  */
@@ -246,6 +284,7 @@ void snake_t::turn(Direction newDirection){
 
 /**
  * @brief Mueve la serpiente una unidad de espacio.
+ * @note No llamar a esta función antes que a snake_t::addPiece.
  *
  * El que sea una lista doblemente enlazada permite que podamos recorrer la serpiente en sentido inverso para actualizar las posiciones.
  */
@@ -278,8 +317,7 @@ void snake_t::step(void){
 
 /**
  * @brief Añade más eslabones a la serpiente.
- * @param (OPCIONAL) Número de eslabones a añadir.
- * @note Llamar a esta función siempre antes de snake_t::step.
+ * @param nPieces (OPCIONAL) Número de eslabones a añadir.
  */
 void snake_t::addPiece(int nPieces){
 	pieceCount += nPieces;
@@ -313,13 +351,15 @@ bool snake_t::checkCollision(void){
 /**
  * @brief Imprime toda la serpiente por pantalla.
  * @param screen Superficie sobre la que realizar el blitting.
+ * @param x Posición en el eje X de comienzo de la zona de movimiento de la serpiente en la pantalla.
+ * @param y Posición en el eje Y de comienzo de la zona de movimiento de la serpiente en la pantalla.
  */
-void snake_t::blit(SDL_Surface* screen){
+void snake_t::blit(SDL_Surface* screen, int x, int y){
 	if(head == NULL || snake == NULL) return;
 
 	SDL_Rect zone;
 	for(snakePiece_t* aux = head; aux != NULL; aux = aux->next){
 		getTilePos(&zone, aux->next, aux->prev, aux);
-		aux->blit(screen, &zone, snake);
+		aux->blit(screen, x, y, &zone, snake, tileSize);
 	}
 }
