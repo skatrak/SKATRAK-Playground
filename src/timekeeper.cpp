@@ -50,14 +50,3 @@ void timekeeper_t::waitFramerate(int fps){
 	}
 	frames++;
 }
-
-/**
- * @return Número de fotogramas que se han imprimido por pantalla desde la última vez que se llamó.
- * @note Esta función resetea el número de fotogramas que se han imprimido por pantalla.
- * @see timekeeper_t::waitFramerate
- */
-int timekeeper_t::renderedFrames(){
-	int tmp = frames;
-	frames = 0;
-	return tmp;
-}

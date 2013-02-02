@@ -36,12 +36,25 @@ class timekeeper_t {
 		void refresh(void);
 		int elapsed(void);
 		void waitFramerate(int fps);
-		int renderedFrames(void);
+		int renderedFrames(void){ return frames; }
+		void resetFrames(void){ frames = 0; }
 };
 
 /**
  * @fn timekeeper_t::timekeeper_t
  * @brief Constructor. Inicializa el reloj con el tiempo inicial.
+ */
+
+/**
+ * @fn timekeeper_t::renderedFrames
+ * @brief Devuelve el número de fotogramas que se han imprimido por pantalla sujetos a este temporizador.
+ * @return Número de fotogramas que se han imprimido por pantalla (Si se llama a timekeeper_t::waitFramerate en cada fotograma).
+ * @see timekeeper_t::waitFramerate
+ */
+
+/**
+ * @fn timekeeper_t::resetFrames
+ * @brief Pone el contador de fotogramas a 0.
  */
 
 #endif
