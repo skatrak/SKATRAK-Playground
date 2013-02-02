@@ -24,7 +24,7 @@
 #include <menu.hpp>
 
 /* Declaraciones de los submenús del menú del Snake */
-returnVal gameSnake(void*){ return ACTUAL_MENU; }
+returnVal gameSnake(void*);
 
 returnVal mainSnake(void* data){
 	// Fuente del menú
