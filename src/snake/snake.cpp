@@ -113,9 +113,9 @@ int snake_t::getTilePosX(int nPosX, int nPosY, int pPosX, int pPosY, int aPosX, 
 		}
 		else if(relY == 1){
 			if(aPosX == pPosX)
-				return 4*tileSize;
-			else if(aPosY == pPosY)
 				return 8*tileSize;
+			else if(aPosY == pPosY)
+				return 4*tileSize;
 		}
 		break;
 	case 1:
@@ -191,7 +191,7 @@ void snake_t::setPos(int posX, int posY, Direction newDirection){
 	direction = newDirection;
 	head->setPos(posX, posY);
 
-	int incX, incY;
+	int incX = 0, incY = 0;
 	switch(direction){
 	case MOVE_UP:
 		incY = -1;
@@ -228,9 +228,9 @@ void snake_t::setImg(string path, int newTileSize){
 	snake = new image_t(path);
 	if(snake != NULL){
 		tileSize = newTileSize;
-		if((snake->width() / (tileSize*12)) != 0.0)
+		if((double)(snake->width() / (tileSize*12)) != 1.0)
 			fprintf(stderr, "snake_t::setImg: [WARNING] La anchura de la imagen no concuerda con el tamaño de los tiles especificado (¿Faltan tiles?).\n");
-		if((snake->height() / (tileSize*3)) != 0.0)
+		if((double)(snake->height() / (tileSize*3)) != 1.0)
 			fprintf(stderr, "snake_t::setImg: [WARNING] La altura de la imagen no concuerda con el tamaño de los tiles especificado (¿Falta la Cabeza/Cuerpo/Cola?).\n");
 	}
 	else
@@ -276,10 +276,24 @@ void snake_t::setHeadPos(int x, int y){
  * @param newDirection Dirección hacia la que se moverá la serpiente a partir de ahora.
  */
 void snake_t::turn(Direction newDirection){
-	if(direction != MOVE_UP && direction != MOVE_DOWN && newDirection != MOVE_UP && newDirection != MOVE_DOWN)
-		direction = newDirection;
-	else if(direction != MOVE_LEFT && direction != MOVE_RIGHT && newDirection != MOVE_LEFT && newDirection != MOVE_RIGHT)
-		direction = newDirection;
+	switch(direction){
+	case MOVE_UP:
+		if(newDirection != MOVE_DOWN && (head->next == NULL || (head->next->posX() != (head->posX()-1) && head->next->posX() != (head->posX()+1))))
+			direction = newDirection;
+		break;
+	case MOVE_DOWN:
+		if(newDirection != MOVE_UP && (head->next == NULL || (head->next->posX() != (head->posX()-1) && head->next->posX() != (head->posX()+1))))
+			direction = newDirection;
+		break;
+	case MOVE_LEFT:
+		if(newDirection != MOVE_RIGHT && (head->next == NULL || (head->next->posY() != (head->posY()-1) && head->next->posY() != (head->posY()+1))))
+			direction = newDirection;
+		break;
+	case MOVE_RIGHT:
+		if(newDirection != MOVE_LEFT && (head->next == NULL || (head->next->posY() != (head->posY()-1) && head->next->posY() != (head->posY()+1))))
+			direction = newDirection;
+		break;
+	}
 }
 
 /**
@@ -313,6 +327,7 @@ void snake_t::step(void){
 		posY = head->posY();
 		break;
 	}
+	head->setPos(posX, posY);
 }
 
 /**
