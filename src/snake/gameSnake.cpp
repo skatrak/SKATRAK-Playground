@@ -32,7 +32,7 @@ returnVal gameSnake(void*){
 	// La serpiente
 	snake_t snake;
 	snake.setPos(10, 10, MOVE_RIGHT);
-	snake.setImg("snake/serpiente_prueba.png", 16);
+	snake.setImg("snake/serpiente_pruebav2.png", 32);
 	int headX, headY;
 
 	// Game loop
@@ -71,14 +71,14 @@ returnVal gameSnake(void*){
 			timer.resetFrames();
 			snake.step();
 			if(snake.headPos(&headX, &headY) >= 0){
-				if(headX >= (sistema->width()/16))
+				if(headX >= (sistema->width()/32))
 					snake.setHeadPos(0, headY);
 				else if(headX < 0)
-					snake.setHeadPos((sistema->width()/16)-1, headY);
-				if(headY >= (sistema->height()/16))
+					snake.setHeadPos((sistema->width()/32)-1, headY);
+				if(headY >= (sistema->height()/32))
 					snake.setHeadPos(headX, 0);
 				else if(headY < 0)
-					snake.setHeadPos(headX, (sistema->height()/16)-1);
+					snake.setHeadPos(headX, (sistema->height()/32)-1);
 			}
 			if(snake.checkCollision()){
 				printf("Te mordiste la cola.\n");
