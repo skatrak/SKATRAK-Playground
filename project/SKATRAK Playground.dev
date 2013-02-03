@@ -1,7 +1,7 @@
 [Project]
 FileName=SKATRAK Playground.dev
 Name=SKATRAK Playground
-UnitCount=33
+UnitCount=34
 PchHead=-1
 PchSource=-1
 Ver=3
@@ -437,6 +437,16 @@ BuildCmd=
 FileName=..\include\snake\snakePiece.hpp
 CompileCpp=1
 Folder=Snake
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit34]
+FileName=..\src\snake\gameSnake.cpp
+CompileCpp=1
+Folder=SKATRAK Playground/Snake
 Compile=1
 Link=1
 Priority=1000
