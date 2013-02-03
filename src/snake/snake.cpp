@@ -97,12 +97,12 @@ int snake_t::getTilePosX(int nPosX, int nPosY, int pPosX, int pPosY, int aPosX, 
 			return 0;
 		else if(relY == 2)
 			return 3*tileSize;
-		// La serpiente se ha cortado verticalmente
+		// Hay un corte vertical
 		else {
-			if(relY < 0)
-				return 3*tileSize;
-			else if(relY > 0)
+			if(relY > 0)
 				return 0;
+			else
+				return 3*tileSize;
 		}
 	case -1:
 		if(relY == -1){
@@ -116,6 +116,13 @@ int snake_t::getTilePosX(int nPosX, int nPosY, int pPosX, int pPosY, int aPosX, 
 				return 8*tileSize;
 			else if(aPosY == pPosY)
 				return 4*tileSize;
+		}
+		// Hay un corte vertical
+		else {
+			if(relY > 0)
+				return 11*tileSize;
+			else
+				return 8*tileSize;
 		}
 		break;
 	case 1:
@@ -131,17 +138,36 @@ int snake_t::getTilePosX(int nPosX, int nPosY, int pPosX, int pPosY, int aPosX, 
 			else if(aPosY == pPosY)
 				return 5*tileSize;
 		}
+		// Hay un corte vertical
+		else {
+			if(relY > 0)
+				return 8*tileSize;
+			else
+				return 11*tileSize;
+		}
 		break;
 	case -2:
 		return 6*tileSize;
 	case 2:
 		return 9*tileSize;
-	// La serpiente se ha cortado horizontalmente
+	// Hay un corte horizontal
 	default:
-		if(relX < 0)
-			return 9*tileSize;
-		else if(relX > 0)
-			return 6*tileSize;
+		if(relX > 0){
+			if(relY == 1)
+				return 8*tileSize;
+			else if(relY == -1)
+				return 7*tileSize;
+			else
+				return 6*tileSize;
+		}
+		else {
+			if(relY == 1)
+				return 11*tileSize;
+			else if(relY == -1)
+				return 10*tileSize;
+			else
+				return 9*tileSize;
+		}
 	}
 
 	// No se debería llegar hasta aquí
