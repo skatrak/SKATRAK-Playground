@@ -25,17 +25,17 @@
 /**
  * @brief Constructor por defecto. Inicializa las variables de la clase con un valor conocido.
  */
-snakePiece_t::snakePiece_t(): x(-1), y(-1), next(NULL), prev(NULL)
+snakePiece_t::snakePiece_t(): x(-1), y(-1), tilePos(-1), next(NULL), prev(NULL)
 {
 }
 
 /**
  * @brief Constructor. Inicializa la posición del eslabón.
- * @posX Posición del eslabón en el eje X.
- * @posY Posición del eslabón en el eje Y.
- * @param (OPCIONAL) Puntero al elemento anterior de la lista.
+ * @param posX Posición del eslabón en el eje X.
+ * @param posY Posición del eslabón en el eje Y.
+ * @param prevPiece (OPCIONAL) Puntero al elemento anterior de la lista.
  */
-snakePiece_t::snakePiece_t(int posX, int posY, snakePiece_t* prevPiece): x(posX), y(posY), next(NULL), prev(prevPiece)
+snakePiece_t::snakePiece_t(int posX, int posY, snakePiece_t* prevPiece): x(posX), y(posY), tilePos(-1), next(NULL), prev(prevPiece)
 {
 }
 
@@ -44,7 +44,7 @@ snakePiece_t::snakePiece_t(int posX, int posY, snakePiece_t* prevPiece): x(posX)
  * @param copy Referencia al objeto snakePiece_t al que copiar.
  * @param prevPiece (OPCIONAL) Puntero al elemento anterior de la lista.
  */
-snakePiece_t::snakePiece_t(snakePiece_t* copy, snakePiece_t* prevPiece): x(copy->x), y(copy->y), next(NULL), prev(prevPiece)
+snakePiece_t::snakePiece_t(snakePiece_t* copy, snakePiece_t* prevPiece): x(copy->x), y(copy->y), tilePos(copy->tilePos), next(NULL), prev(prevPiece)
 {
 }
 
@@ -56,6 +56,14 @@ snakePiece_t::snakePiece_t(snakePiece_t* copy, snakePiece_t* prevPiece): x(copy-
 void snakePiece_t::setPos(int posX, int posY){
 	x = posX;
 	y = posY;
+}
+
+/**
+ * @brief Establece el índice en el eje X del tile correspondiente a este eslabón en la imagen.
+ * @param posX Índice en el eje X.
+ */
+void snakePiece_t::setTilePos(int posX){
+	tilePos = posX;
 }
 
 /**
@@ -84,10 +92,11 @@ void snakePiece_t::move(Direction direction){
  * @param screen Superficie sobre la que realizar el blitting.
  * @param posX Posición en el eje X de comienzo de la zona de movimiento de la serpiente en pantalla.
  * @param posY Posición en el eje Y de comienzo de la zona de movimiento de la serpiente en pantalla.
- * @param zone Zona en la imagen donde se encuentra el tile.
+ * @param part Parte de la serpiente a la que corresponde este segmento.
  * @param tiles Imagen de tiles.
  * @param tileSize Tamaño de la imagen en pantalla.
  */
-void snakePiece_t::blit(SDL_Surface* screen, int posX, int posY, SDL_Rect* zone, image_t* tiles, int tileSize){
-	tiles->blit((x*tileSize) + posX, (y*tileSize) + posY, screen, zone);
+void snakePiece_t::blit(SDL_Surface* screen, int posX, int posY, SnakePart part, image_t* tiles, int tileSize){
+	SDL_Rect zone = {tilePos * tileSize, part * tileSize, tileSize, tileSize};
+	tiles->blit((x*tileSize) + posX, (y*tileSize) + posY, screen, &zone);
 }

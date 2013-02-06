@@ -30,6 +30,13 @@ enum Direction {
 	MOVE_RIGHT
 };
 
+/* Diferentes partes de la serpiente */
+enum SnakePart {
+	SNAKE_HEAD = 0,
+	SNAKE_BODY,
+	SNAKE_TAIL
+};
+
 /**
  * @class snakePiece_t
  * @brief Representa un elemento para una lista doblemente enlazada de 'eslabones' de la serpiente.
@@ -37,8 +44,11 @@ enum Direction {
 class snakePiece_t {
 	private:
 		int x, y;
+		int tilePos;	// Contiene el índice horizontal (el que depende de la dirección de movimiento) del tile
 	public:
+		/// Puntero al siguiente elemento de la lista.
 		snakePiece_t* next;
+		/// Puntero al elemento anterior de la lista.
 		snakePiece_t* prev;
 	public:
 		snakePiece_t(void);
@@ -47,9 +57,11 @@ class snakePiece_t {
 		~snakePiece_t(void){}
 		int posX(void){ return x; }
 		int posY(void){ return y; }
+		int tilePosX(void){ return tilePos; }
 		void setPos(int posX, int posY);
+		void setTilePos(int posX);
 		void move(Direction direction);
-		void blit(SDL_Surface* screen, int posX, int posY, SDL_Rect* zone, image_t* tiles, int tileSize);
+		void blit(SDL_Surface* screen, int posX, int posY, SnakePart part, image_t* tiles, int tileSize);
 };
 
 /**
@@ -67,6 +79,12 @@ class snakePiece_t {
  * @fn snakePiece_t::posY
  * @brief Devuelve la posición en el eje Y actual del eslabón.
  * @return Posición en el eje Y.
+ */
+
+/**
+ * @fn snakePiece_t::tilePosX
+ * @brief Devuelve el índice en el eje X del tile que le corresponde al eslabón.
+ * @return Índice en el eje X del tile en la imagen.
  */
 
 #endif

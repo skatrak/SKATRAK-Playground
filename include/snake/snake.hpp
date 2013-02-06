@@ -25,13 +25,6 @@
 /* Número por defecto de eslabones de la serpiente */
 const int SNAKE_DEFAULT_PIECES = 5;
 
-/* Diferentes partes de la serpiente */
-enum SnakePart {
-	SNAKE_HEAD = 0,
-	SNAKE_BODY,
-	SNAKE_TAIL
-};
-
 /**
  * @class snake_t
  * @brief Representa a una serpiente del juego. Es una lista doblemente enlazada de snakePiece_t.
@@ -44,10 +37,9 @@ class snake_t {
 		snakePiece_t* tail;		// Para recorrer la lista de forma inversa o añadir rápidamente más elementos
 		image_t* snake;			// Fichero de tiles con las posiciones de la serpiente
 		int tileSize;			// Tamaño de cada segmento de la serpiente (son cuadrados)
+		bool turned;			// Especifica si en este fotograma ya se ha hecho un giro
 	protected:
-		void getTilePos(SDL_Rect* tilePos, snakePiece_t* next, snakePiece_t* prev, snakePiece_t* actual);
-		int getTilePosX(int nPosX, int nPosY, int pPosX, int pPosY, int aPosX, int aPosY);
-		int getTilePosY(SnakePart part);
+		int getTilePosX(snakePiece_t* piece);
 	public:
 		snake_t(int pieces = SNAKE_DEFAULT_PIECES);
 		~snake_t(void);
