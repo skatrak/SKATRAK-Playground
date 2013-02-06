@@ -25,15 +25,23 @@
 #include <snake/snake.hpp>
 
 returnVal gameSnake(void*){
+	// Inicialización de la semilla
+	srand(SDL_GetTicks());
+
 	// Fondo de la pantalla
 	SDL_Surface* screen = sistema->scr();
 	image_t background("fondo_inicio_prueba.png");
+	image_t foodImg("snake/serpiente_comida_prueba.png");
 
 	// La serpiente
 	snake_t snake;
 	snake.setPos(10, 10, MOVE_RIGHT);
 	snake.setImg("snake/serpiente_pruebav2.png", 32);
-	int headX, headY;
+	int headX, headY, foodX = -1, foodY = -1;
+
+	// Colocamos la primera comida
+	foodX = rand() % (int)(sistema->width()/32);
+	foodY = rand() % (int)(sistema->height()/32);
 
 	// Game loop
 	SDL_Event event;
@@ -80,6 +88,13 @@ returnVal gameSnake(void*){
 				else if(headY < 0)
 					snake.setHeadPos(headX, (sistema->height()/32)-1);
 			}
+			if(headX == foodX && headY == foodY){
+				snake.addPiece(3);
+				do {
+					foodX = rand() % (int)(sistema->width()/32);
+					foodY = rand() % (int)(sistema->height()/32);
+				} while(foodX == headX && foodY == headY);
+			}
 			if(snake.checkCollision()){
 				printf("Te mordiste la cola.\n");
 				return ACTUAL_MENU;
@@ -88,6 +103,7 @@ returnVal gameSnake(void*){
 
 		// Imprimir por pantalla
 		background.blit(0, 0, screen);
+		foodImg.blit(foodX*32, foodY*32, screen);
 		snake.blit(screen, 0, 0);
 		sistema->update();
 		timer.waitFramerate(30);
