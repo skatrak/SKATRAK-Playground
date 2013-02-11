@@ -23,6 +23,7 @@
 #include <shared_attributes.hpp>
 #include <snake/snakePiece.hpp>
 #include <snake/snake.hpp>
+#include <snake/snakeMap.hpp>
 
 returnVal gameSnake(void*){
 	// Inicialización de la semilla
