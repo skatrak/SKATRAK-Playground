@@ -24,46 +24,43 @@
 #include <snake/snake.hpp>
 
 /**
- * @brief Devuelve el índice en el eje X del tile.
- * @param piece Puntero al eslabón del que se quiere calcular el tile asociado.
+ * @brief Devuelve el índice en el eje X del tile que le corresponde a la cabeza de la serpiente.
  * @return Índice en el eje X del tile o -1 en caso de error.
  *
  * Lo que hace realmente es calcular el estado de giro que tiene la cabeza de la serpiente en un
  * momento determinado y devolver el índice en el eje X donde se encuentra este giro.
  */
-int snake_t::getTilePosX(snakePiece_t* piece){
-	if(piece == NULL) return -1;
+int snake_t::getHeadTilePos(){
+	if(head == NULL) return -1;
 
-	int aPosX = piece->posX();
-	int aPosY = piece->posY();
+	int aPosX = head->posX();
+	int aPosY = head->posY();
 	int relX, relY;
 
 	// Sólo calculamos la posición si es la cabeza. Todos los demás deben obtener sus posiciones a partir del movimiento de la cabeza.
-	if(piece->prev == NULL){
-		if(piece->next == NULL)
+	if(head->prev == NULL){
+		if(head->next == NULL)
 			return 3*direction;
 		else {
+			relX = aPosX - head->next->posX();
+			relY = aPosY - head->next->posY();
 			switch(direction){
 			case MOVE_UP:
-				relX = aPosX - piece->next->posX();
 				if(relX == 0) return 0;
 				if(relX == 1) return 10;
 				if(relX == -1) return 7;
 				break;
 			case MOVE_DOWN:
-				relX = aPosX - piece->next->posX();
 				if(relX == 0) return 3;
 				if(relX == 1) return 11;
 				if(relX == -1) return 8;
 				break;
 			case MOVE_LEFT:
-				relY = aPosY - piece->next->posY();
 				if(relY == 0) return 6;
 				if(relY == 1) return 4;
 				if(relY == -1) return 1;
 				break;
 			case MOVE_RIGHT:
-				relY = aPosY - piece->next->posY();
 				if(relY == 0) return 9;
 				if(relY == 1) return 5;
 				if(relY == -1) return 2;
@@ -241,7 +238,7 @@ void snake_t::step(void){
 	snakePiece_t* aux = tail;
 
 	// El tile del segundo segmento hay que calcularlo antes de mover la serpiente como si fuera la cabeza
-	head->setTilePos(getTilePosX(head));
+	head->setTilePos(getHeadTilePos());
 
 	// Cogemos el último segmento y lo ponemos en la posición de la cabeza
 	tail = aux->prev;
@@ -254,7 +251,7 @@ void snake_t::step(void){
 
 	// Ahora movemos la nueva cabeza y calculamos su estado de giro/posición
 	head->move(direction);
-	head->setTilePos(getTilePosX(head));
+	head->setTilePos(getHeadTilePos());
 }
 
 /**

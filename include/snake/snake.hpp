@@ -39,7 +39,7 @@ class snake_t {
 		int tileSize;			// Tamaño de cada segmento de la serpiente (son cuadrados)
 		bool turned;			// Especifica si en este fotograma ya se ha hecho un giro
 	protected:
-		int getTilePosX(snakePiece_t* piece);
+		int getHeadTilePos();
 	public:
 		snake_t(int pieces = SNAKE_DEFAULT_PIECES);
 		~snake_t(void);
