@@ -196,26 +196,33 @@ void snake_t::setHeadPos(int x, int y){
  * @param newDirection Dirección hacia la que se moverá la serpiente a partir de ahora.
  */
 void snake_t::turn(Direction newDirection){
-	if(!turned){
+	if(!turned && newDirection != direction){
 		switch(direction){
 		case MOVE_UP:
-			if(newDirection != MOVE_DOWN)
+			if(newDirection != MOVE_DOWN){
 				direction = newDirection;
+				turned = true;
+			}
 			break;
 		case MOVE_DOWN:
-			if(newDirection != MOVE_UP)
+			if(newDirection != MOVE_UP){
 				direction = newDirection;
+				turned = true;
+			}
 			break;
 		case MOVE_LEFT:
-			if(newDirection != MOVE_RIGHT)
+			if(newDirection != MOVE_RIGHT){
 				direction = newDirection;
+				turned = true;
+			}
 			break;
 		case MOVE_RIGHT:
-			if(newDirection != MOVE_LEFT)
+			if(newDirection != MOVE_LEFT){
 				direction = newDirection;
+				turned = true;
+			}
 			break;
 		}
-		turned = true;
 	}
 }
 
