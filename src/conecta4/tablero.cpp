@@ -90,7 +90,8 @@ void tablero_t::soltarFicha(){
 	if(ficha[jugador] != NULL){
 		SDL_Surface* screen = sistema->scr();
 		SDL_Surface* background = SDL_ConvertSurface(screen, screen->format, screen->flags);
-		SDL_Event event;
+		SDL_Event event, eventMouse;
+		eventMouse.type = SDL_KEYUP;	// Para que no interfiera si no hay ningún evento de movimiento de ratón durante la caída de la ficha
 		do {
 			timer.refresh();
 			vel += accel;
@@ -106,19 +107,15 @@ void tablero_t::soltarFicha(){
 			blit(screen);
 			sistema->update();
 			timer.waitFramerate(30);
-			while(SDL_PollEvent(&event)); // Desechamos los eventos que surjan
+			while(SDL_PollEvent(&event)) // Desechamos los eventos que surjan, pero guardamos los de movimiento de ratón
+				if(event.type == SDL_MOUSEMOTION)
+					eventMouse = event;
 		}
 		while(vel < -5 || posy != pos);
 		SDL_FreeSurface(background);
+
 		// Ponemos un evento de movimiento de ratón en la cola por si el jugador lo movió mientras caía la ficha
-		// Y ya que estamos aprovechamos las variables posx y posy para no tener que reservar memoria extra
-		SDL_GetMouseState(&posx, &posy);
-		event.type = SDL_MOUSEMOTION;
-		event.motion.x = posx;
-		event.motion.y = posy;
-		event.motion.xrel = 0;
-		event.motion.yrel = 0;
-		SDL_PushEvent(&event);
+		SDL_PushEvent(&eventMouse);
 	}
 
 	tablero[columna][tmp] = (!jugador)? CELL_P1 : CELL_P2;

@@ -67,10 +67,6 @@ void messagebox_t::setOpts(int optNumber){
 		delete [] text;
 		text = NULL;
 	}
-	if(box != NULL){
-		delete box;
-		box = NULL;
-	}
 	if(msgPos != NULL){
 		delete [] msgPos;
 		msgPos = NULL;
@@ -257,8 +253,10 @@ int messagebox_t::loop(SDL_Surface* screen){
 			case SDL_MOUSEBUTTONDOWN:
 				if(event.button.button == SDL_BUTTON_LEFT){
 					for(int i = 1; i <= nOpt; i++){
-						if(event.motion.x >= msgPos[i].x && event.motion.x <= msgPos[i].x + msgPos[i].w && event.motion.y >= msgPos[i].y && event.motion.y <= msgPos[i].y + msgPos[i].h)
+						if(event.motion.x >= msgPos[i].x && event.motion.x <= msgPos[i].x + msgPos[i].w && event.motion.y >= msgPos[i].y && event.motion.y <= msgPos[i].y + msgPos[i].h){
+							SDL_FreeSurface(background);
 							return i;
+						}
 					}
 				}
 				break;
@@ -299,8 +297,10 @@ int messagebox_t::loop(SDL_Surface* screen){
 					break;
 				default: break;
 				}
-				if(event.key.keysym.sym == SDLK_RETURN)
+				if(event.key.keysym.sym == SDLK_RETURN){
+					SDL_FreeSurface(background);
 					return selIndex;
+				}
 				break;
 			case SDL_QUIT:
 				return 0;
