@@ -98,8 +98,6 @@ void image_t::blit(int x, int y, SDL_Surface* screen, SDL_Rect* imZone){
 		SDL_Rect dest = {x, y, 0, 0};
 		SDL_BlitSurface(img, imZone, screen, &dest);
 	}
-	else
-		fprintf(stderr, "image_t::blit: No se puede imprimir por pantalla porque no se ha cargado.\n");
 }
 
 /**

@@ -26,7 +26,7 @@
 /* Declaraciones de los submenús del menú del Snake */
 returnVal gameSnake(void*);
 
-returnVal mainSnake(void* data){
+returnVal mainSnake(void*){
 	// Fuente del menú
 	font_t menuFont("AlteHaasGroteskRegular.ttf");
 	menuFont.setColor(255, 128, 0);
