@@ -187,8 +187,6 @@ void font_t::blit(int x, int y, SDL_Surface* screen){
 		SDL_Rect dest = {x, y - TTF_FontAscent(font) + tmp, 0, 0};
 		SDL_BlitSurface(rendered, NULL, screen, &dest);
 	}
-	else
-		fprintf(stderr, "font_t::blit: No se puede imprimir por pantalla porque no se ha cargado.\n");
 }
 
 /**
