@@ -125,7 +125,7 @@ void snakeMap_t::loadMapScheme(string path){
 		getline(input, buffer);
 		if(lineCharCount == -1)
 			lineCharCount = buffer.length();
-		else if(lineCharCount != buffer.length()){
+		else if(lineCharCount != (int)buffer.length()){
 			fprintf(stderr, "snakeMap_t::loadMapScheme: El archivo tiene líneas de distinto tamaño (%d != %d).\n", lineCharCount, buffer.length());
 			input.close();
 			return;
@@ -169,7 +169,7 @@ void snakeMap_t::loadMapScheme(string path){
 					if(!dirFound){
 						input.seekg(readPos);
 						getline(input, temp);
-						if(temp.length() == lineCharCount && temp[x] == 'D')
+						if((int)temp.length() == lineCharCount && temp[x] == 'D')
 							snake->setPos(x, y, MOVE_DOWN);
 						else {
 							fprintf(stderr, "snakeMap_t::loadMapScheme: El archivo no especifica correctamente la dirección de la serpiente (Utilizar 'D').\n");
