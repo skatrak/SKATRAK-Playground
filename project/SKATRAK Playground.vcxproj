@@ -22,6 +22,7 @@
     <ClInclude Include="..\include\shared_attributes.hpp" />
     <ClInclude Include="..\include\SKATRAK_PLAYGROUND.hpp" />
     <ClInclude Include="..\include\snake\snake.hpp" />
+    <ClInclude Include="..\include\snake\snakeMap.hpp" />
     <ClInclude Include="..\include\snake\snakePiece.hpp" />
     <ClInclude Include="..\include\str_operations.hpp" />
     <ClInclude Include="..\include\system.hpp" />
@@ -44,6 +45,7 @@
     <ClCompile Include="..\src\snake\gameSnake.cpp" />
     <ClCompile Include="..\src\snake\mainSnake.cpp" />
     <ClCompile Include="..\src\snake\snake.cpp" />
+    <ClCompile Include="..\src\snake\snakeMap.cpp" />
     <ClCompile Include="..\src\snake\snakePiece.cpp" />
     <ClCompile Include="..\src\str_operations.cpp" />
     <ClCompile Include="..\src\system.cpp" />

@@ -27,7 +27,7 @@ set OUTPUT="..\bin\windows\SKATRAK Playground.exe"
 rem Listado de módulos objeto
 set OBJECTS_GEN="%OBJDIR%\system.o" "%OBJDIR%\main.o" "%OBJDIR%\music.o" "%OBJDIR%\image.o" "%OBJDIR%\timekeeper.o" "%OBJDIR%\font.o" "%OBJDIR%\inifile.o" "%OBJDIR%\sfx.o" "%OBJDIR%\str_operations.o" "%OBJDIR%\menu.o" "%OBJDIR%\mainMenu.o" "%OBJDIR%\messagebox.o"
 set OBJECTS_C4="%OBJDIR%\mainConecta4.o" "%OBJDIR%\tablero.o" "%OBJDIR%\gameConecta4.o" "%OBJDIR%\messagesConecta4.o"
-set OBJECTS_SNK="%OBJDIR%\mainSnake.o" "%OBJDIR%\snakePiece.o" "%OBJDIR%\snake.o" "%OBJDIR%\gameSnake.o"
+set OBJECTS_SNK="%OBJDIR%\mainSnake.o" "%OBJDIR%\snakePiece.o" "%OBJDIR%\snake.o" "%OBJDIR%\gameSnake.o" "%OBJDIR%\snakeMap.o"
 
 rem Compilamos los módulos objeto por separado
 echo Compilando modulos objeto...
