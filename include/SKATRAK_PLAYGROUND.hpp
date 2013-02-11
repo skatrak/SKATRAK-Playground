@@ -54,6 +54,7 @@ extern const char* SFX_PATH;
 extern const char* FONT_PATH;
 extern const char* IMG_PATH;
 extern const char* INI_PATH;
+extern const char* MAP_PATH;
 
 /* El sistema tiene que poder utilizarse desde todos los módulos */
 extern system_t* sistema;

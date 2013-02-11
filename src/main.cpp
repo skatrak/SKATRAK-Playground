@@ -28,6 +28,7 @@ const char* SFX_PATH = "../../resources/sound/SFX/";
 const char* FONT_PATH = "../../resources/fonts/";
 const char* IMG_PATH = "../../resources/images/";
 const char* INI_PATH = "../../resources/settings/";
+const char* MAP_PATH = "../../resources/maps/";
 
 /* Prototipo del menú principal */
 returnVal mainMenu();
