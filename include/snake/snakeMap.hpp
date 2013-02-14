@@ -47,7 +47,7 @@ class snakeMap_t {
 		image_t* snakeTiles;	// Imagen que contiene los tiles de la serpiente
 		image_t* special;		// Imagen que contiene los tiles de la comida, los bonus, los warps y los muros
 		int tileSize;			// Es el mismo para las comidas y los eslabones de la serpiente
-		int moveFreq;			// Número de fotogramas que tienen que pasar para que se mueva la serpiente
+		int moveTime;			// Número de fotogramas que tienen que pasar para que se mueva la serpiente
 		int foodLimit;			// Número de comidas necesarias para que aparezca un warp
 		int timeLimit;			// Número de fotogramas necesarios para que aparezca un warp
 		snake_t* snake;			// La serpiente
@@ -71,8 +71,8 @@ class snakeMap_t {
 		int height(void) const;
 		// Juego
 		void setDelay(int delay);
-		void setFoodLimit(int nFood);
-		void setTimeLimit(int nFrames);
+		void setFoodLimit(int nFood){ foodLimit = nFood; }
+		void setTimeLimit(int nFrames){ timeLimit = nFrames; }
 		SnakeHit update(SDL_Event* event);
 		void blit(SDL_Surface* screen);
 };

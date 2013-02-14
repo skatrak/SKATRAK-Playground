@@ -27,7 +27,7 @@
 /**
  * @brief Constructor por defecto. Inicializa los valores de las variables de la clase.
  */
-snakeMap_t::snakeMap_t(): wallPos(NULL), nWalls(0), background(NULL), snakeTiles(NULL), special(NULL), tileSize(-1), moveFreq(1), foodLimit(-1), timeLimit(-1), snake(NULL) {
+snakeMap_t::snakeMap_t(): wallPos(NULL), nWalls(0), background(NULL), snakeTiles(NULL), special(NULL), tileSize(-1), moveTime(1), foodLimit(-1), timeLimit(-1), snake(NULL) {
 	snake = new snake_t;
 	setPos(0, 0);
 }
@@ -37,7 +37,7 @@ snakeMap_t::snakeMap_t(): wallPos(NULL), nWalls(0), background(NULL), snakeTiles
  * @param posX Posición en el eje X en la que se colocará el comienzo del mapa en la pantalla.
  * @param posY Posición en el eje Y en la que se colocará el comienzo del mapa en la pantalla.
  */
-snakeMap_t::snakeMap_t(int posX, int posY): wallPos(NULL), nWalls(0), background(NULL), snakeTiles(NULL), special(NULL), tileSize(-1), moveFreq(1), foodLimit(-1), timeLimit(-1), snake(NULL) {
+snakeMap_t::snakeMap_t(int posX, int posY): wallPos(NULL), nWalls(0), background(NULL), snakeTiles(NULL), special(NULL), tileSize(-1), moveTime(1), foodLimit(-1), timeLimit(-1), snake(NULL) {
 	snake = new snake_t;
 	setPos(posX, posY);
 }
@@ -48,7 +48,7 @@ snakeMap_t::snakeMap_t(int posX, int posY): wallPos(NULL), nWalls(0), background
  * @param posY Posición en el eje Y en la que se colocará el comienzo del mapa en la pantalla.
  * @param path Nombre de la imagen de fondo del mapa.
  */
-snakeMap_t::snakeMap_t(int posX, int posY, string path): wallPos(NULL), nWalls(0), background(NULL), snakeTiles(NULL), special(NULL), tileSize(-1), moveFreq(1), foodLimit(-1), timeLimit(-1), snake(NULL) {
+snakeMap_t::snakeMap_t(int posX, int posY, string path): wallPos(NULL), nWalls(0), background(NULL), snakeTiles(NULL), special(NULL), tileSize(-1), moveTime(1), foodLimit(-1), timeLimit(-1), snake(NULL) {
 	snake = new snake_t;
 	setPos(posX, posY);
 	setBackground(path);
@@ -303,4 +303,9 @@ int snakeMap_t::width(void) const {
  */
 int snakeMap_t::height(void) const {
 	return (background != NULL)? background->height() : 0;
+}
+
+void snakeMap_t::setDelay(int delay){
+	if(delay > 0)
+		moveTime = delay;
 }
