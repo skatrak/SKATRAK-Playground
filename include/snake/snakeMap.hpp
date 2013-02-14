@@ -44,6 +44,7 @@ class snakeMap_t {
 		} mapPos, foodPos, bonusPos, warpPos, *wallPos;
 		int nWalls;				// Número de bloques de pared que hay
 		image_t* background;	// Define el espacio de juego y le da un aspecto al fondo
+		image_t* snakeTiles;	// Imagen que contiene los tiles de la serpiente
 		image_t* special;		// Imagen que contiene los tiles de la comida, los bonus, los warps y los muros
 		int tileSize;			// Es el mismo para las comidas y los eslabones de la serpiente
 		int moveFreq;			// Número de fotogramas que tienen que pasar para que se mueva la serpiente
@@ -65,10 +66,12 @@ class snakeMap_t {
 		// Imágenes
 		void setSnakeImg(string path, int size = -1);
 		void setFoodImg(string path, int size = -1);
+		// Juego
 		void setDelay(int delay);
 		void setFoodLimit(int nFood);
 		void setTimeLimit(int nFrames);
 		SnakeHit update(SDL_Event* event);
+		void blit(SDL_Surface* screen);
 };
 
 #endif
