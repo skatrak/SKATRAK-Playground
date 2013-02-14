@@ -25,9 +25,67 @@
 #include <snake/snakeMap.hpp>
 
 /**
+ * @brief Coloca uno de los 3 tipos de comida en el mapa.
+ * @param food Tipo de comida (FOOD_NORMAL, FOOD_BONUS, FOOD_WARP).
+ *
+ * Esta función no hace comprobación de falta de inicialización de los atributos de la clase.
+ */
+void snakeMap_t::locateFood(SnakeFood food){
+	int posX, posY;
+	do {
+		posX = rand() % (background->width() / tileSize);
+		posY = rand() % (background->height() / tileSize);
+	} while(checkCollision(posX, posY));
+
+	switch(food){
+	case FOOD_NORMAL:
+		foodPos.x = posX;
+		foodPos.y = posY;
+		break;
+	case FOOD_BONUS:
+		bonusPos.x = posX;
+		bonusPos.y = posY;
+		break;
+	case FOOD_WARP:
+		warpPos.x = posX;
+		warpPos.y = posY;
+		break;
+	}
+}
+
+/**
+ * @brief Detecta si hay alguna colisión en la posición indicada o si no se indica ninguna posición, detecta si la cabeza de la serpiente ha chocado contra un muro del mapa.
+ * @param posX Posición en el eje X del punto que se quiere comprobar.
+ * @param posY Posición en el eje Y del punto que se quiere comprobar.
+ * @return true si hay alguna colisión y false si no la hay.
+ */
+bool snakeMap_t::checkCollision(int posX, int posY){
+	if(posX < 0 || posY < 0){
+		if(snake != NULL && wallPos != NULL){
+			int X, Y;
+			snake->headPos(&X, &Y);
+			for(int i = 0; i < nWalls; i++){
+				if(wallPos[i].x == X && wallPos[i].y == Y)
+					return true;
+			}
+		}
+	}
+	else if(snake->checkCollision(posX, posY))
+		return true;
+	else {
+		for(int i = 0; i < nWalls; i++){
+			if(wallPos[i].x == posX && wallPos[i].y == posY)
+				return true;
+		}
+	}
+	return false;
+}
+
+/**
  * @brief Constructor por defecto. Inicializa los valores de las variables de la clase.
  */
 snakeMap_t::snakeMap_t(): wallPos(NULL), nWalls(0), background(NULL), snakeTiles(NULL), special(NULL), tileSize(-1), moveTime(1), foodLimit(-1), timeLimit(-1), snake(NULL) {
+	foodPos.x = foodPos.y = bonusPos.x = bonusPos.y = warpPos.x = warpPos.y = -1;
 	snake = new snake_t;
 	setPos(0, 0);
 }
@@ -38,6 +96,7 @@ snakeMap_t::snakeMap_t(): wallPos(NULL), nWalls(0), background(NULL), snakeTiles
  * @param posY Posición en el eje Y en la que se colocará el comienzo del mapa en la pantalla.
  */
 snakeMap_t::snakeMap_t(int posX, int posY): wallPos(NULL), nWalls(0), background(NULL), snakeTiles(NULL), special(NULL), tileSize(-1), moveTime(1), foodLimit(-1), timeLimit(-1), snake(NULL) {
+	foodPos.x = foodPos.y = bonusPos.x = bonusPos.y = warpPos.x = warpPos.y = -1;
 	snake = new snake_t;
 	setPos(posX, posY);
 }
@@ -49,6 +108,7 @@ snakeMap_t::snakeMap_t(int posX, int posY): wallPos(NULL), nWalls(0), background
  * @param path Nombre de la imagen de fondo del mapa.
  */
 snakeMap_t::snakeMap_t(int posX, int posY, string path): wallPos(NULL), nWalls(0), background(NULL), snakeTiles(NULL), special(NULL), tileSize(-1), moveTime(1), foodLimit(-1), timeLimit(-1), snake(NULL) {
+	foodPos.x = foodPos.y = bonusPos.x = bonusPos.y = warpPos.x = warpPos.y = -1;
 	snake = new snake_t;
 	setPos(posX, posY);
 	setBackground(path);
@@ -194,7 +254,6 @@ void snakeMap_t::loadMapScheme(string path){
 			// Contamos el número de direcciones que hay para no permitir que haya más de una y para evitar buscar hacia atrás si sabemos que no hay nada
 			else if(buffer[x] == 'D' && ++dirCount > 1){
 				fprintf(stderr, "snakeMap_t::loadMapScheme: El archivo contiene más de un indicador de dirección.\n");
-				snake->setPos(0, 0, MOVE_UP);
 				input.close();
 				return;
 			}
@@ -204,7 +263,6 @@ void snakeMap_t::loadMapScheme(string path){
 
 	if(!headFound){
 		fprintf(stderr, "snakeMap_t::loadMapScheme: El archivo no especificaba la posición inicial de la serpiente (Utilizar 'H').\n");
-		snake->setPos(0, 0, MOVE_UP);
 		input.close();
 		return;
 	}
@@ -231,8 +289,10 @@ void snakeMap_t::loadMapScheme(string path){
 			}
 		}
 	}
-	else
+	else {
 		fprintf(stderr, "snakeMap_t::loadMapScheme: No se ha podido reservar memoria para el array de muros.\n");
+		snake->setPos(0, 0, MOVE_UP);
+	}
 
 	input.close();
 }
@@ -305,7 +365,91 @@ int snakeMap_t::height(void) const {
 	return (background != NULL)? background->height() : 0;
 }
 
+/**
+ * @brief Establece cada cuántos fotogramas se actualiza la posición de la serpiente.
+ * @param delay Número de fotogramas.
+ */
 void snakeMap_t::setDelay(int delay){
 	if(delay > 0)
 		moveTime = delay;
+}
+
+/**
+ * @brief Actualiza la posición de la serpiente.
+ * @return Un valor de los posibles objetos con los que puede chocar la serpiente al moverse.
+ * @note Esta función debe llamarse en cada fotograma.
+ */
+SnakeHit snakeMap_t::update(){
+	// Comprobación de que se ha cargado correctamente el mapa
+	if(background == NULL || snake == NULL || tileSize < 0){
+		fprintf(stderr, "snakeMap_t::update: El mapa no está cargado correctamente.\n");
+		return HIT_NONE;
+	}
+
+	// La cuenta atrás para que aparezca un bonus o desaparezca si ya hay uno
+	static int countdown = -1;
+	if(countdown < 0)
+		countdown = 15 + (rand() % 10);	// El tiempo para que reaparezca un bonus será de entre 15 y 25 movimientos de la serpiente
+	else if(countdown == 0){
+		if((bonusPos.x < 0 || bonusPos.y < 0) && (warpPos.x < 0 || warpPos.y < 0)){
+			locateFood(FOOD_BONUS);
+			countdown = 10 + (rand() % 5);	// Va a haber entre 10 y 15 movimientos de la serpiente de tiempo para coger el bonus
+		}
+		else
+			bonusPos.x = bonusPos.y = -1;	// Hacemos desaparecer el bonus si no se recoge a tiempo
+	}
+
+	// Colocación de la primera comida si no está
+	if(foodPos.x < 0 || foodPos.y < 0)
+		locateFood(FOOD_NORMAL);
+
+	// Variables de estado
+	static int frames = 0, eaten = 0;
+
+	// Comprobaciones de si hay que colocar el warp
+	if(frames == timeLimit || eaten == foodLimit)
+		locateFood(FOOD_WARP);
+
+	// Si toca moverse en este fotograma
+	if(frames++ % moveTime == 0){
+		int headX, headY;
+		countdown--;
+
+		// Movimiento de la serpiente
+		snake->step();
+		snake->headPos(&headX, &headY);
+
+		// Comprobaciones de teletransportes
+		if(headX >= (int)(background->width()/tileSize))
+			snake->setHeadPos(0, headY);
+		else if(headX < 0)
+			snake->setHeadPos((int)(background->width()/tileSize)-1, headY);
+		if(headY >= (background->height()/tileSize))
+			snake->setHeadPos(headX, 0);
+		else if(headY < 0)
+			snake->setHeadPos(headX, (background->height()/tileSize)-1);
+
+		// Comprobación de choques
+		if(snake->checkCollision() || checkCollision())
+			return HIT_DEATH;
+
+		// Comprobaciones sobre si has comido algo
+		if(headX == foodPos.x && headY == foodPos.y){
+			eaten++;
+			snake->addPiece(2);
+			if(warpPos.x < 0 || warpPos.y < 0)	// Sólo se colocan nuevas comidas si no hay ningun warp activo
+				locateFood(FOOD_NORMAL);
+			else
+				foodPos.x = foodPos.y = 1000000000;	// No uso '-1' para que no se detecte como que acaba de empezar la partida
+			return HIT_NORMAL;
+		}
+		else if(headX == bonusPos.x && headY == bonusPos.y){
+			snake->addPiece();
+			countdown += 15 + (rand() % 10);	// Se le suma al tiempo que faltaba para que se quitara el bonus el tiempo para el siguiente
+			return HIT_BONUS;
+		}
+		else if(headX == warpPos.x && headY == warpPos.y)
+			return HIT_WARP;
+	}
+	return HIT_NONE;
 }

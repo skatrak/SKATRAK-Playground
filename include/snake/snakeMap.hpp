@@ -31,6 +31,13 @@ enum SnakeHit {
 	HIT_DEATH	// Se mordió la cola o chocó contra una pared
 };
 
+/* Diferentes 'comidas' que pueden aparecer */
+enum SnakeFood {
+	FOOD_NORMAL,
+	FOOD_BONUS,
+	FOOD_WARP
+};
+
 /**
  * @class snakeMap_t
  * @brief Representa un rectángulo de juego compuesto por la serpiente, bloques opcionales y las comidas y bonus que se puede comer la serpiente.
@@ -52,7 +59,8 @@ class snakeMap_t {
 		int timeLimit;			// Número de fotogramas necesarios para que aparezca un warp
 		snake_t* snake;			// La serpiente
 	protected:
-		void init(void);
+		void locateFood(SnakeFood food);
+		bool checkCollision(int posX = -1, int posY = -1);
 	public:
 		// Constructores y destructor
 		snakeMap_t(void);
@@ -73,8 +81,21 @@ class snakeMap_t {
 		void setDelay(int delay);
 		void setFoodLimit(int nFood){ foodLimit = nFood; }
 		void setTimeLimit(int nFrames){ timeLimit = nFrames; }
-		SnakeHit update(SDL_Event* event);
+		void turnSnake(Direction direction);
+		SnakeHit update(void);
 		void blit(SDL_Surface* screen);
 };
+
+/**
+ * @fn snakeMap_t::setFoodLimit
+ * @brief Establece un número de comidas recogidas antes de que aparezca un warp al siguiente nivel.
+ * @param nFood Número de comidas. '-1' Para que sean infinitas.
+ */
+
+/**
+ * @fn snakeMap_t::setTimeLimit
+ * @brief Establece un número de fotogramas antes de que aparezca un warp al siguiente nivel.
+ * @param nFrames Número de fotogramas.
+ */
 
 #endif
