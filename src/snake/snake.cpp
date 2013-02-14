@@ -275,15 +275,27 @@ void snake_t::addPiece(int nPieces){
 }
 
 /**
- * @brief Detecta si hay colisiones entre la cabeza de la serpiente y cualquier otra parte de la misma.
+ * @brief Detecta si hay colisiones entre una posición y la serpiente. Si no se especifican argumentos, detecta si la cabeza está chocando con otra parte del cuerpo.
+ * @param posX Posición en el eje X del punto que se quiere comprobar.
+ * @param posY Posición en el eje X del punto que se quiere comprobar.
  * @return true si hay colisión y false si no la hay.
  */
-bool snake_t::checkCollision(void){
+bool snake_t::checkCollision(int posX, int posY){
 	if(head == NULL) return false;
 
+	// Si no especificamos una posición, compara la posición de la cabeza
+	if(posX < 0 || posY < 0){
+		posX = head->posX();
+		posY = head->posY();
+	}
+	else if(head->posX() == posX && head->posY() == posY)
+		return true;
+
+	// Empieza a comparar por el 2º eslabón de la serpiente
 	for(snakePiece_t* aux = head->next; aux != NULL; aux = aux->next)
-		if(aux->posX() == head->posX() && aux->posY() == head->posY())
+		if(aux->posX() == posX && aux->posY() == posY)
 			return true;
+
 	return false;
 }
 
