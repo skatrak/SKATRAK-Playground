@@ -66,6 +66,9 @@ class snakeMap_t {
 		// Imágenes
 		void setSnakeImg(string path, int size = -1);
 		void setFoodImg(string path, int size = -1);
+		// Consulta de atributos
+		int width(void) const;
+		int height(void) const;
 		// Juego
 		void setDelay(int delay);
 		void setFoodLimit(int nFood);

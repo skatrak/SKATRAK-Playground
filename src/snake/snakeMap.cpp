@@ -288,3 +288,19 @@ void snakeMap_t::setFoodImg(string path, int size){
 			fprintf(stderr, "snakeMap_t::setFoodImg: Se ha intentado asignar dos tamaños de tiles diferentes.\n");
 	}
 }
+
+/**
+ * @brief Devuelve la anchura del mapa en la pantalla.
+ * @return Anchura del mapa ó 0 si no se ha cargado un fondo.
+ */
+int snakeMap_t::width(void) const {
+	return (background != NULL)? background->width() : 0;
+}
+
+/**
+ * @brief Devuelve la altura del mapa en la pantalla.
+ * @return Altura del mapa ó 0 si no se ha cargado un fondo.
+ */
+int snakeMap_t::height(void) const {
+	return (background != NULL)? background->height() : 0;
+}
