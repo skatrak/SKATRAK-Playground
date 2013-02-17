@@ -17,7 +17,7 @@ set error=false
 
 rem Argumentos para compilar y enlazar los códigos objeto. -mwindows para que no aparezca una consola.
 set CFLAGS=-Wall -c -I"..\include"
-set LIBS=-L"..\lib\windows" -mwindows -lmingw32 -lSDLmain -lSDL -lSDL_mixer -lSDL_image -lSDL_ttf
+set LIBS=-L"..\lib" -mwindows -lmingw32 -lSDLmain -lSDL -lSDL_mixer -lSDL_image -lSDL_ttf
 
 rem Directorios importantes
 set OBJDIR=..\build\obj
