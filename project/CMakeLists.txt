@@ -3,12 +3,12 @@ PROJECT(SKATRAK-Playground)
 
 # Rutas de los archivos
 INCLUDE_DIRECTORIES("${PROJECT_SOURCE_DIR}/../include")
-SET(EXECUTABLE_OUTPUT_PATH "${PROJECT_BINARY_DIR}/bin/linux")
+SET(EXECUTABLE_OUTPUT_PATH "${PROJECT_BINARY_DIR}/bin")
 SET(LIBRARY_OUTPUT_PATH "${PROJECT_BINARY_DIR}/lib")
 SET(SOURCE_PATH "${PROJECT_SOURCE_DIR}/../src")
 
 # Argumentos para el compilador
-ADD_DEFINITIONS(-O0 -g -Wall -fmessage-length=0)
+ADD_DEFINITIONS(-O2 -Wall)
 
 # Encontrar SDL
 FIND_PACKAGE(SDL REQUIRED)
@@ -37,23 +37,25 @@ ENDIF (SDLTTF_FOUND)
 
 # Compilar el proyecto
 ADD_EXECUTABLE(SKATRAK-Playground
-    ${SOURCE_PATH}/main.cpp
-    ${SOURCE_PATH}/music.cpp
-    ${SOURCE_PATH}/system.cpp
-    ${SOURCE_PATH}/image.cpp
-    ${SOURCE_PATH}/timekeeper.cpp
-    ${SOURCE_PATH}/font.cpp
-    ${SOURCE_PATH}/inifile.cpp
-    ${SOURCE_PATH}/sfx.cpp
-    ${SOURCE_PATH}/str_operations.cpp
-    ${SOURCE_PATH}/menu.cpp
-    ${SOURCE_PATH}/mainMenu.cpp
-    ${SOURCE_PATH}/messagebox.cpp
-    ${SOURCE_PATH}/conecta4/tablero.cpp
-    ${SOURCE_PATH}/conecta4/mainConecta4.cpp
-    ${SOURCE_PATH}/conecta4/gameConecta4.cpp
-    ${SOURCE_PATH}/conecta4/messagesConecta4.cpp
-    ${SOURCE_PATH}/snake/mainSnake.cpp
-    ${SOURCE_PATH}/snake/snakePiece.cpp
-    ${SOURCE_PATH}/snake/snake.cpp)
+	${SOURCE_PATH}/font.cpp
+	${SOURCE_PATH}/image.cpp
+	${SOURCE_PATH}/inifile.cpp
+	${SOURCE_PATH}/main.cpp
+	${SOURCE_PATH}/mainMenu.cpp
+	${SOURCE_PATH}/menu.cpp
+	${SOURCE_PATH}/messagebox.cpp
+	${SOURCE_PATH}/music.cpp
+	${SOURCE_PATH}/sfx.cpp
+	${SOURCE_PATH}/str_operations.cpp
+	${SOURCE_PATH}/system.cpp
+	${SOURCE_PATH}/timekeeper.cpp
+	${SOURCE_PATH}/conecta4/gameConecta4.cpp
+	${SOURCE_PATH}/conecta4/mainConecta4.cpp
+	${SOURCE_PATH}/conecta4/messagesConecta4.cpp
+	${SOURCE_PATH}/conecta4/tablero.cpp
+	${SOURCE_PATH}/snake/gameSnake.cpp
+	${SOURCE_PATH}/snake/mainSnake.cpp
+	${SOURCE_PATH}/snake/snake.cpp
+	${SOURCE_PATH}/snake/snakeMap.cpp
+	${SOURCE_PATH}/snake/snakePiece.cpp)
 TARGET_LINK_LIBRARIES(SKATRAK-Playground ${LINK_LIBS})
