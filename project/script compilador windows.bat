@@ -20,9 +20,9 @@ set CFLAGS=-Wall -c -I"..\include"
 set LIBS=-L"..\lib\windows" -mwindows -lmingw32 -lSDLmain -lSDL -lSDL_mixer -lSDL_image -lSDL_ttf
 
 rem Directorios importantes
-set OBJDIR=..\bin\windows\obj
+set OBJDIR=..\build\obj
 set SRCDIR=..\src
-set OUTPUT="..\bin\windows\SKATRAK Playground.exe"
+set OUTPUT="..\build\bin\SKATRAK Playground.exe"
 
 rem Listado de módulos objeto
 set OBJECTS_GEN="%OBJDIR%\system.o" "%OBJDIR%\main.o" "%OBJDIR%\music.o" "%OBJDIR%\image.o" "%OBJDIR%\timekeeper.o" "%OBJDIR%\font.o" "%OBJDIR%\inifile.o" "%OBJDIR%\sfx.o" "%OBJDIR%\str_operations.o" "%OBJDIR%\menu.o" "%OBJDIR%\mainMenu.o" "%OBJDIR%\messagebox.o"

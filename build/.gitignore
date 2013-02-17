@@ -1,0 +1,6 @@
+# Este archivo es para que la carpeta 'build' esté en el repositorio
+# Ignoramos todo su contenido
+*
+
+# Pero no este archivo
+!.gitignore

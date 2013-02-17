@@ -48,7 +48,7 @@ Compile=1
 Link=1
 Priority=1000
 OverrideBuildCmd=0
-BuildCmd=$(CPP) -c music.cpp -o ../bin/objects/music.o $(CXXFLAGS)
+BuildCmd=
 
 [Unit5]
 FileName=..\src\system.cpp
@@ -58,7 +58,7 @@ Compile=1
 Link=1
 Priority=1000
 OverrideBuildCmd=0
-BuildCmd=$(CPP) -c system.cpp -o ../bin/objects/system.o $(CXXFLAGS)
+BuildCmd=
 
 [VersionInfo]
 Major=0
@@ -93,9 +93,9 @@ Linker=-mwindows_@@_-l$(WXLIBNAME)_@@_-l$(WXLIBNAME)_gl_@@_-lwxtiff_@@_-lwxjpeg_
 PreprocDefines=__WXMSW___@@___GNUWIN32___@@__UNICODE_@@_
 CompilerSettings=0000000001010000000100
 Icon=
-ExeOutput=..\bin\windows
+ExeOutput=..\build\bin
 ImagesOutput=..\res\images
-ObjectOutput=..\bin\windows\obj
+ObjectOutput=..\build\obj
 OverrideOutput=1
 OverrideOutputName=SKATRAK Playground.exe
 HostApplication=
@@ -181,7 +181,7 @@ Compile=1
 Link=1
 Priority=1000
 OverrideBuildCmd=0
-BuildCmd=$(CPP) -c image.cpp -o ../bin/objects/image.o $(CXXFLAGS)
+BuildCmd=
 
 [Unit9]
 FileName=..\src\timekeeper.cpp
