@@ -16,8 +16,8 @@ OBJPATH=../bin/linux/obj
 SRCPATH=../src
 
 # Rutas de los archivos
-SOURCES=$(SRCPATH)/main.cpp $(SRCPATH)/music.cpp $(SRCPATH)/system.cpp $(SRCPATH)/image.cpp $(SRCPATH)/timekeeper.cpp $(SRCPATH)/font.cpp $(SRCPATH)/inifile.cpp $(SRCPATH)/sfx.cpp $(SRCPATH)/str_operations.cpp $(SRCPATH)/menu.cpp $(SRCPATH)/mainMenu.cpp $(SRCPATH)/messagebox.cpp $(SRCPATH)/conecta4/tablero.cpp $(SRCPATH)/conecta4/mainConecta4.cpp $(SRCPATH)/conecta4/gameConecta4.cpp $(SRCPATH)/conecta4/messagesConecta4.cpp $(SRCPATH)/snake/mainSnake.cpp $(SRCPATH)/snake/snakePiece.cpp $(SRCPATH)/snake/snake.cpp $(SRCPATH)/snake/gameSnake.cpp $(SRCPATH)/snake/snakeMap.cpp
-OBJECTS=$(OBJPATH)/main.o $(OBJPATH)/music.o $(OBJPATH)/system.o $(OBJPATH)/image.o $(OBJPATH)/timekeeper.o $(OBJPATH)/font.o $(OBJPATH)/inifile.o $(OBJPATH)/sfx.o $(OBJPATH)/str_operations.o $(OBJPATH)/menu.o $(OBJPATH)/mainMenu.o $(OBJPATH)/messagebox.o $(OBJPATH)/tablero.o $(OBJPATH)/mainConecta4.o $(OBJPATH)/gameConecta4.o $(OBJPATH)/messagesConecta4.o $(OBJPATH)/mainSnake.o $(OBJPATH)/snakePiece.o $(OBJPATH)/snake.o $(OBJPATH)/gameSnake.o $(OBJPATH)/snakeMap.o
+SOURCES=$(SRCPATH)/main.cpp $(SRCPATH)/music.cpp $(SRCPATH)/system.cpp $(SRCPATH)/image.cpp $(SRCPATH)/timekeeper.cpp $(SRCPATH)/font.cpp $(SRCPATH)/inifile.cpp $(SRCPATH)/sfx.cpp $(SRCPATH)/str_operations.cpp $(SRCPATH)/menu.cpp $(SRCPATH)/mainMenu.cpp $(SRCPATH)/messagebox.cpp $(SRCPATH)/conecta4/tablero.cpp $(SRCPATH)/conecta4/mainConecta4.cpp $(SRCPATH)/conecta4/gameConecta4.cpp $(SRCPATH)/conecta4/messagesConecta4.cpp $(SRCPATH)/snake/mainSnake.cpp $(SRCPATH)/snake/snakePiece.cpp $(SRCPATH)/snake/snake.cpp
+OBJECTS=$(OBJPATH)/main.o $(OBJPATH)/music.o $(OBJPATH)/system.o $(OBJPATH)/image.o $(OBJPATH)/timekeeper.o $(OBJPATH)/font.o $(OBJPATH)/inifile.o $(OBJPATH)/sfx.o $(OBJPATH)/str_operations.o $(OBJPATH)/menu.o $(OBJPATH)/mainMenu.o $(OBJPATH)/messagebox.o $(OBJPATH)/tablero.o $(OBJPATH)/mainConecta4.o $(OBJPATH)/gameConecta4.o $(OBJPATH)/messagesConecta4.o $(OBJPATH)/mainSnake.o $(OBJPATH)/snakePiece.o $(OBJPATH)/snake.o
 EXECUTABLE=../bin/linux/SKATRAK-Playground
 
 all: $(SOURCES) $(EXECUTABLE)
@@ -105,14 +105,6 @@ $(OBJPATH)/snakePiece.o:
 $(OBJPATH)/snake.o:
 	@echo "Compilando \"$@\"..."
 	@$(CC) $(CFLAGS) $(SRCPATH)/snake/snake.cpp -o $@
-
-$(OBJPATH)/gameSnake.o:
-	@echo "Compilando \"$@\"..."
-	@$(CC) $(CFLAGS) $(SRCPATH)/snake/gameSnake.cpp -o $@
-
-$(OBJPATH)/snakeMap.o:
-	@echo "Compilando \"$@\"..."
-	@$(CC) $(CFLAGS) $(SRCPATH)/snake/snakeMap.cpp -o $@
 
 clean:
 	rm -f $(EXECUTABLE)
