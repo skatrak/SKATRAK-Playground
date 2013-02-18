@@ -105,7 +105,7 @@ returnVal gameSnake(void*){
 		// Imprimir por pantalla
 		background.blit(0, 0, screen);
 		foodImg.blit(foodX*32, foodY*32, screen);
-		snake.blit(screen, 0, 0);
+		snake.blit(0, 0, screen);
 		sistema->update();
 		timer.waitFramerate(30);
 	}
