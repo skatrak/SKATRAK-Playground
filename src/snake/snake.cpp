@@ -191,6 +191,8 @@ void snake_t::setHeadPos(int x, int y){
 /**
  * @brief Gira la serpiente hacia una nueva dirección.
  * @param newDirection Dirección hacia la que se moverá la serpiente a partir de ahora.
+ *
+ * Sólo gira si no se ha girado desde la última vez que se movió y si el giro está permitido.
  */
 void snake_t::turn(Direction newDirection){
 	if(!turned && newDirection != direction){
@@ -305,7 +307,7 @@ bool snake_t::checkCollision(int posX, int posY){
  * @param x Posición en el eje X de comienzo de la zona de movimiento de la serpiente en la pantalla.
  * @param y Posición en el eje Y de comienzo de la zona de movimiento de la serpiente en la pantalla.
  */
-void snake_t::blit(SDL_Surface* screen, int x, int y){
+void snake_t::blit(int x, int y, SDL_Surface* screen){
 	if(head == NULL || snake == NULL || tileSize < 0) return;
 
 	head->blit(screen, x, y, SNAKE_HEAD, snake, tileSize);
