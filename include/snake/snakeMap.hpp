@@ -31,9 +31,9 @@ enum SnakeHit {
 	HIT_DEATH	// Se mordió la cola o chocó contra una pared
 };
 
-/* Diferentes 'comidas' que pueden aparecer */
+/* Diferentes 'comidas' que pueden aparecer. Al empezar por '0', permiten indexar el tileset de comidas */
 enum SnakeFood {
-	FOOD_NORMAL,
+	FOOD_NORMAL = 0,
 	FOOD_BONUS,
 	FOOD_WARP
 };
@@ -51,7 +51,6 @@ class snakeMap_t {
 		} mapPos, foodPos, bonusPos, warpPos, *wallPos;
 		int nWalls;				// Número de bloques de pared que hay
 		image_t* background;	// Define el espacio de juego y le da un aspecto al fondo
-		image_t* snakeTiles;	// Imagen que contiene los tiles de la serpiente
 		image_t* special;		// Imagen que contiene los tiles de la comida, los bonus, los warps y los muros
 		int tileSize;			// Es el mismo para las comidas y los eslabones de la serpiente
 		int moveTime;			// Número de fotogramas que tienen que pasar para que se mueva la serpiente
@@ -72,8 +71,8 @@ class snakeMap_t {
 		void setBackground(string path);
 		void loadMapScheme(string path);
 		// Imágenes
-		void setSnakeImg(string path, int size = -1);
-		void setFoodImg(string path, int size = -1);
+		void setSnakeImg(string path, int size);
+		void setFoodImg(string path);
 		// Consulta de atributos
 		int width(void) const;
 		int height(void) const;
