@@ -84,7 +84,7 @@ bool snakeMap_t::checkCollision(int posX, int posY){
 /**
  * @brief Constructor por defecto. Inicializa los valores de las variables de la clase.
  */
-snakeMap_t::snakeMap_t(): wallPos(NULL), nWalls(0), background(NULL), special(NULL), tileSize(-1), moveTime(1), foodLimit(-1), timeLimit(-1), snake(NULL) {
+snakeMap_t::snakeMap_t(): wallPos(NULL), nWalls(0), background(NULL), special(NULL), tileSize(-1), foodLimit(-1), timeLimit(-1), snake(NULL) {
 	foodPos.x = foodPos.y = bonusPos.x = bonusPos.y = warpPos.x = warpPos.y = -1;
 	snake = new snake_t;
 	setPos(0, 0);
@@ -95,7 +95,7 @@ snakeMap_t::snakeMap_t(): wallPos(NULL), nWalls(0), background(NULL), special(NU
  * @param posX Posición en el eje X en la que se colocará el comienzo del mapa en la pantalla.
  * @param posY Posición en el eje Y en la que se colocará el comienzo del mapa en la pantalla.
  */
-snakeMap_t::snakeMap_t(int posX, int posY): wallPos(NULL), nWalls(0), background(NULL), special(NULL), tileSize(-1), moveTime(1), foodLimit(-1), timeLimit(-1), snake(NULL) {
+snakeMap_t::snakeMap_t(int posX, int posY): wallPos(NULL), nWalls(0), background(NULL), special(NULL), tileSize(-1), foodLimit(-1), timeLimit(-1), snake(NULL) {
 	foodPos.x = foodPos.y = bonusPos.x = bonusPos.y = warpPos.x = warpPos.y = -1;
 	snake = new snake_t;
 	setPos(posX, posY);
@@ -107,7 +107,7 @@ snakeMap_t::snakeMap_t(int posX, int posY): wallPos(NULL), nWalls(0), background
  * @param posY Posición en el eje Y en la que se colocará el comienzo del mapa en la pantalla.
  * @param path Nombre de la imagen de fondo del mapa.
  */
-snakeMap_t::snakeMap_t(int posX, int posY, string path): wallPos(NULL), nWalls(0), background(NULL), special(NULL), tileSize(-1), moveTime(1), foodLimit(-1), timeLimit(-1), snake(NULL) {
+snakeMap_t::snakeMap_t(int posX, int posY, string path): wallPos(NULL), nWalls(0), background(NULL), special(NULL), tileSize(-1), foodLimit(-1), timeLimit(-1), snake(NULL) {
 	foodPos.x = foodPos.y = bonusPos.x = bonusPos.y = warpPos.x = warpPos.y = -1;
 	snake = new snake_t;
 	setPos(posX, posY);
@@ -339,15 +339,6 @@ int snakeMap_t::height(void) const {
 }
 
 /**
- * @brief Establece cada cuántos fotogramas se actualiza la posición de la serpiente.
- * @param delay Número de fotogramas.
- */
-void snakeMap_t::setDelay(int delay){
-	if(delay > 0)
-		moveTime = delay;
-}
-
-/**
  * @brief Gira la serpiente a una dirección.
  * @param direction Nueva dirección.
  */
@@ -453,13 +444,18 @@ void snakeMap_t::blit(SDL_Surface* screen){
 	// Imprimimos las comidas que estén presentes
 	SDL_Rect zone = {0, 0, tileSize, tileSize};
 	if(foodPos.x >= 0 && foodPos.y >= 0)
-		special->blit(foodPos.x, foodPos.y, screen, &zone);
+		special->blit(foodPos.x * tileSize, foodPos.y * tileSize, screen, &zone);
 	if(bonusPos.x >= 0 && bonusPos.y >= 0){
 		zone.x = FOOD_BONUS * tileSize;
-		special->blit(bonusPos.x, bonusPos.y, screen, &zone);
+		special->blit(bonusPos.x * tileSize, bonusPos.y * tileSize, screen, &zone);
 	}
 	if(warpPos.x >= 0 && warpPos.y >= 0){
 		zone.x = FOOD_WARP * tileSize;
-		special->blit(warpPos.x, warpPos.y, screen, &zone);
+		special->blit(warpPos.x * tileSize, warpPos.y * tileSize, screen, &zone);
+	}
+	if(wallPos != NULL){
+		zone.x = (FOOD_WARP + 1) * tileSize;
+		for(int i = 0; i < nWalls; i++)
+			special->blit(wallPos[i].x * tileSize, wallPos[i].y * tileSize, screen, &zone);
 	}
 }
