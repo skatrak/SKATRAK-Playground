@@ -32,19 +32,18 @@ returnVal gameSnake(void*){
 	// Fondo de la pantalla
 	SDL_Surface* screen = sistema->scr();
 	image_t background("fondo_inicio_prueba.png");
-	image_t foodImg("snake/serpiente_comida_prueba.png");
 
 	// La serpiente
-	snake_t snake;
-	snake.setPos(10, 10, MOVE_RIGHT);
-	snake.setImg("snake/serpiente_pruebav2.png", 32);
-	int headX, headY, foodX = -1, foodY = -1;
-
-	// Colocamos la primera comida
-	foodX = rand() % (int)(sistema->width()/32);
-	foodY = rand() % (int)(sistema->height()/32);
+	snakeMap_t snakemap(10, 10, "snake/serpiente_mapa_fondo_prueba.png");
+	snakemap.loadMapScheme("mapasnake_prueba.txt");
+	snakemap.setSnakeImg("snake/serpiente_pruebav2.png", 32);
+	snakemap.setFoodImg("snake/serpiente_comida_prueba.png");
+	// Números pequeños para probar su correcto funcionamiento
+	snakemap.setFoodLimit(25);
+	snakemap.setTimeLimit(150);
 
 	// Game loop
+	int puntuacion = 0;
 	SDL_Event event;
 	timekeeper_t timer;
 	while(true){
@@ -54,16 +53,16 @@ returnVal gameSnake(void*){
 			case SDL_KEYDOWN:
 				switch(event.key.keysym.sym){
 				case SDLK_UP:
-					snake.turn(MOVE_UP);
+					snakemap.turnSnake(MOVE_UP);
 					break;
 				case SDLK_DOWN:
-					snake.turn(MOVE_DOWN);
+					snakemap.turnSnake(MOVE_DOWN);
 					break;
 				case SDLK_LEFT:
-					snake.turn(MOVE_LEFT);
+					snakemap.turnSnake(MOVE_LEFT);
 					break;
 				case SDLK_RIGHT:
-					snake.turn(MOVE_RIGHT);
+					snakemap.turnSnake(MOVE_RIGHT);
 					break;
 				case SDLK_ESCAPE:
 					return ACTUAL_MENU;
@@ -76,36 +75,28 @@ returnVal gameSnake(void*){
 			}
 		}
 		// Lógica del juego
-		if(timer.renderedFrames() == 2){
+		if(timer.renderedFrames() == 5){
 			timer.resetFrames();
-			snake.step();
-			if(snake.headPos(&headX, &headY) >= 0){
-				if(headX >= (sistema->width()/32))
-					snake.setHeadPos(0, headY);
-				else if(headX < 0)
-					snake.setHeadPos((sistema->width()/32)-1, headY);
-				if(headY >= (sistema->height()/32))
-					snake.setHeadPos(headX, 0);
-				else if(headY < 0)
-					snake.setHeadPos(headX, (sistema->height()/32)-1);
-			}
-			if(headX == foodX && headY == foodY){
-				snake.addPiece(3);
-				do {
-					foodX = rand() % (int)(sistema->width()/32);
-					foodY = rand() % (int)(sistema->height()/32);
-				} while(foodX == headX && foodY == headY);
-			}
-			if(snake.checkCollision()){
-				printf("Te mordiste la cola.\n");
+			switch(snakemap.update()){
+			case HIT_NONE:
+				break;
+			case HIT_BONUS:
+				puntuacion += 5;	// Deliberadamente sin 'break' para que se sume más a la puntuación
+			case HIT_NORMAL:
+				puntuacion += 5;
+				break;
+			case HIT_DEATH:
+				printf("Has muerto. Puntuación: %d\n", puntuacion);
 				return ACTUAL_MENU;
+			case HIT_WARP:	// Aquí se podría cargar otro mapa, etc...
+				printf("Has ganado. Puntuación: %d\n", puntuacion);
+				return MAIN;
 			}
 		}
 
 		// Imprimir por pantalla
 		background.blit(0, 0, screen);
-		foodImg.blit(foodX*32, foodY*32, screen);
-		snake.blit(0, 0, screen);
+		snakemap.blit(screen);
 		sistema->update();
 		timer.waitFramerate(30);
 	}
