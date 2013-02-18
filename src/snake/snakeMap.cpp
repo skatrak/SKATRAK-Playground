@@ -362,11 +362,11 @@ SnakeHit snakeMap_t::update(){
 	// La cuenta atrás para que aparezca un bonus o desaparezca si ya hay uno
 	static int countdown = -1;
 	if(countdown < 0)
-		countdown = 15 + (rand() % 10);	// El tiempo para que reaparezca un bonus será de entre 15 y 25 movimientos de la serpiente
+		countdown = BONUS_RESPAWN_TIME + (rand() % BONUS_RESPAWN_VARIATION);
 	else if(countdown == 0){
 		if((bonusPos.x < 0 || bonusPos.y < 0) && (warpPos.x < 0 || warpPos.y < 0)){
 			locateFood(FOOD_BONUS);
-			countdown = 10 + (rand() % 5);	// Va a haber entre 10 y 15 movimientos de la serpiente de tiempo para coger el bonus
+			countdown = BONUS_RESPAWN_TIME + (rand() % BONUS_RESPAWN_VARIATION);	// Va a haber entre 10 y 15 movimientos de la serpiente de tiempo para coger el bonus
 		}
 		else
 			bonusPos.x = bonusPos.y = -1;	// Hacemos desaparecer el bonus si no se recoge a tiempo
@@ -415,12 +415,13 @@ SnakeHit snakeMap_t::update(){
 		if(warpPos.x < 0 || warpPos.y < 0)	// Sólo se colocan nuevas comidas si no hay ningun warp activo
 			locateFood(FOOD_NORMAL);
 		else
-			foodPos.x = foodPos.y = 1000000000;	// No uso '-1' para que no se detecte como que acaba de empezar la partida
+			foodPos.x = foodPos.y = 1000000000;	// No uso '-1' para que no se detecte como que acaba de empezar la partida y se vuelva a colocar una comida
 		return HIT_NORMAL;
 	}
 	else if(headX == bonusPos.x && headY == bonusPos.y){
 		snake->addPiece();
-		countdown += 15 + (rand() % 10);	// Se le suma al tiempo que faltaba para que se quitara el bonus el tiempo para el siguiente
+		countdown += BONUS_RESPAWN_TIME + (rand() % BONUS_RESPAWN_VARIATION);	// Se le suma al tiempo que faltaba para que se quitara el bonus el tiempo para el siguiente
+		bonusPos.x = bonusPos.y = -1;
 		return HIT_BONUS;
 	}
 	else if(headX == warpPos.x && headY == warpPos.y)
@@ -444,18 +445,18 @@ void snakeMap_t::blit(SDL_Surface* screen){
 	// Imprimimos las comidas que estén presentes
 	SDL_Rect zone = {0, 0, tileSize, tileSize};
 	if(foodPos.x >= 0 && foodPos.y >= 0)
-		special->blit(foodPos.x * tileSize, foodPos.y * tileSize, screen, &zone);
+		special->blit(mapPos.x + (foodPos.x * tileSize), mapPos.y + (foodPos.y * tileSize), screen, &zone);
 	if(bonusPos.x >= 0 && bonusPos.y >= 0){
 		zone.x = FOOD_BONUS * tileSize;
-		special->blit(bonusPos.x * tileSize, bonusPos.y * tileSize, screen, &zone);
+		special->blit(mapPos.x + (bonusPos.x * tileSize), mapPos.y + (bonusPos.y * tileSize), screen, &zone);
 	}
 	if(warpPos.x >= 0 && warpPos.y >= 0){
 		zone.x = FOOD_WARP * tileSize;
-		special->blit(warpPos.x * tileSize, warpPos.y * tileSize, screen, &zone);
+		special->blit(mapPos.x + (warpPos.x * tileSize), mapPos.y + (warpPos.y * tileSize), screen, &zone);
 	}
 	if(wallPos != NULL){
 		zone.x = (FOOD_WARP + 1) * tileSize;
 		for(int i = 0; i < nWalls; i++)
-			special->blit(wallPos[i].x * tileSize, wallPos[i].y * tileSize, screen, &zone);
+			special->blit(mapPos.x + (wallPos[i].x * tileSize), mapPos.y + (wallPos[i].y * tileSize), screen, &zone);
 	}
 }

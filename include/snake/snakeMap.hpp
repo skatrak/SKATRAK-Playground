@@ -38,6 +38,12 @@ enum SnakeFood {
 	FOOD_WARP
 };
 
+/* Tiempo mínimo que tiene que pasar para que un Bonus reaparezca o desaparezca */
+const int BONUS_RESPAWN_TIME = 25;
+
+/* Se le suma al tiempo mínimo (Se le añade 0, 1, ..., 9 aleatoriamente) */
+const int BONUS_RESPAWN_VARIATION = 10;
+
 /**
  * @class snakeMap_t
  * @brief Representa un rectángulo de juego compuesto por la serpiente, bloques opcionales y las comidas y bonus que se puede comer la serpiente.
