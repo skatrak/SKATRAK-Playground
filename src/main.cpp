@@ -23,12 +23,23 @@
 #include <shared_attributes.hpp>
 
 /* Definiciones de las rutas por defecto de los recursos */
+// Definimos manualmente _RELEASE_VER si queremos distribuir el ejecutable (Utilizando otra estructura de directorios)
+//#define _RELEASE_VER
+#ifdef _RELEASE_VER
+const char* MUS_PATH = "./resources/sound/";
+const char* SFX_PATH = "./resources/sound/SFX/";
+const char* FONT_PATH = "./resources/fonts/";
+const char* IMG_PATH = "./resources/images/";
+const char* INI_PATH = "./resources/settings/";
+const char* MAP_PATH = "./resources/maps/";
+#else
 const char* MUS_PATH = "../../resources/sound/";
 const char* SFX_PATH = "../../resources/sound/SFX/";
 const char* FONT_PATH = "../../resources/fonts/";
 const char* IMG_PATH = "../../resources/images/";
 const char* INI_PATH = "../../resources/settings/";
 const char* MAP_PATH = "../../resources/maps/";
+#endif
 
 /* Prototipo del menú principal */
 returnVal mainMenu();
