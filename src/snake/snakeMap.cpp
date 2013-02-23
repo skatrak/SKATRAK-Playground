@@ -194,7 +194,7 @@ void snakeMap_t::loadMapScheme(string path){
 		if(lineCharCount == -1)
 			lineCharCount = buffer.length();
 		else if(lineCharCount != (int)buffer.length()){
-			fprintf(stderr, "snakeMap_t::loadMapScheme: El archivo tiene líneas de distinto tamaño (%d != %d).\n", lineCharCount, buffer.length());
+			fprintf(stderr, "snakeMap_t::loadMapScheme: El archivo tiene líneas de distinto tamaño (%d != %d).\n", lineCharCount, (int)buffer.length());
 			input.close();
 			return;
 		}
@@ -443,7 +443,7 @@ void snakeMap_t::blit(SDL_Surface* screen){
 	snake->blit(mapPos.x, mapPos.y, screen);
 
 	// Imprimimos las comidas que estén presentes
-	SDL_Rect zone = {0, 0, tileSize, tileSize};
+	SDL_Rect zone = {0, 0, (Uint16)tileSize, (Uint16)tileSize};
 	if(foodPos.x >= 0 && foodPos.y >= 0)
 		special->blit(mapPos.x + (foodPos.x * tileSize), mapPos.y + (foodPos.y * tileSize), screen, &zone);
 	if(bonusPos.x >= 0 && bonusPos.y >= 0){

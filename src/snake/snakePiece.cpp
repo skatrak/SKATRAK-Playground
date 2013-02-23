@@ -97,6 +97,6 @@ void snakePiece_t::move(Direction direction){
  * @param tileSize Tamaño de la imagen en pantalla.
  */
 void snakePiece_t::blit(SDL_Surface* screen, int posX, int posY, SnakePart part, image_t* tiles, int tileSize){
-	SDL_Rect zone = {tilePos * tileSize, part * tileSize, tileSize, tileSize};
+	SDL_Rect zone = {(Sint16)(tilePos * tileSize), (Sint16)(part * tileSize), (Uint16)tileSize, (Uint16)tileSize};
 	tiles->blit((x*tileSize) + posX, (y*tileSize) + posY, screen, &zone);
 }

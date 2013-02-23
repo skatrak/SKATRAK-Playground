@@ -184,7 +184,7 @@ void font_t::blit(int x, int y, SDL_Surface* screen){
 		}
 		int tmp = 0;
 		TTF_GlyphMetrics(font, 'l', NULL, NULL, NULL, &tmp, NULL);
-		SDL_Rect dest = {x, y - TTF_FontAscent(font) + tmp, 0, 0};
+		SDL_Rect dest = {(Sint16)x, (Sint16)(y - TTF_FontAscent(font) + tmp), 0, 0};
 		SDL_BlitSurface(rendered, NULL, screen, &dest);
 	}
 }

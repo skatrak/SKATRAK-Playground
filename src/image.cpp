@@ -95,7 +95,7 @@ void image_t::setAlpha(int alpha){
  */
 void image_t::blit(int x, int y, SDL_Surface* screen, SDL_Rect* imZone){
 	if(img != NULL){
-		SDL_Rect dest = {x, y, 0, 0};
+		SDL_Rect dest = {(Sint16)x, (Sint16)y, 0, 0};
 		SDL_BlitSurface(img, imZone, screen, &dest);
 	}
 }
@@ -112,12 +112,12 @@ void image_t::blit(int x, int y, SDL_Surface* screen, SDL_Rect* imZone){
  */
 void image_t::blit(int x, int y, SDL_Surface* screen, int imX, int imY, int imW, int imH){
 	if(img != NULL){
-		SDL_Rect dest = {x, y, 0, 0};
+		SDL_Rect dest = {(Sint16)x, (Sint16)y, 0, 0};
 		if(imX < 0) imX = -imX;
 		if(imY < 0) imY = -imY;
 		if(imW < 0) imW = -imW;
 		if(imH < 0) imH = -imH;
-		SDL_Rect src = {imX, imY, imW, imH};
+		SDL_Rect src = {(Sint16)imX, (Sint16)imY, (Uint16)imW, (Uint16)imH};
 		SDL_BlitSurface(img, &src, screen, &dest);
 	}
 	else
