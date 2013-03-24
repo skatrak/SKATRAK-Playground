@@ -361,6 +361,7 @@ SnakeHit snakeMap_t::update(){
 
 	// La cuenta atrás para que aparezca un bonus o desaparezca si ya hay uno
 	static int countdown = -1;
+
 	if(countdown < 0)
 		countdown = BONUS_RESPAWN_TIME + (rand() % BONUS_RESPAWN_VARIATION);
 	else if(countdown == 0){
@@ -401,12 +402,17 @@ SnakeHit snakeMap_t::update(){
 	}
 	else {
 		fprintf(stderr, "snakeMap_t::update: La serpiente no está cargada.\n");
+		countdown = -1;
+		frames = eaten = 0;
 		return HIT_DEATH;
 	}
 
 	// Comprobación de choques
-	if(snake->checkCollision() || checkCollision())
+	if(snake->checkCollision() || checkCollision()){
+		countdown = -1;
+		frames = eaten = 0;
 		return HIT_DEATH;
+	}
 
 	// Comprobaciones sobre si has comido algo
 	if(headX == foodPos.x && headY == foodPos.y){
@@ -424,8 +430,11 @@ SnakeHit snakeMap_t::update(){
 		bonusPos.x = bonusPos.y = -1;
 		return HIT_BONUS;
 	}
-	else if(headX == warpPos.x && headY == warpPos.y)
+	else if(headX == warpPos.x && headY == warpPos.y){
+		countdown = -1;
+		frames = eaten = 0;
 		return HIT_WARP;
+	}
 	else
 		return HIT_NONE;
 }
