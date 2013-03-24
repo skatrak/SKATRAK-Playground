@@ -173,6 +173,8 @@ void snakeMap_t::loadMapScheme(string path){
 		delete [] wallPos;
 		wallPos = NULL;
 	}
+	nWalls = 0;
+	foodPos.x = foodPos.y = bonusPos.x = bonusPos.y = warpPos.x = warpPos.y = -1;
 
 	// Apertura del fichero
 	string temp = MAP_PATH;
