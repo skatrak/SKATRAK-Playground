@@ -19,8 +19,20 @@
  *  Sergio M. Afonso Fumero <theSkatrak@gmail.com>
  */
 
-#include <SKATRAK_PLAYGROUND.hpp>
-#include <conecta4/tablero.hpp>
+/* Inclusión de cabeceras necesarias */
+// Cabecera de la clase
+#include "conecta4/tablero.hpp"
+// Estándar
+#include <string>
+using std::string;
+// SDL
+#include "SDL/SDL.h"
+// Propias
+#include "SKATRAK_PLAYGROUND.hpp"
+#include "timekeeper.hpp"
+#include "image.hpp"
+#include "system.hpp"
+#include "sfx.hpp"
 
 /**
  * @brief Crea la matriz que contiene los valores de las fichas en el tablero.

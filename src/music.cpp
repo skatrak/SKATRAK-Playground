@@ -19,7 +19,17 @@
  *  Sergio M. Afonso Fumero <theSkatrak@gmail.com>
  */
 
-#include <SKATRAK_PLAYGROUND.hpp>
+/* Inclusión de cabeceras necesarias */
+// Cabecera de la clase
+#include "music.hpp"
+// Estándar
+#include <string>
+using std::string;
+// SDL
+#include "SDL/SDL_mixer.h"
+// Propias
+#include "SKATRAK_PLAYGROUND.hpp"
+#include "system.hpp"
 
 /* Declaración de la variable musica que será la que contenga la lista de reproducción */
 extern music_t* musica;

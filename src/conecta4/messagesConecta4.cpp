@@ -19,9 +19,16 @@
  *  Sergio M. Afonso Fumero <theSkatrak@gmail.com>
  */
 
-#include <SKATRAK_PLAYGROUND.hpp>
-#include <shared_attributes.hpp>
-#include <conecta4/tablero.hpp>
+/* Inclusión de cabeceras necesarias */
+// Estándar
+#include <string>
+using std::string;
+// Propias
+#include "SKATRAK_PLAYGROUND.hpp"
+#include "shared_attributes.hpp"
+#include "system.hpp"
+#include "messagebox.hpp"
+#include "conecta4/tablero.hpp"
 
 bool msgSalir(bool tablero_vacio){
 	if(tablero_vacio) return true;

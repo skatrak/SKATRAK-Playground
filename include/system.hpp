@@ -22,6 +22,13 @@
 #ifndef __SYSTEM_T__
 #define __SYSTEM_T__
 
+/* Inclusión de cabeceras necesarias */
+#include <string>
+using std::string;
+
+/* Declaración adelantada de structs/clases que no se utilizan directamente */
+struct SDL_Surface;
+
 /* Flags para especificar subsistemas a inicializar o cerrar */
 #define SYS_SUBST_ALL 0x0000000F
 #define SYS_SUBST_SDL 0x00000001

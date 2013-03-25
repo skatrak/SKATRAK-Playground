@@ -22,6 +22,15 @@
 #ifndef __IMAGE_T__
 #define __IMAGE_T__
 
+/* Inclusión de cabeceras necesarias */
+// Estándar
+#include <string>
+using std::string;
+
+/* Declaración adelantada de structs/clases que no se utilizan directamente */
+struct SDL_Surface;
+struct SDL_Rect;
+
 /**
  * @class image_t
  * @brief Clase encargada de representar las imágenes que se utilizan en el programa.

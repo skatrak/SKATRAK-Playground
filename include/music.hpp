@@ -22,6 +22,14 @@
 #ifndef __MUSIC_T__
 #define __MUSIC_T__
 
+/* Inclusión de cabeceras necesarias */
+// Estándar
+#include <string>
+using std::string;
+// SDL
+#include "SDL/SDL_mixer.h"
+
+/* Constantes */
 const int FADEIN_DELAY = 1000;
 const int MAX_VOLUME = 128;
 const int AUDIO_CHANNELS = 10;

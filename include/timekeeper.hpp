@@ -22,6 +22,9 @@
 #ifndef __TIMEKEEPER_T__
 #define __TIMEKEEPER_T__
 
+/* Inclusión de cabeceras necesarias */
+#include "SDL/SDL.h"
+
 /**
  * @class timekeeper_t
  * @brief Temporizador para controlar la velocidad de ejecución del programa y la cantidad de fotogramas que se van renderizando.

@@ -19,9 +19,16 @@
  *  Sergio M. Afonso Fumero <theSkatrak@gmail.com>
  */
 
-#include <SKATRAK_PLAYGROUND.hpp>
-#include <shared_attributes.hpp>
-#include <menu.hpp>
+/* Inclusión de cabeceras necesarias */
+// SDL
+#include "SDL/SDL.h"
+// Propias
+#include "SKATRAK_PLAYGROUND.hpp"
+#include "shared_attributes.hpp"
+#include "system.hpp"
+#include "font.hpp"
+#include "timekeeper.hpp"
+#include "menu.hpp"
 
 /* Declaraciones de los submenús del menú del Conecta 4 */
 returnVal gameConecta4(void*);

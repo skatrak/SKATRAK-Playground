@@ -19,7 +19,18 @@
  *  Sergio M. Afonso Fumero <theSkatrak@gmail.com>
  */
 
-#include <SKATRAK_PLAYGROUND.hpp>
+/* Inclusión de cabeceras necesarias */
+// Cabecera de la clase
+#include "font.hpp"
+// Estándar
+#include <string>
+using std::string;
+// SDL
+#include "SDL/SDL.h"
+#include "SDL/SDL_ttf.h"
+// Propias
+#include "SKATRAK_PLAYGROUND.hpp"
+#include "system.hpp"
 
 /**
  * @brief Constructor. Inicializa los valores de las variables e inicia SDL_TTF si no se ha iniciado.

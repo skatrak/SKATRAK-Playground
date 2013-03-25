@@ -22,6 +22,17 @@
 #ifndef __TABLERO_T__
 #define __TABLERO_T__
 
+/* Inclusión de cabeceras necesarias */
+// Estándar
+#include <string>
+using std::string;
+// SDL
+#include "SDL/SDL.h"
+
+/* Declaración adelantada de structs/clases que no se utilizan directamente */
+class image_t;
+class sfx_t;
+
 // Diferentes contenidos que puede tener una celda del tablero
 enum CellState {
 	CELL_P1,

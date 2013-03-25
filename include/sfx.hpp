@@ -22,6 +22,14 @@
 #ifndef __SFX_T__
 #define __SFX_T__
 
+/* Inclusión de cabeceras necesarias */
+// Estándar
+#include <string>
+using std::string;
+// SDL
+#include "SDL/SDL_mixer.h"
+
+/* Constantes */
 const int DEFAULT_SFX_VOLUME = 128;
 
 /**

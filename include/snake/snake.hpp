@@ -22,7 +22,17 @@
 #ifndef __SNAKE_T__
 #define __SNAKE_T__
 
-/* Número por defecto de eslabones de la serpiente */
+/* Inclusión de cabeceras necesarias */
+#include <string>
+using std::string;
+
+/* Declaración adelantada de structs/clases que no se utilizan directamente */
+struct SDL_Surface;
+class image_t;
+class snakePiece_t;
+enum Direction;
+
+/* Constantes */
 const int SNAKE_DEFAULT_PIECES = 5;
 
 /**

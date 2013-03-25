@@ -22,7 +22,14 @@
 #ifndef __INIFILE_T__
 #define __INIFILE_T__
 
+/* Inclusión de cabeceras necesarias */
+// Estándar
+#include <string>
+#include <fstream>
+using std::string;
 using std::ifstream;
+// Propias
+#include "SKATRAK_PLAYGROUND.hpp"
 
 /* Enumeración con los distintos tipos de error que pueden suceder al leer un fichero .ini */
 enum iniError {

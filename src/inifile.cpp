@@ -19,8 +19,17 @@
  *  Sergio M. Afonso Fumero <theSkatrak@gmail.com>
  */
 
-#include <SKATRAK_PLAYGROUND.hpp>
-#include <str_operations.hpp>
+/* Inclusión de cabeceras necesarias */
+// Cabecera de la clase
+#include "inifile.hpp"
+// Estándar
+#include <string>
+#include <fstream>
+using std::string;
+using std::ifstream;
+// Propias
+#include "SKATRAK_PLAYGROUND.hpp"
+#include "str_operations.hpp"
 
 /**
  * @brief Constructor. Inicialización de variables.

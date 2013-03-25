@@ -22,6 +22,21 @@
 #ifndef __MENU_T__
 #define __MENU_T__
 
+/* Inclusión de cabeceras necesarias */
+#include <string>
+using std::string;
+
+/* Declaración adelantada de structs/clases que no se utilizan directamente */
+struct SDL_Rect;
+union SDL_Event;
+struct SDL_Surface;
+class font_t;
+class image_t;
+class sfx_t;
+
+/* Constantes */
+enum returnVal;	// Definido en shared_attributes.hpp
+
 /* Definición de los flags para alinear los menús */
 #define MENU_ALIGN_RIGHT	0x00000001
 #define MENU_ALIGN_LEFT		0x00000002

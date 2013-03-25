@@ -19,7 +19,10 @@
  *  Sergio M. Afonso Fumero <theSkatrak@gmail.com>
  */
 
-#include <str_operations.hpp>
+/* Inclusión de cabeceras necesarias */
+// Cabecera del espacio de nombres
+#include "str_operations.hpp"
+// Estándar
 #include <cstring>
 
 /**

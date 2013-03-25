@@ -19,9 +19,17 @@
  *  Sergio M. Afonso Fumero <theSkatrak@gmail.com>
  */
 
-#include <SKATRAK_PLAYGROUND.hpp>
-#include <snake/snakePiece.hpp>
-#include <snake/snake.hpp>
+/* Inclusión de cabeceras necesarias */
+// Cabecera de la clase
+#include "snake/snake.hpp"
+// Estándar
+#include <string>
+using std::string;
+// SDL
+#include "SDL/SDL.h"
+// Propias
+#include "snake/snakePiece.hpp"
+#include "image.hpp"
 
 /**
  * @brief Devuelve el índice en el eje X del tile que le corresponde a la cabeza de la serpiente.

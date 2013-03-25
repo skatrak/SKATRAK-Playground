@@ -19,7 +19,11 @@
  *  Sergio M. Afonso Fumero <theSkatrak@gmail.com>
  */
 
-#include <SKATRAK_PLAYGROUND.hpp>
+/* Inclusión de cabeceras necesarias */
+// Cabecera de la clase
+#include "timekeeper.hpp"
+// SDL
+#include "SDL/SDL.h"
 
 /**
  * @brief Actualiza el contador de tiempo.

@@ -22,6 +22,17 @@
 #ifndef __FONT_T__
 #define __FONT_T__
 
+/* Inclusión de cabeceras necesarias */
+// Estándar
+#include <string>
+using std::string;
+// SDL
+#include "SDL/SDL.h"
+#include "SDL/SDL_ttf.h"
+// Propias
+#include "SKATRAK_PLAYGROUND.hpp"
+
+/* Constantes */
 const int DEFAULT_FONT_SIZE = 24;
 const int DEFAULT_FONT_STYLE = TTF_STYLE_NORMAL;
 

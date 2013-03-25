@@ -19,10 +19,22 @@
  *  Sergio M. Afonso Fumero <theSkatrak@gmail.com>
  */
 
-#include <SKATRAK_PLAYGROUND.hpp>
-#include <snake/snakePiece.hpp>
-#include <snake/snake.hpp>
-#include <snake/snakeMap.hpp>
+/* Inclusión de las cabeceras necesarias */
+// Cabecera de la clase
+#include "snake/snakeMap.hpp"
+// Estándar
+#include <string>
+#include <fstream>
+using std::string;
+using std::ifstream;
+// SDL
+#include "SDL/SDL.h"
+// Propias
+#include "SKATRAK_PLAYGROUND.hpp"
+#include "image.hpp"
+#include "system.hpp"
+#include "snake/snake.hpp"
+#include "snake/snakePiece.hpp"
 
 /**
  * @brief Coloca uno de los 3 tipos de comida en el mapa.

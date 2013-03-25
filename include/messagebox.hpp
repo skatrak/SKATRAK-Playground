@@ -22,6 +22,17 @@
 #ifndef __MESSAGEBOX_HPP__
 #define __MESSAGEBOX_HPP__
 
+/* Inclusión de cabeceras necesarias */
+// Estándar
+#include <string>
+using std::string;
+// SDL
+#include "SDL/SDL.h"
+
+/* Declaración adelantada de structs/clases que no se utilizan directamente */
+class font_t;
+class image_t;
+
 /**
  * @class messagebox_t
  * @brief Crea un cuadro de mensaje con una cierta cantidad de posibles respuestas entre 1 y 4.

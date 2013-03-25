@@ -19,7 +19,20 @@
  *  Sergio M. Afonso Fumero <theSkatrak@gmail.com>
  */
 
-#include <SKATRAK_PLAYGROUND.hpp>
+/* Inclusión de cabeceras necesarias */
+// Cabecera de la clase
+#include "system.hpp"
+// Estándar
+#include <string>
+using std::string;
+// SDL
+#include "SDL/SDL.h"
+#include "SDL/SDL_image.h"
+#include "SDL/SDL_mixer.h"
+#include "SDL/SDL_ttf.h"
+// Propias
+#include "SKATRAK_PLAYGROUND.hpp"
+#include "music.hpp"
 
 /**
  * @brief Crea la clase sistema e inicializa las propiedades de la pantalla. También inicializa SDL.

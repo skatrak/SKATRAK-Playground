@@ -22,6 +22,16 @@
 #ifndef __SNAKEMAP_T__
 #define __SNAKEMAP_T__
 
+/* Inclusión de las cabeceras necesarias */
+#include <string>
+using std::string;
+
+/* Declaración adelantada de structs/clases que no se utilizan directamente */
+struct SDL_Surface;
+class image_t;
+class snake_t;
+enum Direction;
+
 /* Diferentes cosas con las que puede impactar la serpiente en cada movimiento */
 enum SnakeHit {
 	HIT_NORMAL,	// Se comió una comida
@@ -38,10 +48,8 @@ enum SnakeFood {
 	FOOD_WARP
 };
 
-/* Tiempo mínimo que tiene que pasar para que un Bonus reaparezca o desaparezca */
+/* Constantes */
 const int BONUS_RESPAWN_TIME = 25;
-
-/* Se le suma al tiempo mínimo (Se le añade 0, 1, ..., 9 aleatoriamente) */
 const int BONUS_RESPAWN_VARIATION = 10;
 
 /**

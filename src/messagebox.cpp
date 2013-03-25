@@ -19,7 +19,19 @@
  *  Sergio M. Afonso Fumero <theSkatrak@gmail.com>
  */
 
-#include <SKATRAK_PLAYGROUND.hpp>
+/* Inclusión de cabeceras necesarias */
+// Cabecera de la clase
+#include "messagebox.hpp"
+// Estándar
+#include <string>
+using std::string;
+// SDL
+#include "SDL/SDL.h"
+// Propias
+#include "font.hpp"
+#include "image.hpp"
+#include "system.hpp"
+#include "timekeeper.hpp"
 
 /**
  * @brief Constructor. Inicializa la clase con sus valores por defecto.

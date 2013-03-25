@@ -19,8 +19,19 @@
  *  Sergio M. Afonso Fumero <theSkatrak@gmail.com>
  */
 
-#include <SKATRAK_PLAYGROUND.hpp>
-#include <shared_attributes.hpp>
+/* Inclusión de cabeceras necesarias */
+// Estándar
+#include <time.h>	// Para time();
+// SDL
+#include "SDL/SDL.h"
+// Propias
+#include "SKATRAK_PLAYGROUND.hpp"
+#include "shared_attributes.hpp"
+#include "system.hpp"
+#include "music.hpp"
+#include "image.hpp"
+#include "font.hpp"
+#include "timekeeper.hpp"
 
 /* Definiciones de las rutas por defecto de los recursos */
 // Definimos manualmente _RELEASE_VER si queremos distribuir el ejecutable (Utilizando otra estructura de directorios)
@@ -49,6 +60,9 @@ system_t* sistema = NULL;			// La variable sistema se comparte entre todos los m
 music_t* musica = NULL;				// La variable musica se comparte por todos los minijuegos y cada uno puede tener su propia lista de reproducción.
 
 int main(int argc, char* argv[]){
+	// Inicializamos la semilla generadora de números aleatorios
+	srand((unsigned int)time(NULL));
+
 	// Creamos la variable sistema (Iniciamos SDL)
 	sistema = new system_t(1024, 768, 32);
 	sistema->setIcon("icono_prueba.png");

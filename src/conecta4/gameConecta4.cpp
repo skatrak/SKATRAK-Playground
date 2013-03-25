@@ -19,9 +19,17 @@
  *  Sergio M. Afonso Fumero <theSkatrak@gmail.com>
  */
 
-#include <SKATRAK_PLAYGROUND.hpp>
-#include <shared_attributes.hpp>
-#include <conecta4/tablero.hpp>
+/* Inclusión de cabeceras necesarias */
+// SDL
+#include "SDL/SDL.h"
+// Propias
+#include "SKATRAK_PLAYGROUND.hpp"
+#include "shared_attributes.hpp"
+#include "system.hpp"
+#include "image.hpp"
+#include "font.hpp"
+#include "timekeeper.hpp"
+#include "conecta4/tablero.hpp"
 
 bool msgSalir(bool tablero_vacio);
 bool msgReset(bool tablero_vacio);

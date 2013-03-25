@@ -19,9 +19,21 @@
  *  Sergio M. Afonso Fumero <theSkatrak@gmail.com>
  */
 
-#include <SKATRAK_PLAYGROUND.hpp>
-#include <shared_attributes.hpp>
-#include <menu.hpp>
+/* Inclusión de cabeceras necesarias */
+// Cabecera de la clase
+#include "menu.hpp"
+// Estándar
+#include <string>
+using std::string;
+// SDL
+#include "SDL/SDL.h"
+// Propias
+#include "SKATRAK_PLAYGROUND.hpp"
+#include "shared_attributes.hpp"
+#include "font.hpp"
+#include "image.hpp"
+#include "sfx.hpp"
+#include "system.hpp"
 
 /**
  * @brief Constructor por defecto. Inicializa los valores de la clase.

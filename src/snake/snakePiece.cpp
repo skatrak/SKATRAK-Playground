@@ -19,8 +19,13 @@
  *  Sergio M. Afonso Fumero <theSkatrak@gmail.com>
  */
 
-#include <SKATRAK_PLAYGROUND.hpp>
-#include <snake/snakePiece.hpp>
+/* Inclusión de cabeceras necesarias */
+// Cabecera de la clase
+#include "snake/snakePiece.hpp"
+// SDL
+#include "SDL/SDL.h"
+// Propias
+#include "image.hpp"
 
 /**
  * @brief Constructor por defecto. Inicializa las variables de la clase con un valor conocido.

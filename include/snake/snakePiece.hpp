@@ -22,6 +22,12 @@
 #ifndef __SNAKEPIECE_T__
 #define __SNAKEPIECE_T__
 
+/* Inclusión de cabeceras necesarias */
+#include "SDL/SDL.h"
+
+/* Declaración adelantada de structs/clases que no se utilizan directamente */
+class image_t;
+
 // Direcciones de movimiento de la serpiente
 enum Direction {
 	MOVE_UP = 0,

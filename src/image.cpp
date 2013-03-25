@@ -19,7 +19,17 @@
  *  Sergio M. Afonso Fumero <theSkatrak@gmail.com>
  */
 
-#include <SKATRAK_PLAYGROUND.hpp>
+/* Inclusión de cabeceras necesarias */
+// Cabecera de la clase
+#include "image.hpp"
+// Estándar
+#include <string>
+using std::string;
+// SDL
+#include "SDL/SDL.h"
+#include "SDL/SDL_image.h"
+// Propias
+#include "SKATRAK_PLAYGROUND.hpp"
 
 /**
  * @brief Inicializa la clase.

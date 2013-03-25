@@ -19,7 +19,18 @@
  *  Sergio M. Afonso Fumero <theSkatrak@gmail.com>
  */
 
-#include <SKATRAK_PLAYGROUND.hpp>
+/* Inclusión de cabeceras necesarias */
+// Cabecera de la clase
+#include "sfx.hpp"
+// Estándar
+#include <string>
+using std::string;
+// SDL
+#include "SDL/SDL_mixer.h"
+// Propias
+#include "SKATRAK_PLAYGROUND.hpp"
+#include "system.hpp"
+#include "music.hpp"
 
 /**
  * @brief Constructor. Inicializa el volumen a DEFAULT_SFX_VOLUME

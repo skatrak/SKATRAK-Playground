@@ -19,16 +19,19 @@
  *  Sergio M. Afonso Fumero <theSkatrak@gmail.com>
  */
 
-#include <SKATRAK_PLAYGROUND.hpp>
-#include <shared_attributes.hpp>
-#include <snake/snakePiece.hpp>
-#include <snake/snake.hpp>
-#include <snake/snakeMap.hpp>
+/* Inclusión de cabeceras necesarias */
+// SDL
+#include "SDL/SDL.h"
+// Propias
+#include "SKATRAK_PLAYGROUND.hpp"
+#include "shared_attributes.hpp"
+#include "system.hpp"
+#include "image.hpp"
+#include "timekeeper.hpp"
+#include "snake/snakePiece.hpp"
+#include "snake/snakeMap.hpp"
 
 returnVal gameSnake(void*){
-	// Inicialización de la semilla
-	srand(SDL_GetTicks());
-
 	// Fondo de la pantalla
 	SDL_Surface* screen = sistema->scr();
 	image_t background("fondo_inicio_prueba.png");
