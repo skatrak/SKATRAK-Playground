@@ -23,8 +23,11 @@
 #define __MENU_T__
 
 /* Inclusión de cabeceras necesarias */
+// Estándar
 #include <string>
 using std::string;
+// Propias
+#include "shared_attributes.hpp"
 
 /* Declaración adelantada de structs/clases que no se utilizan directamente */
 struct SDL_Rect;
@@ -33,9 +36,6 @@ struct SDL_Surface;
 class font_t;
 class image_t;
 class sfx_t;
-
-/* Constantes */
-enum returnVal;	// Definido en shared_attributes.hpp
 
 /* Definición de los flags para alinear los menús */
 #define MENU_ALIGN_RIGHT	0x00000001

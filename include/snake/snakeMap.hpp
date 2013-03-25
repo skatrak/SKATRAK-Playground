@@ -23,14 +23,16 @@
 #define __SNAKEMAP_T__
 
 /* Inclusión de las cabeceras necesarias */
+// Estándar
 #include <string>
 using std::string;
+// Propias
+#include "snake/snakePiece.hpp"
 
 /* Declaración adelantada de structs/clases que no se utilizan directamente */
 struct SDL_Surface;
 class image_t;
 class snake_t;
-enum Direction;
 
 /* Diferentes cosas con las que puede impactar la serpiente en cada movimiento */
 enum SnakeHit {
