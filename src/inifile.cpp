@@ -221,3 +221,32 @@ bool inifile_t::readBool(string section, string varName){
 	error = WRONGTYPE;
 	return false;
 }
+
+/**
+ * @brif Devuelve una cadena que describe el estado de error de la última operación.
+ * @return Cadena de descripción.
+ */
+string inifile_t::errorString(void){
+	string aux;
+	switch(error){
+	case NOERROR:
+		aux = "La última operación concluyó sin errores";
+		break;
+	case FILENOFOUND:
+		aux = "Se ha intentado abrir un archivo inexistente";
+		break;
+	case NOTOPENED:
+		aux = "Se ha inentado acceder a datos sin abrir ningún archivo";
+		break;
+	case WRONGTYPE:
+		aux = "Se ha intentado leer una variable de un tipo distinto";
+		break;
+	case NOEXISTVAR:
+		aux = "La variable con el nombre especificado no existe en la sección especificada";
+		break;
+	case NOEXISTSECTION:
+		aux = "La sección especificada no existe";
+		break;
+	}
+	return aux;
+}

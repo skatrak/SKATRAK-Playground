@@ -59,6 +59,7 @@ class inifile_t {
 		string readString(string section, string varName);
 		bool readBool(string section, string varName);
 		iniError errorStatus(void){ return error; }
+		string errorString(void);
 		void resetError(void){ error = NOERROR; }
 };
 
