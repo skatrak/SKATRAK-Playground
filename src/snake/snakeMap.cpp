@@ -290,6 +290,7 @@ void snakeMap_t::loadMapScheme(string path){
 	if(wallPos != NULL){
 		int i;
 		input.seekg(std::ios::beg);
+		input.clear();
 		for(i = 0, wallCount = 0, y = 0; wallCount < nWalls; y++){
 			getline(input, buffer);
 			for(x = 0; x < lineCharCount; x++){
