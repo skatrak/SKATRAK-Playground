@@ -22,6 +22,10 @@
 #ifndef __SHARED_ATTRIBUTES__
 #define __SHARED_ATTRIBUTES__
 
+/* Inclusión de cabeceras necesarias */
+#include <string>
+using std::string;
+
 /* Valores de retorno de los menús */
 enum returnVal {
 	MAIN,			// Volver al menú principal
@@ -35,9 +39,12 @@ enum returnVal {
 class music_t;
 extern music_t* musica;
 
+/* Funciones globales */
+int loadTracklist(string path);
+
 /* Funciones de callback comunes */
-returnVal defaultCallback(void*);
-returnVal exitCallback(void*);
-returnVal backCallback(void*);
+inline returnVal defaultCallback(void*){ return ACTUAL_MENU; }
+inline returnVal exitCallback(void*){ return EXIT; }
+inline returnVal backCallback(void*){ return PREV_MENU; }
 
 #endif
