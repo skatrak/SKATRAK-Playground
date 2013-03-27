@@ -104,6 +104,7 @@ music_t::~music_t(){
 void music_t::setTracks(int n){
 	if(playing)
 		halt();
+	current = 0;
 	if(music != NULL){
 		for(int i = 0; i < n_tracks; i++){
 			if(music[i] != NULL){
@@ -172,12 +173,17 @@ void music_t::play(){
 	if(running){
 		if(!playing){
 			if(!paused){
-				Mix_FadeInMusic(music[current], 0, FADEIN_DELAY);
-				playing = true;
+				if(music[current] != NULL){
+					Mix_FadeInMusic(music[current], 0, FADEIN_DELAY);
+					playing = true;
+				}
+				else
+					nextTrack();
 			}
 			else {
 				Mix_ResumeMusic();
 				paused = false;
+				playing = true;
 			}
 		}
 	}

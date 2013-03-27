@@ -29,11 +29,6 @@
 #include "timekeeper.hpp"
 #include "menu.hpp"
 
-/* Definición de las funciones de callback comunes */
-returnVal defaultCallback(void* data){ return ACTUAL_MENU; }
-returnVal backCallback(void* data){ return PREV_MENU; }
-returnVal exitCallback(void* data){ return EXIT; }
-
 /* Declaraciones de los submenús del menú principal */
 returnVal mainConecta4(void* data);
 returnVal mainSnake(void* data);
