@@ -32,6 +32,9 @@
 #include "snake/snakeMap.hpp"
 
 returnVal gameSnake(void*){
+	// Música del juego
+	loadTracklist("snake_setlist.ini");
+
 	// Fondo de la pantalla
 	SDL_Surface* screen = sistema->scr();
 	image_t background("fondo_inicio_prueba.png");
@@ -68,6 +71,7 @@ returnVal gameSnake(void*){
 					snakemap.turnSnake(MOVE_RIGHT);
 					break;
 				case SDLK_ESCAPE:
+					loadTracklist("menu_setlist.ini");
 					return ACTUAL_MENU;
 				default: break;
 				}
@@ -90,9 +94,11 @@ returnVal gameSnake(void*){
 				break;
 			case HIT_DEATH:
 				printf("Has muerto. Puntuación: %d\n", puntuacion);
+				loadTracklist("menu_setlist.ini");
 				return ACTUAL_MENU;
 			case HIT_WARP:	// Aquí se podría cargar otro mapa, etc...
 				printf("Has ganado. Puntuación: %d\n", puntuacion);
+				loadTracklist("menu_setlist.ini");
 				return MAIN;
 			}
 		}

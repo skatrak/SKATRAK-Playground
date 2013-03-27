@@ -67,12 +67,9 @@ int main(int argc, char* argv[]){
 	sistema = new system_t(1024, 768, 32);
 	sistema->setIcon("icono_prueba.png");
 
-	// Cargamos 3 pistas de música para que reproduzcan en el fondo
-	musica = new music_t(3);
-	musica->setVol(128);
-	musica->setTrack(0, "track01.ogg");
-	musica->setTrack(1, "track02.ogg");
-	musica->setTrack(2, "track03.ogg");
+	// Cargamos la lista de reproducción del menú principal
+	musica = new music_t;
+	loadTracklist("menu_setlist.ini");
 
 	// Activamos la repetición de teclas para los menús (Los juegos que no usen esta funcionalidad la tienen que volver a activar al salir)
 	SDL_EnableKeyRepeat(250, 75);
@@ -104,9 +101,11 @@ void startScreen(){
 	font_t nombreJuego("BOOTERFF.ttf");
 	nombreJuego.setSize(72);
 	nombreJuego.setText("SKATRAK Playground");
+	nombreJuego.setColor(89, 72, 101);
 	font_t empezar("BOOTERFF.ttf");
 	empezar.setSize(32);
 	empezar.setText("Pulse una tecla para empezar");
+	empezar.setColor(89, 72, 101);
 	timekeeper_t temporizador;
 
 	// Variables para controlar el game loop
@@ -146,13 +145,11 @@ void startScreen(){
 			}
 		}
 		// Para dar una sensación de texto parpadeante
-		if(alphaAdd)
-			alpha += 5;
-		else
-			alpha -= 5;
+		alpha += (alphaAdd)? 5 : -5;
+
 		if(alpha <= SDL_ALPHA_TRANSPARENT) alphaAdd = true;
 		else if(alpha >= SDL_ALPHA_OPAQUE - 5) alphaAdd = false;
-		empezar.setAlpha((int)alpha);
+		empezar.setAlpha(alpha);
 
 		// Imprimimos por pantalla todo lo que haga falta e intercambiamos los buffers de vídeo
 		fondo.blit(0, 0, screen);

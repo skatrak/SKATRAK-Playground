@@ -42,6 +42,9 @@ returnVal gameConecta4(void* data){
 	char letreroJugador[32];
 	const int GAME_FONT_OFFSET = 15;
 
+	// Música de fondo
+	loadTracklist("conecta4_setlist.ini");
+
 	// Imagen de fondo del juego y marcador
 	image_t fondo("conecta4/fondo_prueba.png");
 	image_t mark("marcador_prueba.png");
@@ -107,14 +110,18 @@ returnVal gameConecta4(void* data){
 						}
 						continue;
 					}
-					else if(msgSalir(tablero.isEmpty()))
+					else if(msgSalir(tablero.isEmpty())){
+						loadTracklist("menu_setlist.ini");
 						return ACTUAL_MENU;
+					}
 					event.type = SDL_KEYUP; // Cambiamos el tipo de evento para que no caiga una ficha en el tablero por haber pulsado reset o atrás
 				}
 				break;
 			case SDL_KEYDOWN:
-				if(event.key.keysym.sym == SDLK_ESCAPE && msgSalir(tablero.isEmpty()))
+				if(event.key.keysym.sym == SDLK_ESCAPE && msgSalir(tablero.isEmpty())){
+					loadTracklist("menu_setlist.ini");
 					return ACTUAL_MENU;
+				}
 				break;
 			case SDL_QUIT:
 				return EXIT;
