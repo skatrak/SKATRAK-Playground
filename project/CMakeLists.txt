@@ -8,7 +8,7 @@ SET(LIBRARY_OUTPUT_PATH "${PROJECT_BINARY_DIR}/lib")
 SET(SOURCE_PATH "${PROJECT_SOURCE_DIR}/../src")
 
 # Argumentos para el compilador
-ADD_DEFINITIONS(-O2 -Wall)
+ADD_DEFINITIONS(-Wall)
 
 # Encontrar SDL
 FIND_PACKAGE(SDL REQUIRED)
@@ -54,6 +54,7 @@ ADD_EXECUTABLE(SKATRAK-Playground
 	${SOURCE_PATH}/messagebox.cpp
 	${SOURCE_PATH}/music.cpp
 	${SOURCE_PATH}/sfx.cpp
+	${SOURCE_PATH}/shared_attributes.cpp
 	${SOURCE_PATH}/str_operations.cpp
 	${SOURCE_PATH}/system.cpp
 	${SOURCE_PATH}/timekeeper.cpp

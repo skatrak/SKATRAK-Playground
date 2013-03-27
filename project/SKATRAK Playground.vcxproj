@@ -42,6 +42,7 @@
     <ClCompile Include="..\src\messagebox.cpp" />
     <ClCompile Include="..\src\music.cpp" />
     <ClCompile Include="..\src\sfx.cpp" />
+    <ClCompile Include="..\src\shared_attributes.cpp" />
     <ClCompile Include="..\src\snake\gameSnake.cpp" />
     <ClCompile Include="..\src\snake\mainSnake.cpp" />
     <ClCompile Include="..\src\snake\snake.cpp" />
