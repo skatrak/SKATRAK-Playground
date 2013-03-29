@@ -227,10 +227,14 @@ void snakeMap_t::loadMapScheme(string path){
 
 				// La 'D' representa la dirección de la serpiente y debe estar pegada a la 'H', pero no diagonalmente
 				// Comprobamos si la 'D' está en la misma línea
-				if(dirCount == 1 && x > 0 && buffer[x-1] == 'D')
+				if(dirCount == 1 && x > 0 && buffer[x-1] == 'D'){
+					snake->setPieces(SNAKE_DEFAULT_PIECES);
 					snake->setPos(x, y, MOVE_LEFT);
-				else if(dirCount == 0 && x < lineCharCount-1 && buffer[x+1] == 'D')
+				}
+				else if(dirCount == 0 && x < lineCharCount-1 && buffer[x+1] == 'D'){
+					snake->setPieces(SNAKE_DEFAULT_PIECES);
 					snake->setPos(x, y, MOVE_RIGHT);
+				}
 
 				// Comprobamos si la 'D' está arriba o abajo
 				else {
@@ -243,6 +247,7 @@ void snakeMap_t::loadMapScheme(string path){
 						getline(input, temp);
 						if(temp[x] == 'D'){
 							dirFound = true;
+							snake->setPieces(SNAKE_DEFAULT_PIECES);
 							snake->setPos(x, y, MOVE_UP);
 						}
 					}
@@ -251,8 +256,10 @@ void snakeMap_t::loadMapScheme(string path){
 					if(!dirFound){
 						input.seekg(readPos);
 						getline(input, temp);
-						if((int)temp.length() == lineCharCount && temp[x] == 'D')
+						if((int)temp.length() == lineCharCount && temp[x] == 'D'){
+							snake->setPieces(SNAKE_DEFAULT_PIECES);
 							snake->setPos(x, y, MOVE_DOWN);
+						}
 						else {
 							fprintf(stderr, "snakeMap_t::loadMapScheme: El archivo no especifica correctamente la dirección de la serpiente (Utilizar 'D').\n");
 							input.close();
@@ -279,7 +286,7 @@ void snakeMap_t::loadMapScheme(string path){
 		return;
 	}
 
-	if(tileSize > 0 && background != NULL && (((y+1)*tileSize != background->height()) || (lineCharCount*tileSize != background->width())))
+	if(tileSize > 0 && background != NULL && ((y*tileSize != background->height()) || (lineCharCount*tileSize != background->width())))
 		fprintf(stderr, "snakeMap_t::loadMapScheme: [WARNING] Las dimensiones del mapa cargado no coinciden con las dimensiones del fondo.\n");
 
 	// Creamos el nuevo array de posiciones de los muros
@@ -397,7 +404,7 @@ SnakeHit snakeMap_t::update(){
 	frames++; countdown--;
 
 	// Comprobaciones de si hay que colocar el warp
-	if(frames == timeLimit || eaten == foodLimit)
+	if((frames == timeLimit || eaten == foodLimit) && (warpPos.x < 0 || warpPos.y < 0))
 		locateFood(FOOD_WARP);
 
 	// Movemos la serpiente
@@ -414,6 +421,7 @@ SnakeHit snakeMap_t::update(){
 			snake->setHeadPos(headX, 0);
 		else if(headY < 0)
 			snake->setHeadPos(headX, (background->height()/tileSize)-1);
+		snake->headPos(&headX, &headY);
 	}
 	else {
 		fprintf(stderr, "snakeMap_t::update: La serpiente no está cargada.\n");

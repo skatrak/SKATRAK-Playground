@@ -118,10 +118,10 @@ void snake_t::setPos(int posX, int posY, Direction newDirection){
 	int incX = 0, incY = 0;
 	switch(direction){
 	case MOVE_UP:
-		incY = -1;
+		incY = 1;
 		break;
 	case MOVE_DOWN:
-		incY = 1;
+		incY = -1;
 		break;
 	case MOVE_LEFT:
 		incX = 1;
@@ -262,6 +262,20 @@ void snake_t::step(void){
 	// Ahora movemos la nueva cabeza y calculamos su estado de giro/posición
 	head->move(direction);
 	head->setTilePos(getHeadTilePos());
+}
+
+/**
+ * @brief Le da un tamaño a la serpiente.
+ * @param nPieces Número de piezas que va a tener la serpiente.
+ *
+ * Esta función borra la serpiente actual, así que luego hay que llamar a setPos para que se pongan los tiles correctamente.
+ */
+void snake_t::setPieces(int nPieces){
+	for(snakePiece_t* aux = head; aux != NULL; aux = aux->next)
+		delete aux;
+	head = tail = NULL;
+	pieceCount = 0;
+	addPiece(nPieces);
 }
 
 /**

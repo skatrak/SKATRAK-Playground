@@ -27,9 +27,13 @@
 #include "shared_attributes.hpp"
 #include "system.hpp"
 #include "image.hpp"
+#include "font.hpp"
+#include "inifile.hpp"
 #include "timekeeper.hpp"
 #include "snake/snakePiece.hpp"
 #include "snake/snakeMap.hpp"
+
+int loadMaplist(string fileName, string*& schemeNameList, int& nMaps);
 
 returnVal gameSnake(void*){
 	// Música del juego
@@ -37,16 +41,34 @@ returnVal gameSnake(void*){
 
 	// Fondo de la pantalla
 	SDL_Surface* screen = sistema->scr();
-	image_t background("fondo_inicio_prueba.png");
+	image_t background("snake/fondo_prueba.png");
 
 	// La serpiente
-	snakeMap_t snakemap(10, 10, "snake/serpiente_mapa_fondo_prueba.png");
-	snakemap.loadMapScheme("mapasnake_prueba.txt");
-	snakemap.setSnakeImg("snake/serpiente_pruebav2.png", 32);
-	snakemap.setFoodImg("snake/serpiente_comida_prueba.png");
+	snakeMap_t snakemap;
+	snakemap.setBackground("snake/mapa_fondo_prueba.png");
+	snakemap.setPos((sistema->width() - snakemap.width()) / 2, 32);
+	snakemap.setSnakeImg("snake/serpiente_prueba.png", 16);
+	snakemap.setFoodImg("snake/comida_prueba.png");
+
+	// Cargamos del archivo de configuración la lista de mapas
+	string* lista = NULL;
+	int nMaps = 0, indiceMapa = 0;
+	if(loadMaplist("snake_maplist.ini", lista, nMaps) < 0){
+		fprintf(stderr, "gameSnake: No se ha podido cargar la lista de mapas.\n");
+		return ACTUAL_MENU;
+	}
+	snakemap.loadMapScheme(lista[indiceMapa]);
+
 	// Números pequeños para probar su correcto funcionamiento
-	snakemap.setFoodLimit(25);
-	snakemap.setTimeLimit(150);
+	snakemap.setFoodLimit(22);
+	snakemap.setTimeLimit(5400);	// 3 minutos a 30 fps
+
+	// Información de la partida en la pantalla
+	char texto[17];
+	font_t puntText("AlteHaasGroteskRegular.ttf");
+	puntText.setColor(0, 0, 255);
+	puntText.setSize(48);
+	puntText.setText("Puntuación: 0");
 
 	// Game loop
 	int puntuacion = 0;
@@ -72,11 +94,13 @@ returnVal gameSnake(void*){
 					break;
 				case SDLK_ESCAPE:
 					loadTracklist("menu_setlist.ini");
+					delete [] lista;
 					return ACTUAL_MENU;
 				default: break;
 				}
 				break;
 			case SDL_QUIT:
+				delete [] lista;
 				return EXIT;
 			default: break;
 			}
@@ -93,20 +117,56 @@ returnVal gameSnake(void*){
 				puntuacion += 5;
 				break;
 			case HIT_DEATH:
-				printf("Has muerto. Puntuación: %d\n", puntuacion);
 				loadTracklist("menu_setlist.ini");
+				delete [] lista;
 				return ACTUAL_MENU;
-			case HIT_WARP:	// Aquí se podría cargar otro mapa, etc...
-				printf("Has ganado. Puntuación: %d\n", puntuacion);
-				loadTracklist("menu_setlist.ini");
-				return MAIN;
+			case HIT_WARP:	// Cargamos el mapa siguiente
+				if(indiceMapa < nMaps)
+					snakemap.loadMapScheme(lista[++indiceMapa]);
+				else {
+					delete [] lista;
+					return MAIN;
+				}
+				break;
 			}
 		}
 
 		// Imprimir por pantalla
+		sprintf(texto, "Puntuación: %d", puntuacion);
+		puntText.setText(texto);
 		background.blit(0, 0, screen);
+		puntText.blit(snakemap.posX(), snakemap.posY() + snakemap.height() + 16, screen);
 		snakemap.blit(screen);
 		sistema->update();
 		timer.waitFramerate(30);
 	}
+}
+
+int loadMaplist(string fileName, string*& schemeNameList, int& nMaps){
+	inifile_t config(fileName);
+	if(config.errorStatus()){
+		fprintf(stderr, "loadMapList: %s\n", config.errorString().c_str());
+		return -1;
+	}
+
+	nMaps = config.readInt("Map", "Cantidad");
+	if(config.errorStatus()){
+		fprintf(stderr, "loadMapList: %s\n", config.errorString().c_str());
+		return -1;
+	}
+
+	schemeNameList = new string[nMaps];
+
+	char nombre[7];
+	for(int i = 0; i < nMaps; ++i){
+		sprintf(nombre, "Mapa%d", i+1);
+		schemeNameList[i] = config.readString("Map", nombre);
+		if(config.errorStatus()){
+			fprintf(stderr, "loadMapList: %s\n", config.errorString().c_str());
+			delete [] schemeNameList;
+			schemeNameList = NULL;
+			return -1;
+		}
+	}
+	return 0;
 }

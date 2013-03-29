@@ -61,6 +61,7 @@ class snake_t {
 		void setHeadPos(int x, int y);
 		void turn(Direction newDirection);
 		void step(void);
+		void setPieces(int nPieces);
 		void addPiece(int nPieces = 1);
 		bool checkCollision(int posX = -1, int posY = -1);
 		void blit(int x, int y, SDL_Surface* screen);

@@ -51,8 +51,8 @@ enum SnakeFood {
 };
 
 /* Constantes */
-const int BONUS_RESPAWN_TIME = 25;
-const int BONUS_RESPAWN_VARIATION = 10;
+const int BONUS_RESPAWN_TIME = 50;
+const int BONUS_RESPAWN_VARIATION = 20;
 
 /**
  * @class snakeMap_t
@@ -89,6 +89,8 @@ class snakeMap_t {
 		void setSnakeImg(string path, int size);
 		void setFoodImg(string path);
 		// Consulta de atributos
+		int posX(void) const { return mapPos.x; }
+		int posY(void) const { return mapPos.y; }
 		int width(void) const;
 		int height(void) const;
 		// Juego
