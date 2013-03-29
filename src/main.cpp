@@ -136,6 +136,7 @@ void startScreen(){
 		while(SDL_PollEvent(&event)){
 			switch(event.type){
 				case SDL_KEYDOWN:
+				case SDL_MOUSEBUTTONUP:
 					if(mainMenu() == ERROR)
 						fprintf(stderr, "Se ha salido del programa con un error.\n");
 					salir = true;
