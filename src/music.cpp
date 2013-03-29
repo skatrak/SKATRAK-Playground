@@ -38,7 +38,7 @@ extern music_t* musica;
  * @brief Esta función hace que se pase automáticamente a la siguiente canción de la lista de reproducción cuando se acaba la que se está reproduciendo.
  * @note Se supone que esta función tiene que ser miembro de la clase music_t, pero la llamada a la función Mix_HookMusicFinished de SDL requiere que se le pase
  * como único argumento la dirección de una función que no reciba ni devuelva ningún valor. Si estuviera implementada como método de la clase music_t,
- * recibiría un parámetro oculto y no se podría compilar.
+ * recibiría un parámetro oculto (this) y no se podría compilar.
  */
 void nextTrack(){
 	if(musica->playing)

@@ -59,6 +59,9 @@ void startScreen(void);
 system_t* sistema = NULL;			// La variable sistema se comparte entre todos los minijuegos y permanece igual para todos ellos.
 music_t* musica = NULL;				// La variable musica se comparte por todos los minijuegos y cada uno puede tener su propia lista de reproducción.
 
+#ifdef __cplusplus
+extern "C"
+#endif
 int main(int argc, char* argv[]){
 	// Inicializamos la semilla generadora de números aleatorios
 	srand((unsigned int)time(NULL));
@@ -111,9 +114,6 @@ void startScreen(){
 	// Variables para controlar el game loop
 	SDL_Event event;
 	bool salir = false;
-
-	// Comenzamos a reproducir la música
-	musica->play();
 
 	int alpha = 0;
 	while((int)alpha < SDL_ALPHA_OPAQUE){
