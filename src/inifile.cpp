@@ -24,6 +24,7 @@
 #include "inifile.hpp"
 // Estándar
 #include <string>
+#include <cstring>
 #include <fstream>
 using std::string;
 using std::ifstream;
